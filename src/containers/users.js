@@ -19,12 +19,14 @@ class Users extends React.Component {
             primaryText={user.msal.name}
             secondaryText={user.msal.displayableId}
             imageUrl={user.photo}
+            key={user.msal.displayableId}
           />
         )
       }
     )
     templates.push(
       <DefaultButton
+        key='LoginButton'
         text='Login'
         onClick={this.props.signIn}
       />

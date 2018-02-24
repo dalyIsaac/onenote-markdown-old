@@ -45,7 +45,7 @@ function* getToken(app, user) {
         currentToken = yield call([app, app.acquireTokenSilent], graphScopes, null, user);
     } catch (error) {
         currentToken = '';
-        console.error('Token error: ' + error);
+        console.error(`Token error for ${user}: ${error} `);
         const newUser = UserData(user.msal, '', error)
         yield put(actions.updateUser(newUser));
     }
@@ -65,7 +65,7 @@ function* getPhoto(action) {
             const newUser = new UserData(action.user, photo);
             yield put(actions.updateUser(newUser))
         } catch (error) {
-            console.error('Getting photo failed: ' + error);
+            console.error(`Getting photo failed for ${action.user.displayableId}: ${error}`);
         }
     } else {
         console.error('No token');
@@ -74,6 +74,7 @@ function* getPhoto(action) {
 
 const urls = new WeakMap();
 
+// code courtesy of https://www.bignerdranch.com/blog/dont-over-react/
 const blobUrl = blob => {
     if (urls.has(blob)) {
       return urls.get(blob)
