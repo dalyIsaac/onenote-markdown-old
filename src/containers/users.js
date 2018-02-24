@@ -1,77 +1,22 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { signIn, signOut } from '../actions';
-import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react/lib/Button';
-import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
-import { Callout} from 'office-ui-fabric-react/lib/Callout';
+import { UsersComponent } from '../components/users';
+import { PersonaInitialsColor } from 'office-ui-fabric-react/lib/Persona';
 
-class Users extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = { confirmSignout: false };
-    this.onSignoutClicked = this.onSignoutClicked.bind(this);
-    this.onSignoutDismiss = this.onSignoutDismiss.bind(this);
-    this._signoutButtonElement = null;
-  }
-
-  onSignoutClicked() {
-    this.setState({ confirmSignout: !this.state.confirmSignout });
-  }
-
-  onSignoutDismiss() {
-    this.setState({ confirmSignout: false });
-  }
-
+class UsersContainer extends React.Component {
   render() {
-    let templates = [];
-    this.props.users.forEach(
-      (user) => {
-        const names = user.msal.name.split(" ");
-        const initials = names.reduce((acc, val) => acc + val[0], '');
-        templates.push(
-          <Persona
-            imageInitials={initials}
-            size={PersonaSize.size48}
-            primaryText={user.msal.name}
-            secondaryText={user.msal.displayableId}
-            imageUrl={user.photo}
-            key={user.msal.displayableId}
-          />
-        )
-      }
-    )
-    templates.push(
-      <div key='msal'>
-        <DefaultButton
-          key='SignInButton'
-          text='Sign in'
-          onClick={this.props.signIn}
-        />
-      </div>
-    );
-    templates.push(
-      <div>
-        <div ref={ (signoutButton) => this._signoutButtonElement = signoutButton }>
-          <DefaultButton
-            onClick={ this.onSignoutClicked }
-            text={ this.state.signOutButtonElement ? 'Cancel' : 'Sign out of all accounts' }
-          />
-        </div>
-        { this.state.confirmSignout && (
-          <Callout
-            role={ 'alertdialog' }
-            gapSpace={ 0 }
-            target={ this._signoutButtonElement }
-            onDismiss={ this.onSignoutDismiss }
-            setInitialFocus={ true }
-          >
-            Hello world
-          </Callout>
-        ) }
-      </div>
-    )
-    return templates;
+    let personas = [];
+    this.props.users.forEach(user => {
+      const persona = {
+        imageInitials: user.msal.name.split(' ').reduce((acc, val) => acc + val[0], ''),
+        imageUrl: user.photo,
+        personaName: user.msal.name,
+        initialsColor: PersonaInitialsColor[personas.length % 13]
+      };
+      personas.push(persona);
+    });
+    return <UsersComponent users={personas}/>
   }
 }
 
@@ -92,4 +37,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Users);
+export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);

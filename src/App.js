@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Users from './containers/users';
+import UsersContainer from './containers/users';
 import { connect } from 'react-redux';
 import { authenticate } from './actions';
 
@@ -10,7 +10,7 @@ class App extends Component {
   render() {
     // this.props.authenticate();
     return (
-      <Users />
+      <UsersContainer />
     );
   }
 }
