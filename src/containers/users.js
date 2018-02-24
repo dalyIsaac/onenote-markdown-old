@@ -11,12 +11,19 @@ class UsersContainer extends React.Component {
       const persona = {
         imageInitials: user.msal.name.split(' ').reduce((acc, val) => acc + val[0], ''),
         imageUrl: user.photo,
-        personaName: user.msal.name,
+        personaName: user.msal.displayableId,
+        userName: user.msal.name,
         initialsColor: PersonaInitialsColor[personas.length % 13]
       };
       personas.push(persona);
     });
-    return <UsersComponent users={personas}/>
+    return (
+      <UsersComponent 
+          users={personas}
+          signIn={this.props.signIn}
+          signOut={this.props.signOut}
+      />
+    );
   }
 }
 
