@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import './index.css';
 import App from './App';
 
@@ -13,7 +14,7 @@ import { Fabric } from 'office-ui-fabric-react/lib/Fabric'
 import registerServiceWorker from './registerServiceWorker';
 
 const sagaMiddleware = createSagaMiddleware();
-let store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
+let store = createStore(rootReducer, composeWithDevTools(applyMiddleware(sagaMiddleware)));
 sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(

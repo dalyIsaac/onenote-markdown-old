@@ -6,6 +6,7 @@ import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 
 class Users extends React.Component {
   render() {
+    var url = window.URL || window.webkitURL;
     let templates = [];
     this.props.users.forEach(
       (user) => {
@@ -17,6 +18,7 @@ class Users extends React.Component {
             size={PersonaSize.size48}
             primaryText={user.msal.name}
             secondaryText={user.msal.displayableId}
+            imageUrl={user.photo}
           />
         )
       }
