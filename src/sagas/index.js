@@ -16,20 +16,19 @@ export default function* rootSaga() {
     yield takeEvery(GET_PHOTO, getPhoto)
 }
 
-function* authenticate(action) {
+export function* authenticate(action) {
     const userList = action.app.getAllUsers();
-    if (userList.length === 0) {
-        return;
-    }
-    const userDataList = userList.map(x => new UserData(x));
-    yield put(actions.newUserList(userDataList));
-    for (let i = 0; i < userDataList.length; i++) {
-        const user = userDataList[i];
-        yield put(actions.getPhoto(user.msal));
+    if (userList.length !== 0) {
+        const userDataList = userList.map(x => new UserData(x));
+        yield put(actions.newUserList(userDataList));
+        for (let i = 0; i < userDataList.length; i++) {
+            const user = userDataList[i];
+            yield put(actions.getPhoto(user.msal));
+        }
     }
 }
 
-function* signIn(action) {
+export function* signIn(action) {
     yield call([action.app, action.app.loginRedirect], graphScopes);
     // no need for a put because the app redirects
 }
