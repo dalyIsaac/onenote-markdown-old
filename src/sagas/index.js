@@ -18,7 +18,7 @@ export default function* rootSaga() {
 
 export function* authenticate(action) {
     const userList = action.app.getAllUsers();
-    if (userList.length !== 0) {
+    if (userList.length > 0) {
         const userDataList = userList.map(x => new UserData(x));
         yield put(actions.newUserList(userDataList));
         for (let i = 0; i < userDataList.length; i++) {
