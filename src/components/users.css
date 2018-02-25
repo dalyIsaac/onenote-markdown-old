@@ -1,6 +1,9 @@
 .usersButton {
     background: white;
     border: 0cm white;
+    margin: 0px;
+    padding: 0px;
+    height: 48px;
     cursor: pointer;
 }
 
