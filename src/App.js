@@ -1,27 +1,26 @@
-import React, { Component } from 'react';
-import HeaderComponent from './components/header';
+import React from 'react';
+import HeaderContainer from './containers/header';
 import { connect } from 'react-redux';
 import { authenticate } from './actions';
 
-class App extends Component {
+class App extends React.Component {
   componentWillMount() {
     this.props.authenticate();
   }
+
   render() {
-    // this.props.authenticate();
     return (
       <div>
-        <HeaderComponent />
+        <HeaderContainer />
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    // nothing here
-  }
-}
+const mapStateToProps = () => ({
+  // nothing here yet
+})
+
 
 const mapDispatchToProps = (dispatch) => {
   return {

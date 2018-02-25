@@ -3,7 +3,6 @@ import { Facepile } from 'office-ui-fabric-react/lib/Facepile';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel';
 import { ActionButton } from 'office-ui-fabric-react/lib/Button';
-import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
 import './users.css';
 
 export class UsersComponent extends React.Component {
@@ -12,7 +11,6 @@ export class UsersComponent extends React.Component {
         this.state = { showUserPanel: false };
         this.showUserPanelClicked = this.showUserPanelClicked.bind(this);
         this.hideUserPanel = this.hideUserPanel.bind(this);
-        initializeIcons();
     }
 
     showUserPanelClicked() {

@@ -3,8 +3,15 @@ import { connect } from 'react-redux';
 import { signIn, signOut } from '../actions';
 import { UsersComponent } from '../components/users';
 import { PersonaInitialsColor } from 'office-ui-fabric-react/lib/Persona';
+import { push } from 'react-router-redux';
 
 class UsersContainer extends React.Component {
+  componentWillMount() {
+    if (this.props.users.length === 0) {
+      this.props.redirectToAbout();
+    }
+  }
+
   render() {
     let personas = [];
     this.props.users.forEach(user => {
@@ -35,12 +42,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    signIn: () => {
-      dispatch(signIn())
-    },
-    signOut: () => {
-      dispatch(signOut())
-    }
+    signIn: () => dispatch(signIn()),
+    signOut: () => dispatch(signOut()),
+    redirectToAbout: () => dispatch(push('/about'))
   }
 };
 
