@@ -6,8 +6,9 @@ import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import { Route, Redirect, Switch } from 'react-router'
-import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
+import { Route, Redirect, Switch } from 'react-router';
+import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
+import PrivateRoute from './routing';
 import createHistory from 'history/createBrowserHistory';
 
 import rootReducer from './reducers';
@@ -34,9 +35,8 @@ ReactDOM.render(
             <Fabric>
                 <App />
                 <Switch>
-                    <Route path='/about' component={AboutContainer} />
-                    <Route path="/settings" component={SettingsComponent} />
-                    <Redirect from="*" to="/" />
+                    <PrivateRoute path="/settings" component={SettingsComponent} />
+                    <Route path="/about" component={AboutContainer} />
                 </Switch>
             </Fabric>
         </ConnectedRouter>

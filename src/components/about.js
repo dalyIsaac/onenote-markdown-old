@@ -8,7 +8,7 @@ class AboutComponent extends React.Component {
     componentWillMount() {
         if (this.props.users.length !== 0) 
         {
-            this.props.redirectToApp();
+            // this.props.redirectToApp();
         }
     }
 
