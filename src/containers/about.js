@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from 'react'; // eslint-disable-line no-unused-vars
 import { connect } from 'react-redux';
 import { signIn } from '../actions';
 import AboutComponent from '../components/about';

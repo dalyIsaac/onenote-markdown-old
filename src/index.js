@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import { Route, Redirect, Switch } from 'react-router';
+import { Route, Switch } from 'react-router';
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 import PrivateRoute from './routing';
 import createHistory from 'history/createBrowserHistory';
@@ -22,6 +22,9 @@ import rootSaga from './sagas';
 import registerServiceWorker from './registerServiceWorker';
 import { Fabric } from 'office-ui-fabric-react/lib/Fabric'
 
+import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
+
+initializeIcons();
 const history = createHistory();
 const historyMiddleware = routerMiddleware(history);
 
