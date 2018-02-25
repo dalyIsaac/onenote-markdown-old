@@ -8,6 +8,7 @@ let app;
  * Creates an action to start the authentication process with MSAL
 */
 export function authenticate() {
+    const redirectUri = window.location.href.includes('localhost:3000') ? 'http://localhost:3000' : '';    
     app = new Msal.UserAgentApplication(
         appId,
         '',
@@ -15,7 +16,9 @@ export function authenticate() {
             // callback
         },
         {
-            cacheLocation
+            cacheLocation,
+            redirectUri,
+            postLogoutRedirectUri: redirectUri
         });
     return {
         type: AUTHENTICATE,

@@ -6,15 +6,16 @@ import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import { Route } from 'react-router'
-import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux'
+import { Route, Redirect, Switch } from 'react-router'
+import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
 import createHistory from 'history/createBrowserHistory';
 
 import rootReducer from './reducers';
 
 import './index.css';
 import App from './App';
-import { Settings } from './components/settings';
+import { SettingsComponent } from './components/settings';
+import AboutContainer from './containers/about';
 
 import rootSaga from './sagas';
 import registerServiceWorker from './registerServiceWorker';
@@ -31,8 +32,12 @@ ReactDOM.render(
     <Provider store={store}>
         <ConnectedRouter history={history}>
             <Fabric>
-                <Route exact path="/" component={App} />
-                <Route path="/settings" component={Settings} />
+                <App />
+                <Switch>
+                    <Route path='/about' component={AboutContainer} />
+                    <Route path="/settings" component={SettingsComponent} />
+                    <Redirect from="*" to="/" />
+                </Switch>
             </Fabric>
         </ConnectedRouter>
     </Provider>,
