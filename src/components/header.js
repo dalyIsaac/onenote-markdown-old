@@ -4,7 +4,7 @@ import { AddressBarComponent } from './addressBar';
 import UsersContainer from '../containers/users';
 import './header.css';
 
-export const HeaderComponent = (users) => (
+export const HeaderComponent = (props) => (
     <div className='container'>
         <Image
             className='icon'
@@ -13,7 +13,7 @@ export const HeaderComponent = (users) => (
             width={48}
             height={48}
         />
-        { users.length === 0 && 
+        { props.users.length > 0 && 
             <div className='addressBarContainer'>
                 <AddressBarComponent/>
             </div>}
