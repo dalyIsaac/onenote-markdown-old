@@ -35,6 +35,7 @@ export class NotebookPickerComponent extends React.Component {
 
   _showModal() {
     this.setState({ showModal: true });
+    this.props.getAllNotebooks();
   }
 
   _closeModal() {

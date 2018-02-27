@@ -1,15 +1,22 @@
 import * as Msal from 'msal';
 import { appId, cacheLocation } from '../constants';
-import { AUTHENTICATE, SIGN_IN, SIGN_OUT, GET_PHOTO, NEW_USER_LIST, UPDATE_USER } from '../types';
-
-let app;
+import { 
+    AUTHENTICATE, 
+    SIGN_IN, 
+    SIGN_OUT, 
+    GET_PHOTO, 
+    NEW_USER_LIST, 
+    UPDATE_USER, 
+    GET_ALL_USERS
+ } from '../types';
+ import { app, updateApp } from './index';
 
 /** 
  * Creates an action to start the authentication process with MSAL
 */
 export function authenticate() {
     const redirectUri = window.location.href.includes('localhost:3000') ? 'http://localhost:3000' : '';    
-    app = new Msal.UserAgentApplication(
+    updateApp(new Msal.UserAgentApplication(
         appId,
         '',
         () => {
@@ -19,7 +26,7 @@ export function authenticate() {
             cacheLocation,
             redirectUri,
             postLogoutRedirectUri: redirectUri
-        });
+        }));
     return {
         type: AUTHENTICATE,
         app
@@ -69,3 +76,11 @@ export const getPhoto = (user) => ({
     app,
     user
 });
+
+/** 
+ * Creates an action to get a list of all of the users who are currently logged in
+ */
+export const getAllUsers = () => ({
+    type: GET_ALL_USERS,
+    app
+})

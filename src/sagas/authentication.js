@@ -1,16 +1,15 @@
 import { call, put } from 'redux-saga/effects';
 
-import { UserData, AUTHENTICATE, SIGN_IN, SIGN_OUT, GET_PHOTO } from './../types';
+import { UserData } from './../types';
 import { authentication }from '../actions';
 import { graphScopes } from '../constants';
-import { betaUrl, blobUrl } from './index';
+import { blobUrl, getToken, currentToken } from './index';
+import { betaUrl } from '../constants';
 
 import axios from 'axios';
 
-let currentToken = '';
-
 export function* authenticate(action) {
-    const userList = action.app.getAllUsers();
+    const userList = yield call([action.app, action.app.getAllUsers]);
     if (userList.length > 0) {
         const userDataList = userList.map(x => new UserData(x));
         yield put(authentication.newUserList(userDataList));
@@ -29,18 +28,6 @@ export function* signIn(action) {
 export function* signOut(action) {
     yield call([action.app, action.app.logout]);
     // no need for a put because the app redirects
-}
-
-
-function* getToken(app, user) {
-    try {
-        currentToken = yield call([app, app.acquireTokenSilent], graphScopes, null, user);
-    } catch (error) {
-        currentToken = '';
-        console.error(`Token error for ${user}: ${error} `);
-        const newUser = UserData(user.msal, '', error)
-        yield put(authentication.updateUser(newUser));
-    }
 }
 
 export function* getPhoto(action) {

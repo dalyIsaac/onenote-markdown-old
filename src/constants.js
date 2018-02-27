@@ -7,3 +7,5 @@ export const graphScopes = [
     'Notes.Read.All',
     'Notes.ReadWrite.All'];
 export const cacheLocation = 'localStorage';
+export const stableUrl = 'https://graph.microsoft.com/v1.0/';
+export const betaUrl = 'https://graph.microsoft.com/beta/';
