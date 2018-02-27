@@ -1,7 +1,8 @@
 import React from 'react';
 import HeaderContainer from './containers/header';
+import NotebookPickerContainer from './containers/notebookPicker';
 import { connect } from 'react-redux';
-import { authenticate } from './actions';
+import { authentication } from './actions';
 
 class App extends React.Component {
   componentWillMount() {
@@ -12,6 +13,7 @@ class App extends React.Component {
     return (
       <div>
         <HeaderContainer />
+        <NotebookPickerContainer />
       </div>
     );
   }
@@ -25,7 +27,7 @@ const mapStateToProps = () => ({
 const mapDispatchToProps = (dispatch) => {
   return {
     authenticate: () => {
-      dispatch(authenticate())
+      dispatch(authentication.authenticate())
     }
   };
 }
