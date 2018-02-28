@@ -1,5 +1,5 @@
 import * as authentication from './authentication';
-import * as notebooks from './notebooks';
+import * as getNotebooks from './getNotebooks';
 
 // Essentially an instance variable
 export let app = '';
@@ -9,4 +9,4 @@ export const updateApp = (newApp) => {
 }
 
 export { authentication };
-export { notebooks };
+export { getNotebooks };

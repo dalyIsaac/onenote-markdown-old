@@ -10,6 +10,7 @@ export const GET_PHOTO = 'GET_PHOTO';
 
 // Notebooks
 export const GET_ALL_NOTEBOOKS = 'GET_ALL_NOTEBOOKS';
+export const PUT_ALL_NOTEBOOKS = 'PUT_ALL_NOTEBOOKS';
 
 export class UserData {
     constructor(msal, photo = '', error = null) {
