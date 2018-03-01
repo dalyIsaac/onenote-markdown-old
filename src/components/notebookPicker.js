@@ -2,6 +2,7 @@ import * as React from "react";
 import { Modal } from "office-ui-fabric-react/lib/Modal";
 import { DefaultButton } from "office-ui-fabric-react/lib/Button";
 import { Spinner, SpinnerSize } from "office-ui-fabric-react/lib/Spinner";
+import { NotebookPickerList } from "./notebookPickerList";
 import "./notebookPicker.css";
 
 export class NotebookPickerComponent extends React.Component {
@@ -10,13 +11,8 @@ export class NotebookPickerComponent extends React.Component {
     this._showModal = this._showModal.bind(this);
     this._closeModal = this._closeModal.bind(this);
     this.state = {
-      showModal: false,
-      spinnerVisible: true
+      showModal: false
     };
-  }
-
-  componentWillReceiveProps() {
-    this.setState({ spinnerVisible: false });
   }
 
   render() {
@@ -34,13 +30,15 @@ export class NotebookPickerComponent extends React.Component {
           containerClassName="ms-modalExample-container"
         >
           <div className="parent">
-            {this.state.spinnerVisible && (
+            {this.props.notebooks.length !== this.props.userLength ? (
               <Spinner
                 className="spinner"
                 size={SpinnerSize.large}
                 label="Hang on, I'm asking around for your notebooks..."
                 ariaLive="assertive"
               />
+            ) : (
+              <NotebookPickerList notebooks={this.props.notebooks} />
             )}
           </div>
         </Modal>
@@ -50,8 +48,7 @@ export class NotebookPickerComponent extends React.Component {
 
   _showModal() {
     this.setState({
-      showModal: true,
-      spinnerVisible: true
+      showModal: true
     });
     this.props.getAllNotebooks();
   }
