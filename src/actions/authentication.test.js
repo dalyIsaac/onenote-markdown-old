@@ -1,4 +1,4 @@
-import * as actions from './index';
+import * as actions from './authentication';
 import { UserData } from '../types';
 import * as Msal from 'msal';
 import { storageSetup, getUserAgentApplication } from '../testHelpers';
