@@ -50,6 +50,7 @@ export class NotebookPickerList extends React.Component {
         onRender: () => {
           return (
             <img
+              alt="OneNote icon"
               src={
                 "https://static2.sharepointonline.com/files/fabric/assets/brand-icons/document/svg/one_16x1.svg"
               }
