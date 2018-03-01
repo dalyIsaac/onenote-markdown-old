@@ -1,14 +1,14 @@
 import * as React from "react";
 import { TextField } from "office-ui-fabric-react/lib/TextField";
-import { Toggle } from "office-ui-fabric-react/lib/Toggle";
+import { DefaultButton } from "office-ui-fabric-react/lib/Button";
 import {
   DetailsList,
   DetailsListLayoutMode,
   Selection,
-  SelectionMode,
-  IColumn
+  SelectionMode
 } from "office-ui-fabric-react/lib/DetailsList";
 import { MarqueeSelection } from "office-ui-fabric-react/lib/MarqueeSelection";
+import "./notebookPickerList.css";
 
 export class NotebookPickerList extends React.Component {
   constructor(props) {
@@ -117,22 +117,33 @@ export class NotebookPickerList extends React.Component {
     const { columns, notebooks } = this.state;
 
     return (
-      <div>
-        <TextField label="Filter by name:" onChanged={this._onChangeText} />
-        <MarqueeSelection selection={this._selection}>
-          <DetailsList
-            items={notebooks}
-            columns={columns}
-            selectionMode={SelectionMode.multiple}
-            setKey="set"
-            layoutMode={DetailsListLayoutMode.justified}
-            isHeaderVisible={true}
-            selection={this._selection}
-            selectionPreservedOnEmptyClick={true}
-            onItemInvoked={this._onItemInvoked}
-            enterModalSelectionOnTouch={true}
-          />
-        </MarqueeSelection>
+      <div className="wrapper">
+        <div className="filterDiv">
+          <TextField label="Filter by name:" onChanged={this._onChangeText} />
+        </div>
+        <div className="detailsListDiv">
+          <MarqueeSelection selection={this._selection}>
+            <DetailsList
+              items={notebooks}
+              columns={columns}
+              selectionMode={SelectionMode.multiple}
+              setKey="set"
+              layoutMode={DetailsListLayoutMode.justified}
+              isHeaderVisible={true}
+              selection={this._selection}
+              selectionPreservedOnEmptyClick={true}
+              onItemInvoked={this._onItemInvoked}
+              enterModalSelectionOnTouch={true}
+            />
+          </MarqueeSelection>
+        </div>
+        <DefaultButton
+          className="footerDiv"
+          primary={true}
+          description="Starts opening the selected notebooks"
+          // onClick={this._showModal}
+          text="Open notebooks"
+        />
       </div>
     );
   }

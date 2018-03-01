@@ -1,0 +1,19 @@
+.wrapper {
+  display: grid;
+  grid-template-rows: 100px calc(75vh - 132px) 32px;
+}
+
+.filterDiv {
+  grid-row: 1;
+  padding: 12px;
+}
+
+.detailsListDiv {
+  grid-row: 2;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.footerDiv {
+  grid-row: 3;
+}
