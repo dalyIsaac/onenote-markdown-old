@@ -1,8 +1,8 @@
-import React from 'react';
-import HeaderContainer from './containers/header';
-import NotebookPickerContainer from './containers/notebookPicker';
-import { connect } from 'react-redux';
-import { authentication } from './actions';
+import React from "react";
+import HeaderContainer from "./containers/header";
+import NotebookPickerContainer from "./containers/notebookPicker";
+import { connect } from "react-redux";
+import { authentication } from "./actions";
 
 class App extends React.Component {
   componentWillMount() {
@@ -21,15 +21,14 @@ class App extends React.Component {
 
 const mapStateToProps = () => ({
   // nothing here yet
-})
+});
 
-
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     authenticate: () => {
-      dispatch(authentication.authenticate())
+      dispatch(authentication.authenticate(dispatch));
     }
   };
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

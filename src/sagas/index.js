@@ -40,8 +40,7 @@ export const blobUrl = blob => {
 export let currentToken = "";
 
 /**
- *
- *
+ * Gets the users's token with a silent call
  * @export
  * @param {UserAgentApplication} app
  * @param {UserData} user
@@ -56,7 +55,38 @@ export function* getToken(app, user) {
     );
   } catch (error) {
     currentToken = "";
-    console.error(`Token error for ${user.msal.displayableId}`);
+    console.error(
+      `Could not acquire a valid token ${
+        user.msal.displayableId
+      } by silently querying MSAL.`
+    );
+    console.error(error);
+    const newUser = new UserData(user.msal, "", error);
+    yield put(authentication.updateUser(newUser));
+  }
+}
+
+/**
+ * Gets the users's token with a silent call
+ * @export
+ * @param {UserAgentApplication} app
+ * @param {UserData} user
+ */
+export function* getTokenRedirect(app, user) {
+  try {
+    currentToken = yield call(
+      [app, app.acquireTokenRedirect],
+      graphScopes,
+      null,
+      user.msal
+    );
+  } catch (error) {
+    currentToken = "";
+    console.error(
+      `Could not acquire a valid token ${
+        user.msal.displayableId
+      } by redirecting to MSAL authentication.`
+    );
     console.error(error);
     const newUser = new UserData(user.msal, "", error);
     yield put(authentication.updateUser(newUser));

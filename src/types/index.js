@@ -14,9 +14,9 @@ export const PUT_ALL_NOTEBOOKS = "PUT_ALL_NOTEBOOKS";
 export const CLEAR_ALL_NOTEBOOKS = "CLEAR_ALL_NOTEBOOKS";
 
 export class UserData {
-  constructor(msal, photo = "", error = null) {
+  constructor(msal, photo = "", acquireTokenError = null) {
     this.msal = msal;
     this.photo = photo;
-    this.error = error;
+    this.acquireTokenError = acquireTokenError;
   }
 }
