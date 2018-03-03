@@ -25,6 +25,20 @@ export function* authenticate(action) {
   }
 }
 
+/**
+ * Acquires a token by redirecting a user who is logged in, but the token has expired
+ * @export
+ * @param {any} action
+ */
+export function* reauthorizeUser(action) {
+  yield call(
+    [action.app, action.app.acquireTokenRedirect],
+    graphScopes,
+    "https://login.microsoftonline.com/common",
+    action.user.msal
+  );
+}
+
 export function* signIn(action) {
   yield call([action.app, action.app.loginRedirect], graphScopes);
   // no need for a put because the app redirects

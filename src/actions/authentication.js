@@ -7,7 +7,8 @@ import {
   GET_PHOTO,
   NEW_USER_LIST,
   UPDATE_USER,
-  GET_ALL_USERS
+  GET_ALL_USERS,
+  REAUTHORIZE_USER
 } from "../types";
 import { app, updateApp } from "./index";
 import { push } from "react-router-redux";
@@ -90,4 +91,13 @@ export const getPhoto = user => ({
 export const getAllUsers = () => ({
   type: GET_ALL_USERS,
   app
+});
+
+/**
+ * Acquires a token by redirecting a user who is logged in, but the token has expired
+ */
+export const reauthorizeUser = user => ({
+  type: REAUTHORIZE_USER,
+  app,
+  user
 });

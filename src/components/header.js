@@ -30,7 +30,6 @@ export class HeaderComponent extends React.Component {
         </div>
         <Dialog
           hidden={this.props.userWithError === undefined}
-          //   onDismiss={ this._closeDialog }
           dialogContentProps={{
             type: DialogType.normal,
             title: "There was a slight problem..."
@@ -42,16 +41,21 @@ export class HeaderComponent extends React.Component {
           }}
         >
           <p>
-            <span className="accountName">
+            <span className="boldText">
               {this.props.userWithError === undefined
                 ? ""
                 : this.props.userWithError.msal.displayableId + " "}
             </span>
-            requires you to reauthorize OneNoteMarkdown
+            requires you to reauthorize OneNoteMarkdown.{" "}
+            <span className="boldText">
+              Signing out signs you out of all accounts.
+            </span>
           </p>
           <DialogFooter>
             <PrimaryButton
-              // onClick={this._closeDialog}
+              onClick={() =>
+                this.props.reauthorizeUser(this.props.userWithError)
+              }
               text="Reauthorize"
             />
             <DefaultButton
