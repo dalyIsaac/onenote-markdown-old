@@ -1,30 +1,34 @@
 .container {
-    display: grid;
-    grid-template-columns: 60px auto 200px;
-    grid-template-rows: 56px;
-    border-bottom: 1px solid #b4009e;
-    position: relative;
+  display: grid;
+  grid-template-columns: 60px auto 200px;
+  grid-template-rows: 56px;
+  border-bottom: 1px solid #b4009e;
+  position: relative;
 }
 
 .icon {
-    grid-column: 1;
-    margin: 4px;
+  grid-column: 1;
+  margin: 4px;
 }
 
 .addressBarContainer {
-    grid-column: 2;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  grid-column: 2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .root_eeeb05d5 {
-    margin: 0;
+  margin: 0;
 }
 
 .usersContainer {
-    grid-column: 3;
-    text-align: right;
-    margin: 4px;
+  grid-column: 3;
+  text-align: right;
+  margin: 4px;
+}
+
+.accountName {
+  font-weight: bold;
 }
