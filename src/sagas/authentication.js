@@ -8,6 +8,11 @@ import { betaUrl } from "../constants";
 
 import axios from "axios";
 
+/**
+ * Adds the users who are currently signed into the store
+ * @export
+ * @param {any} action
+ */
 export function* authenticate(action) {
   const userList = yield call([action.app, action.app.getAllUsers]);
   if (userList.length > 0) {
@@ -20,6 +25,20 @@ export function* authenticate(action) {
   }
 }
 
+/**
+ * Acquires a token by redirecting a user who is logged in, but the token has expired
+ * @export
+ * @param {any} action
+ */
+export function* reauthorizeUser(action) {
+  yield call(
+    [action.app, action.app.acquireTokenRedirect],
+    graphScopes,
+    "https://login.microsoftonline.com/common",
+    action.user.msal
+  );
+}
+
 export function* signIn(action) {
   yield call([action.app, action.app.loginRedirect], graphScopes);
   // no need for a put because the app redirects
@@ -30,6 +49,11 @@ export function* signOut(action) {
   // no need for a put because the app redirects
 }
 
+/**
+ * Gets the profile photos of users
+ * @export
+ * @param {any} action
+ */
 export function* getPhoto(action) {
   yield call(getToken, action.app, action.user);
   if (currentToken !== "") {

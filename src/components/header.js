@@ -1,24 +1,70 @@
-import * as React from 'react';
-import { Image, ImageFit } from 'office-ui-fabric-react/lib/Image';
-import { AddressBarComponent } from './addressBar';
-import UsersContainer from '../containers/users';
-import './header.css';
+import * as React from "react";
+import { Image, ImageFit } from "office-ui-fabric-react/lib/Image";
+import { AddressBarComponent } from "./addressBar";
+import UsersContainer from "../containers/users";
+import "./header.css";
+import { Dialog, DialogType, DialogFooter } from "office-ui-fabric-react";
+import {
+  PrimaryButton,
+  DefaultButton
+} from "office-ui-fabric-react/lib/Button";
 
-export const HeaderComponent = (props) => (
-    <div className='container'>
+export class HeaderComponent extends React.Component {
+  render() {
+    return (
+      <div className="container">
         <Image
-            className='icon'
-            src='https://static2.sharepointonline.com/files/fabric/assets/brand-icons/product/png/onenote_96x1.png'
-            imageFit={ImageFit.contain}
-            width={48}
-            height={48}
+          className="icon"
+          src="https://static2.sharepointonline.com/files/fabric/assets/brand-icons/product/png/onenote_96x1.png"
+          imageFit={ImageFit.contain}
+          width={48}
+          height={48}
         />
-        { props.users.length > 0 && 
-            <div className='addressBarContainer'>
-                <AddressBarComponent/>
-            </div>}
-        <div className='usersContainer'>
-            <UsersContainer/>
+        {this.props.users.length > 0 && (
+          <div className="addressBarContainer">
+            <AddressBarComponent />
+          </div>
+        )}
+        <div className="usersContainer">
+          <UsersContainer />
         </div>
-    </div>
-);
+        <Dialog
+          hidden={this.props.userWithError === undefined}
+          dialogContentProps={{
+            type: DialogType.normal,
+            title: "There was a slight problem..."
+          }}
+          modalProps={{
+            titleAriaId: "myLabelId",
+            subtitleAriaId: "mySubTextId",
+            isBlocking: true
+          }}
+        >
+          <p>
+            <span className="boldText">
+              {this.props.userWithError === undefined
+                ? ""
+                : this.props.userWithError.msal.displayableId + " "}
+            </span>
+            requires you to reauthorize OneNoteMarkdown.{" "}
+            <span className="boldText">
+              Signing out signs you out of all accounts.
+            </span>
+          </p>
+          <DialogFooter>
+            <PrimaryButton
+              onClick={() =>
+                this.props.reauthorizeUser(this.props.userWithError)
+              }
+              text="Reauthorize"
+            />
+            <DefaultButton
+              // onClick={this._closeDialog}
+              text="Sign out"
+            />
+          </DialogFooter>
+        </Dialog>
+      </div>
+    );
+  }
+}

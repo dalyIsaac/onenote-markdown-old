@@ -7,11 +7,18 @@ import {
   SIGN_IN,
   SIGN_OUT,
   GET_PHOTO,
-  GET_ALL_NOTEBOOKS
+  GET_ALL_NOTEBOOKS,
+  REAUTHORIZE_USER
 } from "./../types";
 import { authentication } from "../actions";
 
-import { authenticate, signIn, signOut, getPhoto } from "./authentication";
+import {
+  authenticate,
+  signIn,
+  signOut,
+  getPhoto,
+  reauthorizeUser
+} from "./authentication";
 import { getAllNotebooks } from "./notebooks";
 
 export default function* rootSaga() {
@@ -20,6 +27,7 @@ export default function* rootSaga() {
   yield takeLatest(SIGN_OUT, signOut);
   yield takeEvery(GET_PHOTO, getPhoto);
   yield takeLatest(GET_ALL_NOTEBOOKS, getAllNotebooks);
+  yield takeLatest(REAUTHORIZE_USER, reauthorizeUser);
 }
 
 const urls = new WeakMap();
@@ -40,8 +48,7 @@ export const blobUrl = blob => {
 export let currentToken = "";
 
 /**
- *
- *
+ * Gets the users's token with a silent call
  * @export
  * @param {UserAgentApplication} app
  * @param {UserData} user
@@ -56,7 +63,38 @@ export function* getToken(app, user) {
     );
   } catch (error) {
     currentToken = "";
-    console.error(`Token error for ${user.msal.displayableId}`);
+    console.error(
+      `Could not acquire a valid token ${
+        user.msal.displayableId
+      } by silently querying MSAL.`
+    );
+    console.error(error);
+    const newUser = new UserData(user.msal, "", error);
+    yield put(authentication.updateUser(newUser));
+  }
+}
+
+/**
+ * Gets the users's token with a silent call
+ * @export
+ * @param {UserAgentApplication} app
+ * @param {UserData} user
+ */
+export function* getTokenRedirect(app, user) {
+  try {
+    currentToken = yield call(
+      [app, app.acquireTokenRedirect],
+      graphScopes,
+      null,
+      user.msal
+    );
+  } catch (error) {
+    currentToken = "";
+    console.error(
+      `Could not acquire a valid token ${
+        user.msal.displayableId
+      } by redirecting to MSAL authentication.`
+    );
     console.error(error);
     const newUser = new UserData(user.msal, "", error);
     yield put(authentication.updateUser(newUser));
