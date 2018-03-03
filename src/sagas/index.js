@@ -61,6 +61,7 @@ export function* getToken(app, user) {
       null,
       user.msal
     );
+    console.log(user);
   } catch (error) {
     currentToken = "";
     console.error(

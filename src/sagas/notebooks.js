@@ -1,12 +1,15 @@
-import { call, put } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import { getToken, currentToken } from "./index";
 import { stableUrl } from "../constants";
 import { getNotebooks } from "../actions";
 
 import axios from "axios";
 
+const getUsers = state => state.users;
+
 export function* getAllNotebooks(action) {
-  const userList = yield call([action.app, action.app.getAllUsers]);
+  yield put(getNotebooks.clearAllNotebooks());
+  const userList = yield select(getUsers);
   for (let i = 0; i < userList.length; i++) {
     const user = userList[i];
     yield call(getToken, action.app, user);
@@ -16,6 +19,7 @@ export function* getAllNotebooks(action) {
         url: stableUrl + "me/onenote/notebooks",
         headers: { Authorization: `Bearer ${currentToken}` }
       });
+      console.log(result.data.value);
       yield put(getNotebooks.putAllNotebooks(user, result.data.value));
     }
   }
