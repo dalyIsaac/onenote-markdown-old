@@ -1,12 +1,20 @@
-.usersButton {
-    background: white;
-    border: 0cm white;
-    margin: 0px;
-    padding: 0px;
-    height: 48px;
-    cursor: pointer;
+.facepileContainer {
+  background: white;
+  border: 0cm white;
+  margin: 0px;
+  padding: 0px;
+  height: 48px;
+  cursor: pointer;
 }
 
 .PersonaContainer {
-    margin: 12px;
+  margin: 12px;
+}
+
+.addbuttonContainer {
+  width: 40px;
+  overflow: hidden;
+  height: 48px;
+  float: right;
+  margin: 4px;
 }

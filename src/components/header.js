@@ -58,10 +58,7 @@ export class HeaderComponent extends React.Component {
               }
               text="Reauthorize"
             />
-            <DefaultButton
-              // onClick={this._closeDialog}
-              text="Sign out"
-            />
+            <DefaultButton onClick={this.props.signOut} text="Sign out" />
           </DialogFooter>
         </Dialog>
       </div>
