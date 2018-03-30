@@ -1,50 +1,64 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+// React
+import React from "react";
+import ReactDOM from "react-dom";
 
-import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
-import createSagaMiddleware from 'redux-saga';
-import { composeWithDevTools } from 'redux-devtools-extension';
+// Redux
+import { createStore, applyMiddleware, compose } from "redux";
+import { Provider } from "react-redux";
+import createSagaMiddleware from "redux-saga";
+import { composeWithDevTools } from "redux-devtools-extension";
+import rootReducer from "./reducers";
+import registerServiceWorker from "./registerServiceWorker";
+import rootSaga from "./sagas";
 
-import { Route, Switch } from 'react-router';
-import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
-import PrivateRoute from './routing';
-import createHistory from 'history/createBrowserHistory';
+// react-router, react-router-redux
+import { Route, Switch } from "react-router";
+import { ConnectedRouter, routerMiddleware } from "react-router-redux";
+import PrivateRoute from "./routing";
+import createHistory from "history/createBrowserHistory";
 
-import rootReducer from './reducers';
+// office-ui-fabric
+import { Fabric } from "office-ui-fabric-react/lib/Fabric";
+import { initializeIcons } from "office-ui-fabric-react/lib/Icons";
 
-import './index.css';
-import App from './App';
-import { SettingsComponent } from './components/settings';
-import AboutContainer from './containers/about';
-
-import rootSaga from './sagas';
-import registerServiceWorker from './registerServiceWorker';
-import { Fabric } from 'office-ui-fabric-react/lib/Fabric'
-
-import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
-import HeaderContainer from './containers/header';
+// App components
+import App from "./App";
+import AboutContainer from "./containers/about";
+import HeaderContainer from "./containers/header";
+import { SettingsComponent } from "./components/settings";
+import "./index.css";
 
 initializeIcons();
+
 const history = createHistory();
 const historyMiddleware = routerMiddleware(history);
 
 const sagaMiddleware = createSagaMiddleware();
-let store = createStore(rootReducer, composeWithDevTools(applyMiddleware(sagaMiddleware, historyMiddleware)));
+let store = createStore(
+  rootReducer,
+  composeWithDevTools(
+    compose(
+      applyMiddleware(sagaMiddleware, historyMiddleware)
+    ))
+);
 sagaMiddleware.run(rootSaga);
 
-ReactDOM.render(
+const Container = () => {
+  return (
     <Provider store={store}>
-        <ConnectedRouter history={history}>
-            <Fabric>
-                <HeaderContainer />
-                <Switch>
-                    <PrivateRoute path="/settings" component={SettingsComponent} />
-                    <PrivateRoute exact path="/" component={App} />
-                    <Route path="/about" component={AboutContainer} />
-                </Switch>
-            </Fabric>
-        </ConnectedRouter>
-    </Provider>,
- document.getElementById('root'));
+      <ConnectedRouter history={history}>
+        <Fabric>
+          <HeaderContainer />
+          <Switch>
+            <PrivateRoute path="/settings" component={SettingsComponent} />
+            <PrivateRoute exact path="/" component={App} />
+            <Route path="/about" component={AboutContainer} />
+          </Switch>
+        </Fabric>
+      </ConnectedRouter>
+    </Provider>
+  );
+};
+
+ReactDOM.render(<Container />, document.getElementById("root"));
 registerServiceWorker();

@@ -20,15 +20,14 @@ export default class NotebookPicker extends React.Component {
     return (
       <div>
         <DefaultButton
-          description="Opens the Sample Modal"
+          description="Opens the notebook picker"
           onClick={this._showModal}
-          text="Open Modal"
+          text="Open Notebooks"
         />
         <Modal
           isOpen={this.state.showModal}
           onDismiss={this._closeModal}
           isBlocking={false}
-          containerClassName="ms-modalExample-container"
         >
           <div className="parent">
             {this.props.notebooks.length !== this.props.userLength ? (

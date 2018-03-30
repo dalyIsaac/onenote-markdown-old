@@ -76,5 +76,5 @@ Header.propTypes = {
   reauthorizeUser: PropTypes.func.isRequired,
   signOut: PropTypes.func.isRequired,
   users: PropTypes.array.isRequired,
-  userWithError: PropTypes.object.isRequired
+  userWithError: PropTypes.object
 };
