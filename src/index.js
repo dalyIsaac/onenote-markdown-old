@@ -23,6 +23,7 @@ import registerServiceWorker from './registerServiceWorker';
 import { Fabric } from 'office-ui-fabric-react/lib/Fabric'
 
 import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
+import HeaderContainer from './containers/header';
 
 initializeIcons();
 const history = createHistory();
@@ -36,9 +37,10 @@ ReactDOM.render(
     <Provider store={store}>
         <ConnectedRouter history={history}>
             <Fabric>
-                <App />
+                <HeaderContainer />
                 <Switch>
                     <PrivateRoute path="/settings" component={SettingsComponent} />
+                    <PrivateRoute exact path="/" component={App} />
                     <Route path="/about" component={AboutContainer} />
                 </Switch>
             </Fabric>

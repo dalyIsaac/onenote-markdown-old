@@ -1,4 +1,4 @@
-import { NotebookPickerComponent } from "../components/notebookPicker";
+import NotebookPicker from "../components/notebookPicker";
 import { connect } from "react-redux";
 import { getNotebooks } from "../actions";
 
@@ -11,6 +11,4 @@ const mapDispatchToProps = dispatch => ({
   getAllNotebooks: () => dispatch(getNotebooks.getAllNotebooks())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  NotebookPickerComponent
-);
+export default connect(mapStateToProps, mapDispatchToProps)(NotebookPicker);

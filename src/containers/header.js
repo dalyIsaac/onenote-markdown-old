@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
-import { HeaderComponent } from "../components/header";
+import Header from "../components/header";
 import { signOut, reauthorizeUser } from "../actions/authentication";
+import { authentication } from "../actions";
 
 const mapStateToProps = state => ({
   users: state.users,
@@ -8,8 +9,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  authenticate: () => dispatch(authentication.authenticate(dispatch)),
   reauthorizeUser: user => dispatch(reauthorizeUser(user)),
   signOut: () => dispatch(signOut())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

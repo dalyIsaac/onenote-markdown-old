@@ -1,4 +1,5 @@
 import * as React from "react";
+import PropTypes from 'prop-types';
 import { Facepile } from "office-ui-fabric-react/lib/Facepile";
 import { Persona, PersonaSize } from "office-ui-fabric-react/lib/Persona";
 import { Panel, PanelType } from "office-ui-fabric-react/lib/Panel";
@@ -101,4 +102,10 @@ export class UsersComponent extends React.Component {
       </div>
     );
   }
+}
+
+UsersComponent.propTypes = {
+  users: PropTypes.array.isRequired,
+  signIn: PropTypes.func.isRequired,
+  signOut: PropTypes.func.isRequired
 }

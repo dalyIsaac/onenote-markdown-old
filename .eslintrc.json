@@ -19,5 +19,9 @@
         "no-unused-vars": "warn",
         "constructor-super": "warn",
         "valid-typeof": "warn"
-    }
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended"
+      ]
 }

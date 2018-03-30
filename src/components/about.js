@@ -1,8 +1,9 @@
 import * as React from "react";
 import { ActionButton } from "office-ui-fabric-react/lib/Button";
+import PropTypes from "prop-types";
 import "./about.css";
 
-class AboutComponent extends React.Component {
+class About extends React.Component {
   render() {
     return (
       <div className="hero">
@@ -24,4 +25,8 @@ class AboutComponent extends React.Component {
   }
 }
 
-export default AboutComponent;
+About.propTypes = {
+  signIn: PropTypes.func.isRequired
+};
+
+export default About;

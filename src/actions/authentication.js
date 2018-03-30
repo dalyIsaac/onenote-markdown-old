@@ -12,6 +12,7 @@ import {
 } from "../types";
 import { app, updateApp } from "./index";
 import { push } from "react-router-redux";
+import { UserData } from "../types"; //eslint-disable-line
 
 /**
  * Creates an action to start the authentication process with MSAL
@@ -59,9 +60,9 @@ export const signOut = () => ({
 
 /**
  * Creates an action to replace the user list with a new user list
- * @param {UserData} users
+ * @param {UserData[]} users
  */
-export const newUserList = users => ({
+export const newUserList = (users) => ({
   type: NEW_USER_LIST,
   users
 });
@@ -95,8 +96,9 @@ export const getAllUsers = () => ({
 
 /**
  * Acquires a token by redirecting a user who is logged in, but the token has expired
+ * @param {UserData} user
  */
-export const reauthorizeUser = user => ({
+export const reauthorizeUser = (user) => ({
   type: REAUTHORIZE_USER,
   app,
   user

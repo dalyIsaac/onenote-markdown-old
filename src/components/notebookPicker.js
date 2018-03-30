@@ -1,11 +1,12 @@
 import * as React from "react";
+import PropTypes from 'prop-types';
 import { Modal } from "office-ui-fabric-react/lib/Modal";
 import { DefaultButton } from "office-ui-fabric-react/lib/Button";
 import { Spinner, SpinnerSize } from "office-ui-fabric-react/lib/Spinner";
 import { NotebookPickerList } from "./notebookPickerList";
 import "./notebookPicker.css";
 
-export class NotebookPickerComponent extends React.Component {
+export default class NotebookPicker extends React.Component {
   constructor(props) {
     super(props);
     this._showModal = this._showModal.bind(this);
@@ -57,3 +58,9 @@ export class NotebookPickerComponent extends React.Component {
     this.setState({ showModal: false });
   }
 }
+
+NotebookPicker.propTypes = {
+  notebooks: PropTypes.array.isRequired,
+  userLength: PropTypes.number.isRequired,
+  getAllNotebooks: PropTypes.func.isRequired
+};

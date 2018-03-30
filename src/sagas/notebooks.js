@@ -19,7 +19,6 @@ export function* getAllNotebooks(action) {
         url: stableUrl + "me/onenote/notebooks",
         headers: { Authorization: `Bearer ${currentToken}` }
       });
-      console.log(result.data.value);
       yield put(getNotebooks.putAllNotebooks(user, result.data.value));
     }
   }

@@ -1,4 +1,5 @@
 import * as React from "react";
+import PropTypes from 'prop-types';
 import { Image, ImageFit } from "office-ui-fabric-react/lib/Image";
 import { AddressBarComponent } from "./addressBar";
 import UsersContainer from "../containers/users";
@@ -9,7 +10,11 @@ import {
   DefaultButton
 } from "office-ui-fabric-react/lib/Button";
 
-export class HeaderComponent extends React.Component {
+export default class Header extends React.Component {
+  componentWillMount() {
+    this.props.authenticate();
+  }
+
   render() {
     return (
       <div className="container">
@@ -65,3 +70,11 @@ export class HeaderComponent extends React.Component {
     );
   }
 }
+
+Header.propTypes = {
+  authenticate: PropTypes.func.isRequired,
+  reauthorizeUser: PropTypes.func.isRequired,
+  signOut: PropTypes.func.isRequired,
+  users: PropTypes.array.isRequired,
+  userWithError: PropTypes.object.isRequired
+};

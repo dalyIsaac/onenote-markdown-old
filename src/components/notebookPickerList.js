@@ -1,4 +1,5 @@
 import * as React from "react";
+import PropTypes from 'prop-types';
 import { TextField } from "office-ui-fabric-react/lib/TextField";
 import { DefaultButton } from "office-ui-fabric-react/lib/Button";
 import {
@@ -9,6 +10,7 @@ import {
 } from "office-ui-fabric-react/lib/DetailsList";
 import { MarqueeSelection } from "office-ui-fabric-react/lib/MarqueeSelection";
 import "./notebookPickerList.css";
+import { NotebookRow } from "../types";
 
 export class NotebookPickerList extends React.Component {
   constructor(props) {
@@ -25,15 +27,7 @@ export class NotebookPickerList extends React.Component {
       const account = this.props.notebooks[i];
       for (let j = 0; j < account.notebooks.length; j++) {
         const notebook = account.notebooks[j];
-        notebooks.push({
-          fileName: notebook.displayName,
-          lastModifiedDateTime: notebook.lastModifiedDateTime
-            .replace("T", " ")
-            .replace("Z", "")
-            .split(".")[0],
-          userDisplayableId: account.user.displayableId,
-          user: account.user
-        });
+        notebooks.push(new NotebookRow(notebook, account.user))
       }
     }
 
@@ -231,4 +225,9 @@ export class NotebookPickerList extends React.Component {
       });
     }
   }
+}
+
+
+NotebookPickerList.propTypes = {
+  notebooks: PropTypes.array.isRequired
 }

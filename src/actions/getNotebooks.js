@@ -4,12 +4,18 @@ import {
   CLEAR_ALL_NOTEBOOKS
 } from "../types";
 import { app } from "./index";
+import { UserData } from '../types'; // eslint-disable-line
 
 export const getAllNotebooks = () => ({
   type: GET_ALL_NOTEBOOKS,
   app
 });
 
+/**
+ * Puts freshly fetched notebooks into the store
+ * @param {UserData} user 
+ * @param {any} notebooks 
+ */
 export const putAllNotebooks = (user, notebooks) => ({
   type: PUT_ALL_NOTEBOOKS,
   user,
