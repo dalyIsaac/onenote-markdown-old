@@ -35,7 +35,7 @@ export class NotebookRow {
    */
   constructor(notebook, user) {
     this.fileName = notebook.displayName;
-    this.lastModifiedDateTime = (new Date(notebook.lastModifiedDateTime)).toLocaleString();
+    this.lastModifiedDateTime = new Date(notebook.lastModifiedDateTime);
     this.userDisplayableId = user.msal.displayableId;
     this.user = user
     this.notebook = notebook;

@@ -86,8 +86,13 @@ export class NotebookPickerList extends React.Component {
         isSorted: true,
         isSortedDescending: true,
         onColumnClick: this.onColumnClick,
-        data: "string",
-        isPadded: true
+        isPadded: true,
+        onRender: (notebook) => {
+          return (
+            <div>{notebook.lastModifiedDateTime.toLocaleString()}</div>
+          );
+        }
+
       }
     ];
 
