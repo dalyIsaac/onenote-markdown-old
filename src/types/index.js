@@ -15,6 +15,8 @@ export const REAUTHORIZE_USER = "REAUTHORIZE_USER";
 export const GET_ALL_NOTEBOOKS = "GET_ALL_NOTEBOOKS";
 export const PUT_ALL_NOTEBOOKS = "PUT_ALL_NOTEBOOKS";
 export const CLEAR_ALL_NOTEBOOKS = "CLEAR_ALL_NOTEBOOKS";
+export const SET_ITEM = "SET_ITEM";
+export const GET_ITEM = "GET_ITEM";
 
 export class UserData {
   constructor(msal, photo = "", acquireTokenError = null) {

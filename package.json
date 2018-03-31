@@ -3,11 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@redux-offline/redux-offline": "^2.3.2",
-    "@types/react-redux": "^5.0.15",
     "axios": "^0.18.0",
     "eslint-plugin-react": "^7.7.0",
     "history": "^4.7.2",
+    "localforage": "^1.7.1",
     "msal": "^0.1.4",
     "office-ui-fabric-react": "^5.55.0",
     "prop-types": "^15.6.1",
@@ -27,6 +26,7 @@
   },
   "devDependencies": {
     "@microsoft/microsoft-graph-types": "^1.2.0",
+    "@types/react-redux": "^5.0.15",
     "redux-devtools-extension": "^2.13.2"
   }
 }

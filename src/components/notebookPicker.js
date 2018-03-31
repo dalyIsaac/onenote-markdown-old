@@ -42,6 +42,14 @@ export default class NotebookPicker extends React.Component {
             )}
           </div>
         </Modal>
+        <DefaultButton
+          onClick={this.props.setItem}
+          text="Set item"
+        />
+        <DefaultButton
+          onClick={this.props.getItem}
+          text="Get item"
+        />
       </div>
     );
   }

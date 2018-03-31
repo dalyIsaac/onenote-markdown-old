@@ -5,8 +5,13 @@ import { getNotebooks } from "../actions";
 
 import axios from "axios";
 
+import localForage from 'localforage';
+
 const getUsers = state => state.users;
 
+/**
+ * Gets a list of all of the notebooks which belong to the signed in users
+ */
 export function* getAllNotebooks(action) {
   yield put(getNotebooks.clearAllNotebooks());
   const userList = yield select(getUsers);
@@ -21,5 +26,34 @@ export function* getAllNotebooks(action) {
       });
       yield put(getNotebooks.putAllNotebooks(user, result.data.value));
     }
+  }
+}
+
+export function* setItem(action) {
+  console.log("I'm going to try and set an item");
+  const bigValue = {
+    randomNumber: 90123123,
+    anotherObject: {
+      hello: "world",
+      anotherObject: {
+        hello: "world"
+      }
+    }
+  };
+  try {
+    yield call([localForage, localForage.setItem], "bigValue", bigValue);
+    console.info("Data written");
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export function* getItem(action) {
+  console.log("I'm going to try and get an item");
+  try { 
+    const bigValue = yield call([localForage, localForage.getItem], "bigValue")
+    console.log(bigValue)
+  } catch (error) {
+    console.log(error)
   }
 }

@@ -8,7 +8,9 @@ import {
   SIGN_OUT,
   GET_PHOTO,
   GET_ALL_NOTEBOOKS,
-  REAUTHORIZE_USER
+  REAUTHORIZE_USER,
+  SET_ITEM,
+  GET_ITEM
 } from "./../types";
 import { authentication } from "../actions";
 
@@ -19,7 +21,7 @@ import {
   getPhoto,
   reauthorizeUser
 } from "./authentication";
-import { getAllNotebooks } from "./notebooks";
+import { getAllNotebooks, setItem, getItem } from "./notebooks";
 
 export default function* rootSaga() {
   yield takeLatest(AUTHENTICATE, authenticate);
@@ -28,6 +30,8 @@ export default function* rootSaga() {
   yield takeEvery(GET_PHOTO, getPhoto);
   yield takeLatest(GET_ALL_NOTEBOOKS, getAllNotebooks);
   yield takeLatest(REAUTHORIZE_USER, reauthorizeUser);
+  yield takeLatest(SET_ITEM, setItem); // change
+  yield takeLatest(GET_ITEM, getItem);
 }
 
 const urls = new WeakMap();
