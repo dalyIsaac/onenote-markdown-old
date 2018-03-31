@@ -1,7 +1,7 @@
 import { call, put } from "redux-saga/effects";
 
 import { UserData } from "./../types";
-import { authentication } from "../actions";
+import { authentication, notebooks } from "../actions";
 import { graphScopes } from "../constants";
 import { blobUrl, getToken, currentToken } from "./index";
 import { betaUrl } from "../constants";
@@ -23,6 +23,7 @@ export function* authenticate(action) {
       yield put(authentication.getPhoto(user));
     }
   }
+  yield put(notebooks.loadSavedNotebooks());
 }
 
 /**

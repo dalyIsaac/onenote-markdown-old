@@ -30,7 +30,7 @@ export default class NotebookPicker extends React.Component {
           isBlocking={false}
         >
           <div className="parent">
-            {this.props.notebooks.length !== this.props.userLength ? (
+            {this.props.allNotebooks.length !== this.props.userLength ? (
               <Spinner
                 className="spinner"
                 size={SpinnerSize.large}
@@ -38,8 +38,11 @@ export default class NotebookPicker extends React.Component {
                 ariaLive="assertive"
               />
             ) : (
-              <NotebookPickerList notebooks={this.props.notebooks} />
-            )}
+                <NotebookPickerList
+                  openedNotebooks={this.props.openedNotebooks}
+                  allNotebooks={this.props.allNotebooks}
+                  openNotebooks={this.props.openNotebooks} />
+              )}
           </div>
         </Modal>
       </div>
@@ -59,7 +62,7 @@ export default class NotebookPicker extends React.Component {
 }
 
 NotebookPicker.propTypes = {
-  notebooks: PropTypes.array.isRequired,
+  allNotebooks: PropTypes.array.isRequired,
   userLength: PropTypes.number.isRequired,
   getAllNotebooks: PropTypes.func.isRequired
 };

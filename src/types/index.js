@@ -15,6 +15,9 @@ export const REAUTHORIZE_USER = "REAUTHORIZE_USER";
 export const GET_ALL_NOTEBOOKS = "GET_ALL_NOTEBOOKS";
 export const PUT_ALL_NOTEBOOKS = "PUT_ALL_NOTEBOOKS";
 export const CLEAR_ALL_NOTEBOOKS = "CLEAR_ALL_NOTEBOOKS";
+export const OPEN_NOTEBOOKS = "OPEN_NOTEBOOKS";
+export const LOAD_NOTEBOOK_INTO_REDUX = "LOAD_NOTEBOOK_INTO_REDUX";
+export const LOAD_SAVED_NOTEBOOKS = "LOAD_SAVED_NOTEBOOKS";
 
 export class UserData {
   constructor(msal, photo = "", acquireTokenError = null) {
@@ -27,17 +30,30 @@ export class UserData {
 export class NotebookRow {
   /**
    * Creates an instance of NotebookRow.
-   * @param {Notebook} notebook 
+   * @param {Object} notebook 
    * @param {UserData} user 
    * @memberof NotebookRow
    */
   constructor(notebook, user) {
     this.fileName = notebook.displayName;
-    this.lastModifiedDateTime = notebook.lastModifiedDateTime
-    .replace("T", " ")
-    .replace("Z", "")
-    .split(".")[0];
+    this.lastModifiedDateTime = new Date(notebook.lastModifiedDateTime);
     this.userDisplayableId = user.msal.displayableId;
-    this.user = this.user
+    this.user = user;
+    this.notebook = notebook;
+  }
+}
+
+/**
+ * @class Notebook
+ */
+export class Notebook {
+  /**
+   * @param {Object} notebook JSON response from the Microsoft Graph for a notebook
+   */
+  constructor(notebook, user=undefined) {
+    this.id = undefined;
+    this.user = user;
+    Object.assign(this, notebook);
+    this.data = {};
   }
 }
