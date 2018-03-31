@@ -7,7 +7,7 @@ export let app = '';
 // Updates app
 export const updateApp = (newApp) => {
     app = newApp;
-}
+};
 
 export { authentication };
 export { getNotebooks };

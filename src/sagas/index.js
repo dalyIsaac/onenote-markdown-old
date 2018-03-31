@@ -9,8 +9,7 @@ import {
   GET_PHOTO,
   GET_ALL_NOTEBOOKS,
   REAUTHORIZE_USER,
-  SET_ITEM,
-  GET_ITEM
+  OPEN_NOTEBOOKS,
 } from "./../types";
 import { authentication } from "../actions";
 
@@ -21,7 +20,7 @@ import {
   getPhoto,
   reauthorizeUser
 } from "./authentication";
-import { getAllNotebooks, setItem, getItem } from "./notebooks";
+import { getAllNotebooks, openNotebooks } from "./notebooks";
 
 export default function* rootSaga() {
   yield takeLatest(AUTHENTICATE, authenticate);
@@ -30,8 +29,7 @@ export default function* rootSaga() {
   yield takeEvery(GET_PHOTO, getPhoto);
   yield takeLatest(GET_ALL_NOTEBOOKS, getAllNotebooks);
   yield takeLatest(REAUTHORIZE_USER, reauthorizeUser);
-  yield takeLatest(SET_ITEM, setItem); // change
-  yield takeLatest(GET_ITEM, getItem);
+  yield takeLatest(OPEN_NOTEBOOKS, openNotebooks);
 }
 
 const urls = new WeakMap();
@@ -47,7 +45,7 @@ export const blobUrl = blob => {
   }
 };
 
-// Storing the token as a variable outside, instead of yielding is to avoid interfering with redux-saga.
+// Storing the token as a variable outside instead of yielding is to avoid interfering with redux-saga.
 // It should be thought of as an instance variable
 export let currentToken = "";
 
@@ -69,7 +67,7 @@ export function* getToken(app, user) {
     currentToken = "";
     console.error(
       `Could not acquire a valid token ${
-        user.msal.displayableId
+      user.msal.displayableId
       } by silently querying MSAL.`
     );
     console.error(error);
@@ -96,7 +94,7 @@ export function* getTokenRedirect(app, user) {
     currentToken = "";
     console.error(
       `Could not acquire a valid token ${
-        user.msal.displayableId
+      user.msal.displayableId
       } by redirecting to MSAL authentication.`
     );
     console.error(error);

@@ -1,7 +1,8 @@
 import { call, put, select } from "redux-saga/effects";
 import { getToken, currentToken } from "./index";
 import { stableUrl } from "../constants";
-import { getNotebooks } from "../actions";
+import { getNotebooks, notebooks } from "../actions";
+import { Notebook } from "./../types";
 
 import axios from "axios";
 
@@ -50,10 +51,27 @@ export function* setItem(action) {
 
 export function* getItem(action) {
   console.log("I'm going to try and get an item");
-  try { 
+  try {
     const bigValue = yield call([localForage, localForage.getItem], "bigValue")
     console.log(bigValue)
   } catch (error) {
     console.log(error)
+  }
+}
+
+export function* openNotebooks(action) {
+  for (let i = 0; i < action.notebooks.length; i++) {
+    const element = action.notebooks[i];
+    const user = element.user;
+    yield call(getToken, action.app, user);
+    if (currentToken !== "") {
+      const result = yield call(axios, {
+        method: "get",
+        url: stableUrl + "me/onenote/notebooks/" + element.notebook.id,
+        headers: { Authorization: `Bearer ${currentToken}` }
+      });
+      const newNotebook = new Notebook(result.data, user);
+      yield put(notebooks.loadNotebook(newNotebook));
+    }
   }
 }

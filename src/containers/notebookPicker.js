@@ -9,8 +9,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getAllNotebooks: () => dispatch(getNotebooks.getAllNotebooks()),
-  setItem: () => dispatch(notebooks.setItem()),
-  getItem: () => dispatch(notebooks.getItem())
+  openNotebooks: (notebookList) => dispatch(notebooks.openNotebooks(notebookList))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotebookPicker);

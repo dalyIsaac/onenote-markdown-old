@@ -38,18 +38,10 @@ export default class NotebookPicker extends React.Component {
                 ariaLive="assertive"
               />
             ) : (
-              <NotebookPickerList notebooks={this.props.notebooks} />
+              <NotebookPickerList notebooks={this.props.notebooks} openNotebooks={this.props.openNotebooks} />
             )}
           </div>
         </Modal>
-        <DefaultButton
-          onClick={this.props.setItem}
-          text="Set item"
-        />
-        <DefaultButton
-          onClick={this.props.getItem}
-          text="Get item"
-        />
       </div>
     );
   }

@@ -16,11 +16,10 @@ export class NotebookPickerList extends React.Component {
   constructor(props) {
     super(props);
 
-    this._onColumnClick = this._onColumnClick.bind(this);
-    this._onChangeText = this._onChangeText.bind(this);
-    this._onItemInvoked = this._onItemInvoked.bind(this);
-    this._getSelectionDetails = this._getSelectionDetails.bind(this);
-    this._sortItems = this._sortItems.bind(this);
+    this.onColumnClick = this.onColumnClick.bind(this);
+    this.updateFilter = this.updateFilter.bind(this);
+    this.openNotebooks = this.openNotebooks.bind(this);
+    this.sortItems = this.sortItems.bind(this);
 
     let notebooks = [];
     for (let i = 0; i < this.props.notebooks.length; i++) {
@@ -31,7 +30,7 @@ export class NotebookPickerList extends React.Component {
       }
     }
 
-    notebooks = this._sortItems(notebooks, "lastModifiedDateTime", true);
+    notebooks = this.sortItems(notebooks, "lastModifiedDateTime", true);
     const columns = [
       {
         key: "column1",
@@ -60,7 +59,7 @@ export class NotebookPickerList extends React.Component {
         maxWidth: 350,
         isRowHeader: true,
         isResizable: true,
-        onColumnClick: this._onColumnClick,
+        onColumnClick: this.onColumnClick,
         data: "string",
         isPadded: true
       },
@@ -72,7 +71,7 @@ export class NotebookPickerList extends React.Component {
         maxWidth: 350,
         isRowHeader: true,
         isResizable: true,
-        onColumnClick: this._onColumnClick,
+        onColumnClick: this.onColumnClick,
         data: "string",
         isPadded: true
       },
@@ -86,24 +85,17 @@ export class NotebookPickerList extends React.Component {
         isResizable: true,
         isSorted: true,
         isSortedDescending: true,
-        onColumnClick: this._onColumnClick,
+        onColumnClick: this.onColumnClick,
         data: "string",
         isPadded: true
       }
     ];
 
-    this._selection = new Selection({
-      onSelectionChanged: () => {
-        this.setState({
-          selectionDetails: this._getSelectionDetails()
-        });
-      }
-    });
+    this.selection = new Selection();
 
     this.state = {
       notebooks,
-      columns,
-      selectionDetails: this._getSelectionDetails()
+      columns
     };
     this.constNotebooks = notebooks;
   }
@@ -114,10 +106,10 @@ export class NotebookPickerList extends React.Component {
     return (
       <div className="wrapper">
         <div className="filterDiv">
-          <TextField label="Filter by name:" onChanged={this._onChangeText} />
+          <TextField label="Filter by name:" onChanged={this.updateFilter} />
         </div>
         <div className="detailsListDiv">
-          <MarqueeSelection selection={this._selection}>
+          <MarqueeSelection selection={this.selection}>
             <DetailsList
               items={notebooks}
               columns={columns}
@@ -125,9 +117,8 @@ export class NotebookPickerList extends React.Component {
               setKey="set"
               layoutMode={DetailsListLayoutMode.justified}
               isHeaderVisible={true}
-              selection={this._selection}
+              selection={this.selection}
               selectionPreservedOnEmptyClick={true}
-              onItemInvoked={this._onItemInvoked}
               enterModalSelectionOnTouch={true}
             />
           </MarqueeSelection>
@@ -136,18 +127,18 @@ export class NotebookPickerList extends React.Component {
           className="footerDiv"
           primary={true}
           description="Starts opening the selected notebooks"
-          // onClick={this._showModal}
+          onClick={this.openNotebooks}
           text="Open notebooks"
         />
       </div>
     );
   }
 
-  _onChangeModalSelection(checked) {
+  onChangeModalSelection(checked) {
     this.setState({ isModalSelection: checked });
   }
 
-  _onChangeText(text) {
+  updateFilter(text) {
     text = text.toLowerCase();
     this.setState({
       notebooks: text
@@ -158,24 +149,14 @@ export class NotebookPickerList extends React.Component {
     });
   }
 
-  _onItemInvoked(item) {
-    alert(`Item invoked: ${item.name}`);
-  }
-
-  _getSelectionDetails() {
-    const selectionCount = this._selection.getSelectedCount();
-
-    switch (selectionCount) {
-      case 0:
-        return "No items selected";
-      case 1:
-        return "1 item selected: " + this._selection.getSelection()[0].name;
-      default:
-        return `${selectionCount} items selected`;
+  openNotebooks() {
+    const selectionCount = this.selection.getSelectedCount();
+    if (selectionCount > 0) {
+      this.props.openNotebooks(this.selection.getSelection())
     }
   }
 
-  _onColumnClick(ev, column) {
+  onColumnClick(ev, column) {
     const { columns, notebooks } = this.state;
     let newItems = notebooks.slice();
     const newColumns = columns.slice();
@@ -191,7 +172,7 @@ export class NotebookPickerList extends React.Component {
         newCol.isSortedDescending = true;
       }
     });
-    newItems = this._sortItems(
+    newItems = this.sortItems(
       newItems,
       currColumn.fieldName,
       currColumn.isSortedDescending
@@ -202,7 +183,7 @@ export class NotebookPickerList extends React.Component {
     });
   }
 
-  _sortItems(items, sortBy, descending = false) {
+  sortItems(items, sortBy, descending = false) {
     if (descending) {
       return items.sort((a, b) => {
         if (a[sortBy] < b[sortBy]) {

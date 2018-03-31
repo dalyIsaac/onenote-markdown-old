@@ -1,12 +1,13 @@
-import {
-    SET_ITEM,
-    GET_ITEM
-} from "../types";
+import { OPEN_NOTEBOOKS, LOAD_NOTEBOOK } from "../types";
+import { app } from "./index";
 
-export const setItem = () => ({
-    type: SET_ITEM
+export const openNotebooks = (notebooks) => ({
+    type: OPEN_NOTEBOOKS,
+    notebooks,
+    app
 })
 
-export const getItem = () => ({
-    type: GET_ITEM
+export const loadNotebook = (notebook) => ({
+    type: LOAD_NOTEBOOK,
+    notebook
 })
