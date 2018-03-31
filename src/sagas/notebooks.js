@@ -1,12 +1,10 @@
 import { call, put, select } from "redux-saga/effects";
+import axios from "axios";
+import localForage from 'localforage';
 import { getToken, currentToken } from "./index";
 import { stableUrl } from "../constants";
 import { getNotebooks, notebooks } from "../actions";
 import { Notebook } from "./../types";
-
-import axios from "axios";
-
-import localForage from 'localforage';
 
 const getUsers = state => state.users;
 
@@ -43,16 +41,10 @@ function* saveNotebook(notebook) {
   }
 }
 
-export function* getItem(action) {
-  try {
-    const bigValue = yield call([localForage, localForage.getItem], "bigValue")
-    console.log(bigValue)
-  } catch (error) {
-    // console.error(`localForage could not get ${action.notebook.id}`);
-    console.log(error)
-  }
-}
-
+/**
+ * Loads newly opened notebooks into redux and localforage
+ * @param action 
+ */
 export function* openNotebooks(action) {
   for (let i = 0; i < action.notebooks.length; i++) {
     const element = action.notebooks[i];
@@ -65,8 +57,30 @@ export function* openNotebooks(action) {
         headers: { Authorization: `Bearer ${currentToken}` }
       });
       const newNotebook = new Notebook(result.data, user);
-      yield put(notebooks.loadNotebook(newNotebook));
+      yield put(notebooks.loadNotebookIntoRedux(newNotebook));
       yield call(saveNotebook, newNotebook);
     }
+  }
+}
+
+/**
+ * Loads saved notebooks into redux
+ * @export
+ * @param {any} action 
+ */
+export function* loadSavedNotebooks(action) {
+  try {
+    let notebookList = [];
+    const keys = yield call([localForage, localForage.iterate],
+      (value) => {
+        notebookList.push(new Notebook(value));
+      }
+    );
+    for (let i = 0; i < notebookList.length; i++) {
+      const element = notebookList[i];
+      yield put(notebooks.loadNotebookIntoRedux(element));
+    }
+  } catch (error) {
+    console.error(error)
   }
 }

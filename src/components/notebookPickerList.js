@@ -22,11 +22,13 @@ export class NotebookPickerList extends React.Component {
     this.sortItems = this.sortItems.bind(this);
 
     let notebooks = [];
-    for (let i = 0; i < this.props.notebooks.length; i++) {
-      const account = this.props.notebooks[i];
+    for (let i = 0; i < this.props.allNotebooks.length; i++) {
+      const account = this.props.allNotebooks[i];
       for (let j = 0; j < account.notebooks.length; j++) {
-        const notebook = account.notebooks[j];
-        notebooks.push(new NotebookRow(notebook, account.user))
+        const notebook = new NotebookRow(account.notebooks[j], account.user)
+        if (this.props.openedNotebooks[notebook.notebook.id] === undefined) {
+          notebooks.push(notebook);
+        }
       }
     }
 
@@ -148,8 +150,8 @@ export class NotebookPickerList extends React.Component {
     this.setState({
       notebooks: text
         ? this.constNotebooks.filter(
-            i => i.fileName.toLowerCase().indexOf(text) > -1
-          )
+          i => i.fileName.toLowerCase().indexOf(text) > -1
+        )
         : this.constNotebooks
     });
   }
@@ -215,5 +217,7 @@ export class NotebookPickerList extends React.Component {
 
 
 NotebookPickerList.propTypes = {
-  notebooks: PropTypes.array.isRequired
+  allNotebooks: PropTypes.array.isRequired,
+  openNotebooks: PropTypes.func.isRequired,
+  openedNotebooks: PropTypes.object
 }

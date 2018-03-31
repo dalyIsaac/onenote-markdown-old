@@ -16,7 +16,8 @@ export const GET_ALL_NOTEBOOKS = "GET_ALL_NOTEBOOKS";
 export const PUT_ALL_NOTEBOOKS = "PUT_ALL_NOTEBOOKS";
 export const CLEAR_ALL_NOTEBOOKS = "CLEAR_ALL_NOTEBOOKS";
 export const OPEN_NOTEBOOKS = "OPEN_NOTEBOOKS";
-export const LOAD_NOTEBOOK = "LOAD_NOTEBOOK";
+export const LOAD_NOTEBOOK_INTO_REDUX = "LOAD_NOTEBOOK_INTO_REDUX";
+export const LOAD_SAVED_NOTEBOOKS = "LOAD_SAVED_NOTEBOOKS";
 
 export class UserData {
   constructor(msal, photo = "", acquireTokenError = null) {
@@ -37,7 +38,7 @@ export class NotebookRow {
     this.fileName = notebook.displayName;
     this.lastModifiedDateTime = new Date(notebook.lastModifiedDateTime);
     this.userDisplayableId = user.msal.displayableId;
-    this.user = user
+    this.user = user;
     this.notebook = notebook;
   }
 }
@@ -46,14 +47,13 @@ export class NotebookRow {
  * @class Notebook
  */
 export class Notebook {
-
   /**
    * @param {Object} notebook JSON response from the Microsoft Graph for a notebook
    */
-  constructor(notebook, user) {
+  constructor(notebook, user=undefined) {
     this.id = undefined;
-    Object.assign(this, notebook);
     this.user = user;
+    Object.assign(this, notebook);
     this.data = {};
   }
 }

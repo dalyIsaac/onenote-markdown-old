@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { getNotebooks, notebooks } from "../actions";
 
 const mapStateToProps = state => ({
-  notebooks: state.allNotebooks,
+  allNotebooks: state.allNotebooks,
+  openedNotebooks: state.notebooks,
   userLength: state.users.length
 });
 
