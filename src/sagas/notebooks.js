@@ -71,7 +71,7 @@ export function* openNotebooks(action) {
 export function* loadSavedNotebooks(action) {
   try {
     let notebookList = [];
-    const keys = yield call([localForage, localForage.iterate],
+    yield call([localForage, localForage.iterate],
       (value) => {
         notebookList.push(new Notebook(value));
       }
