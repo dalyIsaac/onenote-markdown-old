@@ -48,11 +48,12 @@ export class NotebookRow {
 export class Notebook {
 
   /**
-   * @param {...Object} notebook JSON response from the Microsoft Graph for a notebook
+   * @param {Object} notebook JSON response from the Microsoft Graph for a notebook
    */
   constructor(notebook, user) {
-      Object.assign(this, notebook);
-      this.user = user;
-      this.data = {};
+    this.id = undefined;
+    Object.assign(this, notebook);
+    this.user = user;
+    this.data = {};
   }
 }

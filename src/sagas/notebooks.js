@@ -30,31 +30,25 @@ export function* getAllNotebooks(action) {
   }
 }
 
-export function* setItem(action) {
-  console.log("I'm going to try and set an item");
-  const bigValue = {
-    randomNumber: 90123123,
-    anotherObject: {
-      hello: "world",
-      anotherObject: {
-        hello: "world"
-      }
-    }
-  };
+/**
+ * Saves a new notebook to localforage
+ * @param {Notebook} notebook 
+ */
+function* saveNotebook(notebook) {
   try {
-    yield call([localForage, localForage.setItem], "bigValue", bigValue);
-    console.info("Data written");
+    yield call([localForage, localForage.setItem], notebook.id, notebook);
   } catch (error) {
+    console.error(`localForage could not write ${notebook} to ${notebook.id}`);
     console.error(error);
   }
 }
 
 export function* getItem(action) {
-  console.log("I'm going to try and get an item");
   try {
     const bigValue = yield call([localForage, localForage.getItem], "bigValue")
     console.log(bigValue)
   } catch (error) {
+    // console.error(`localForage could not get ${action.notebook.id}`);
     console.log(error)
   }
 }
@@ -72,6 +66,7 @@ export function* openNotebooks(action) {
       });
       const newNotebook = new Notebook(result.data, user);
       yield put(notebooks.loadNotebook(newNotebook));
+      yield call(saveNotebook, newNotebook);
     }
   }
 }
