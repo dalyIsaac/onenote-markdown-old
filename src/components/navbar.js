@@ -61,7 +61,7 @@ export default class Navbar extends React.Component {
         />
                 <Modal
           isOpen={this.state.showModal}
-          onDismiss={this._closeModal}
+          onDismiss={this.closeModal}
           isBlocking={false}
         >
           <div className="parent">
