@@ -1,12 +1,12 @@
 import React from "react";
-import NotebookPickerContainer from "./containers/notebookPicker";
+import Navbar from "./containers/navbar";
 import { connect } from "react-redux";
 
 class App extends React.Component {
   render() {
     return (
       <div>
-        <NotebookPickerContainer />
+        <Navbar />
       </div>
     );
   }

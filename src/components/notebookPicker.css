@@ -1,12 +1,18 @@
-.parent {
-  height: 75vh;
-  width: 75vw;
-  position: relative;
+.wrapper {
+  display: grid;
+  grid-template-rows: 32px calc(75vh - 64px) 32px;
 }
 
-.spinner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.filterDiv {
+  grid-row: 1;
+}
+
+.detailsListDiv {
+  grid-row: 2;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.footerDiv {
+  grid-row: 3;
 }

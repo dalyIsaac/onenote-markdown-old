@@ -1,68 +1,225 @@
 import * as React from "react";
 import PropTypes from 'prop-types';
-import { Modal } from "office-ui-fabric-react/lib/Modal";
+import { SearchBox } from "office-ui-fabric-react/lib/SearchBox";
 import { DefaultButton } from "office-ui-fabric-react/lib/Button";
-import { Spinner, SpinnerSize } from "office-ui-fabric-react/lib/Spinner";
-import { NotebookPickerList } from "./notebookPickerList";
+import {
+  DetailsList,
+  DetailsListLayoutMode,
+  Selection,
+  SelectionMode
+} from "office-ui-fabric-react/lib/DetailsList";
+import { MarqueeSelection } from "office-ui-fabric-react/lib/MarqueeSelection";
 import "./notebookPicker.css";
+import { NotebookRow } from "../types";
 
 export default class NotebookPicker extends React.Component {
   constructor(props) {
     super(props);
-    this._showModal = this._showModal.bind(this);
-    this._closeModal = this._closeModal.bind(this);
+
+    this.onColumnClick = this.onColumnClick.bind(this);
+    this.updateFilter = this.updateFilter.bind(this);
+    this.openNotebooks = this.openNotebooks.bind(this);
+    this.sortItems = this.sortItems.bind(this);
+
+    let notebooks = [];
+    for (let i = 0; i < this.props.allNotebooks.length; i++) {
+      const account = this.props.allNotebooks[i];
+      for (let j = 0; j < account.notebooks.length; j++) {
+        const notebook = new NotebookRow(account.notebooks[j], account.user)
+        if (this.props.openedNotebooks[notebook.notebook.id] === undefined) {
+          notebooks.push(notebook);
+        }
+      }
+    }
+
+    notebooks = this.sortItems(notebooks, "lastModifiedDateTime", true);
+    const columns = [
+      {
+        key: "column1",
+        name: "Icons",
+        iconName: "Page",
+        isIconOnly: true,
+        fieldName: "icon",
+        minWidth: 16,
+        maxWidth: 16,
+        onRender: () => {
+          return (
+            <img
+              alt="OneNote icon"
+              src={
+                "https://static2.sharepointonline.com/files/fabric/assets/brand-icons/document/svg/one_16x1.svg"
+              }
+            />
+          );
+        }
+      },
+      {
+        key: "column2",
+        name: "Name",
+        fieldName: "fileName",
+        minWidth: 210,
+        maxWidth: 350,
+        isRowHeader: true,
+        isResizable: true,
+        onColumnClick: this.onColumnClick,
+        data: "string",
+        isPadded: true
+      },
+      {
+        key: "column3",
+        name: "Account",
+        fieldName: "userDisplayableId",
+        minWidth: 210,
+        maxWidth: 350,
+        isRowHeader: true,
+        isResizable: true,
+        onColumnClick: this.onColumnClick,
+        data: "string",
+        isPadded: true
+      },
+      {
+        key: "column4",
+        name: "Last Modified Date Time",
+        fieldName: "lastModifiedDateTime",
+        minWidth: 210,
+        maxWidth: 350,
+        isRowHeader: true,
+        isResizable: true,
+        isSorted: true,
+        isSortedDescending: true,
+        onColumnClick: this.onColumnClick,
+        isPadded: true,
+        onRender: (notebook) => {
+          return (
+            <div>{notebook.lastModifiedDateTime.toLocaleString()}</div>
+          );
+        }
+
+      }
+    ];
+
+    this.selection = new Selection();
+
     this.state = {
-      showModal: false
+      notebooks,
+      columns
     };
+    this.constNotebooks = notebooks;
   }
 
   render() {
+    const { columns, notebooks } = this.state;
+
     return (
-      <div>
-        <DefaultButton
-          description="Opens the notebook picker"
-          onClick={this._showModal}
-          text="Open Notebooks"
+      <div className="wrapper">
+        <SearchBox
+          className="filterDiv"
+          placeholder="Filter"
+          onChange={this.updateFilter}
         />
-        <Modal
-          isOpen={this.state.showModal}
-          onDismiss={this._closeModal}
-          isBlocking={false}
-        >
-          <div className="parent">
-            {this.props.allNotebooks.length !== this.props.userLength ? (
-              <Spinner
-                className="spinner"
-                size={SpinnerSize.large}
-                label="Hang on, I'm asking around for your notebooks..."
-                ariaLive="assertive"
-              />
-            ) : (
-                <NotebookPickerList
-                  openedNotebooks={this.props.openedNotebooks}
-                  allNotebooks={this.props.allNotebooks}
-                  openNotebooks={this.props.openNotebooks} />
-              )}
-          </div>
-        </Modal>
+        <div className="detailsListDiv">
+          <MarqueeSelection selection={this.selection}>
+            <DetailsList
+              items={notebooks}
+              columns={columns}
+              selectionMode={SelectionMode.multiple}
+              setKey="set"
+              layoutMode={DetailsListLayoutMode.justified}
+              isHeaderVisible={true}
+              selection={this.selection}
+              selectionPreservedOnEmptyClick={true}
+              enterModalSelectionOnTouch={true}
+            />
+          </MarqueeSelection>
+        </div>
+        <DefaultButton
+          className="footerDiv"
+          primary={true}
+          description="Starts opening the selected notebooks"
+          onClick={this.openNotebooks}
+          text="Open notebooks"
+        />
       </div>
     );
   }
 
-  _showModal() {
-    this.setState({
-      showModal: true
-    });
-    this.props.getAllNotebooks();
+  onChangeModalSelection(checked) {
+    this.setState({ isModalSelection: checked });
   }
 
-  _closeModal() {
-    this.setState({ showModal: false });
+  updateFilter(text) {
+    text = text.toLowerCase();
+    this.setState({
+      notebooks: text
+        ? this.constNotebooks.filter(
+          i => i.fileName.toLowerCase().indexOf(text) > -1
+        )
+        : this.constNotebooks
+    });
+  }
+
+  openNotebooks() {
+    const selectionCount = this.selection.getSelectedCount();
+    if (selectionCount > 0) {
+      this.props.openNotebooks(this.selection.getSelection())
+    }
+  }
+
+  onColumnClick(ev, column) {
+    const { columns, notebooks } = this.state;
+    let newItems = notebooks.slice();
+    const newColumns = columns.slice();
+    const currColumn = newColumns.filter((currCol, idx) => {
+      return column.key === currCol.key;
+    })[0];
+    newColumns.forEach(newCol => {
+      if (newCol === currColumn) {
+        currColumn.isSortedDescending = !currColumn.isSortedDescending;
+        currColumn.isSorted = true;
+      } else {
+        newCol.isSorted = false;
+        newCol.isSortedDescending = true;
+      }
+    });
+    newItems = this.sortItems(
+      newItems,
+      currColumn.fieldName,
+      currColumn.isSortedDescending
+    );
+    this.setState({
+      columns: newColumns,
+      notebooks: newItems
+    });
+  }
+
+  sortItems(items, sortBy, descending = false) {
+    if (descending) {
+      return items.sort((a, b) => {
+        if (a[sortBy] < b[sortBy]) {
+          return 1;
+        }
+        if (a[sortBy] > b[sortBy]) {
+          return -1;
+        }
+        return 0;
+      });
+    } else {
+      return items.sort((a, b) => {
+        if (a[sortBy] < b[sortBy]) {
+          return -1;
+        }
+        if (a[sortBy] > b[sortBy]) {
+          return 1;
+        }
+        return 0;
+      });
+    }
   }
 }
 
+
 NotebookPicker.propTypes = {
   allNotebooks: PropTypes.array.isRequired,
-  userLength: PropTypes.number.isRequired,
-  getAllNotebooks: PropTypes.func.isRequired
-};
+  openNotebooks: PropTypes.func.isRequired,
+  openedNotebooks: PropTypes.object
+}
