@@ -1,11 +1,10 @@
 .wrapper {
   display: grid;
-  grid-template-rows: 100px calc(75vh - 132px) 32px;
+  grid-template-rows: 32px calc(75vh - 64px) 32px;
 }
 
 .filterDiv {
   grid-row: 1;
-  padding: 12px;
 }
 
 .detailsListDiv {

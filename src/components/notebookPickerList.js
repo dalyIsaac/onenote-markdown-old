@@ -1,6 +1,6 @@
 import * as React from "react";
 import PropTypes from 'prop-types';
-import { TextField } from "office-ui-fabric-react/lib/TextField";
+import { SearchBox } from "office-ui-fabric-react/lib/SearchBox";
 import { DefaultButton } from "office-ui-fabric-react/lib/Button";
 import {
   DetailsList,
@@ -112,9 +112,11 @@ export class NotebookPickerList extends React.Component {
 
     return (
       <div className="wrapper">
-        <div className="filterDiv">
-          <TextField label="Filter by name:" onChanged={this.updateFilter} />
-        </div>
+        <SearchBox
+          className="filterDiv"
+          placeholder="Filter"
+          onChange={this.updateFilter}
+        />
         <div className="detailsListDiv">
           <MarqueeSelection selection={this.selection}>
             <DetailsList
