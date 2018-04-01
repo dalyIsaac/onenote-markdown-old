@@ -18,46 +18,34 @@ export default class Navbar extends React.Component {
   }
 
   render() {
+    let notebookList = this.props.notebookOrder.map(id => {
+      const notebook = this.props.openedNotebooks[id];
+      return ({
+        name: notebook.displayName,
+        url: '',
+        icon: 'OneNoteLogo',
+        key: notebook.id
+      });
+    })
+
     return (
       <div className='ms-NavExample-LeftPane'>
         <Nav
-          groups={
-            [
-              {
-                links:
-                  [
-                    { name: 'Documents', url: '', key: 'key3' },
-                    { name: 'Pages', url: '', key: 'key4' },
-                    { name: 'Notebook', url: '', key: 'key5' },
-                    { name: 'Long Name Test for ellipse', url: '', key: 'key6' },
-                    {
-                      name: 'Edit',
-                      url: '',
-                      onClick: this._onClickHandler2,
-                      icon: 'Edit',
-                      key: 'key8'
-                    },
-                    {
-                      name: 'Delete',
-                      url: '',
-                      onClick: this._onClickHandler2,
-                      iconProps: { iconName: 'OneNoteLogo' },
-                      key: 'key9'
-                    },
-                    {
-                      name: 'Open notebooks',
-                      url: '',
-                      onClick: this.showModal,
-                      iconProps: { iconName: 'Add' },
-                      key: 'openNotebooks'
-                    },
-                  ]
-              }
-            ]
-          }
+          groups={[{
+            links:
+              [
+                ...notebookList,
+                {
+                  name: 'Open notebooks',
+                  url: '',
+                  onClick: this.showModal,
+                  icon: 'Add',
+                  key: 'openNotebooks'
+                },
+              ]
+          }]}
           expandedStateText={'expanded'}
           collapsedStateText={'collapsed'}
-          selectedKey={'key3'}
         />
         <Modal
           isOpen={this.state.showModal}
