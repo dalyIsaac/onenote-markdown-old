@@ -11,6 +11,7 @@ import {
   REAUTHORIZE_USER,
   OPEN_NOTEBOOKS,
   LOAD_SAVED_NOTEBOOKS,
+  UPDATE_NOTEBOOK_ORDER,
 } from "./../types";
 import { authentication } from "../actions";
 

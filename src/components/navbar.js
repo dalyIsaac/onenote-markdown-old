@@ -59,7 +59,7 @@ export default class Navbar extends React.Component {
           collapsedStateText={'collapsed'}
           selectedKey={'key3'}
         />
-                <Modal
+        <Modal
           isOpen={this.state.showModal}
           onDismiss={this.closeModal}
           isBlocking={false}
@@ -99,5 +99,7 @@ export default class Navbar extends React.Component {
 Navbar.propTypes = {
   allNotebooks: PropTypes.array.isRequired,
   userLength: PropTypes.number.isRequired,
-  getAllNotebooks: PropTypes.func.isRequired
+  getAllNotebooks: PropTypes.func.isRequired,
+  openedNotebooks: PropTypes.object.isRequired,
+  notebookOrder: PropTypes.array.isRequired
 };

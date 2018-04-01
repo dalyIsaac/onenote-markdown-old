@@ -5,6 +5,7 @@ import { getToken, currentToken } from "./index";
 import { stableUrl } from "../constants";
 import { getNotebooks, notebooks } from "../actions";
 import { Notebook } from "./../types";
+import { updateNotebookOrder } from "../actions/notebooks";
 
 const getUsers = state => state.users;
 
@@ -29,14 +30,15 @@ export function* getAllNotebooks(action) {
 }
 
 /**
- * Saves a new notebook to localforage
- * @param {Notebook} notebook 
+ * Sets an object using localForage
+ * @param {string} index 
+ * @param {any} data 
  */
-function* saveNotebook(notebook) {
+function* storageSetItem(index, data) {
   try {
-    yield call([localForage, localForage.setItem], notebook.id, notebook);
+    yield call([localForage, localForage.setItem], index, data);
   } catch (error) {
-    console.error(`localForage could not write ${notebook} to ${notebook.id}`);
+    console.error(`localForage could not write ${index} to ${data}`);
     console.error(error);
   }
 }
@@ -46,6 +48,9 @@ function* saveNotebook(notebook) {
  * @param action 
  */
 export function* openNotebooks(action) {
+  let notebookOrder = yield select((state) => {
+    return [...(state.notebookOrder)];
+  });
   for (let i = 0; i < action.notebooks.length; i++) {
     const element = action.notebooks[i];
     const user = element.user;
@@ -58,9 +63,14 @@ export function* openNotebooks(action) {
       });
       const newNotebook = new Notebook(result.data, user);
       yield put(notebooks.loadNotebookIntoRedux(newNotebook));
-      yield call(saveNotebook, newNotebook);
+      yield call(storageSetItem, newNotebook.id, newNotebook);
+
+      // Update notebook order
+      notebookOrder.push(newNotebook.id);
+      yield call(storageSetItem, 'notebookOrder', notebookOrder);
     }
   }
+  yield put(notebooks.updateNotebookOrder(notebookOrder));
 }
 
 /**
@@ -70,6 +80,7 @@ export function* openNotebooks(action) {
  */
 export function* loadSavedNotebooks(action) {
   try {
+    // Retrieve notebooks
     let notebookList = [];
     yield call([localForage, localForage.iterate],
       (value) => {
@@ -80,6 +91,10 @@ export function* loadSavedNotebooks(action) {
       const element = notebookList[i];
       yield put(notebooks.loadNotebookIntoRedux(element));
     }
+
+    // Retrieve notebook order
+    const notebookOrder = yield call([localForage, localForage.getItem], 'notebookOrder');
+    yield put(updateNotebookOrder(notebookOrder));
   } catch (error) {
     console.error(error)
   }

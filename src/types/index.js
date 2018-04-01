@@ -19,6 +19,9 @@ export const OPEN_NOTEBOOKS = "OPEN_NOTEBOOKS";
 export const LOAD_NOTEBOOK_INTO_REDUX = "LOAD_NOTEBOOK_INTO_REDUX";
 export const LOAD_SAVED_NOTEBOOKS = "LOAD_SAVED_NOTEBOOKS";
 
+// Notebook order
+export const UPDATE_NOTEBOOK_ORDER = "UPDATE_NOTEBOOK_ORDER";
+
 export class UserData {
   constructor(msal, photo = "", acquireTokenError = null) {
     this.msal = msal;
