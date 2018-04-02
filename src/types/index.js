@@ -22,6 +22,14 @@ export const LOAD_SAVED_NOTEBOOKS = "LOAD_SAVED_NOTEBOOKS";
 // Notebook order
 export const UPDATE_NOTEBOOK_ORDER = "UPDATE_NOTEBOOK_ORDER";
 
+// Selected Nav
+export const UPDATE_SELECTED_NOTEBOOK = "UPDATE_SELECTED_NOTEBOOK";
+export const CLOSE_NOTEBOOK = "CLOSE_NOTEBOOK"; // in general
+
+// Loading notebooks
+export const TOTAL_NOTEBOOK_LENGTH = "TOTAL_NOTEBOOK_LENGTH";
+export const REMOVE_ONE_NOTEBOOK_LENGTH = "REMOVE_ONE_NOTEBOOK_LENGTH"
+
 export class UserData {
   constructor(msal, photo = "", acquireTokenError = null) {
     this.msal = msal;
@@ -53,7 +61,7 @@ export class Notebook {
   /**
    * @param {Object} notebook JSON response from the Microsoft Graph for a notebook
    */
-  constructor(notebook, user=undefined) {
+  constructor(notebook, user = undefined) {
     this.id = undefined;
     this.user = user;
     Object.assign(this, notebook);

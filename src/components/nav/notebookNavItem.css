@@ -1,0 +1,43 @@
+.navItem {
+    background: white;
+    border: none;
+    width: 200px;
+    text-align: left;
+    font-size: 14px;
+    border-left: 4px solid transparent;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+}
+
+.navItem:hover {
+    background: #fceffb;
+}
+
+.navItem:active {
+    background: #f7e5f5;
+}
+
+.navItemSelected {
+    color: #5c005c;
+    background: #fceffb;
+    outline: none;
+    border: none;
+    border-left: #b4009e 4px solid;
+}
+
+.navItemWrapper{
+    padding: 6px 4px;
+}
+
+.icon {
+    color: #b4009e;
+    font-size: 16px;
+    vertical-align: middle;
+}
+
+label {
+    padding-left: 8px;
+    vertical-align: middle;
+    cursor: pointer;
+}

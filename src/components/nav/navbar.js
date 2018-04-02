@@ -2,9 +2,9 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Nav } from 'office-ui-fabric-react/lib/Nav';
 import { Modal } from "office-ui-fabric-react/lib/Modal";
-import { DefaultButton } from "office-ui-fabric-react/lib/Button";
 import { Spinner, SpinnerSize } from "office-ui-fabric-react/lib/Spinner";
 import NotebookPicker from "./notebookPicker";
+import NotebookNav from "../../containers/notebookNav";
 import "./navbar.css";
 
 export default class Navbar extends React.Component {
@@ -17,6 +17,18 @@ export default class Navbar extends React.Component {
     };
   }
 
+  /**
+   * Prevents bugs with object references during render
+   * @param {any} nextProps 
+   */
+  shouldComponentUpdate(nextProps) {
+    const { openedNotebooks, notebookOrder } = nextProps;
+    if (Object.keys(openedNotebooks).length !== notebookOrder.length) {
+      return false;
+    }
+    return true;
+  }
+
   render() {
     let notebookList = this.props.notebookOrder.map(id => {
       const notebook = this.props.openedNotebooks[id];
@@ -24,12 +36,13 @@ export default class Navbar extends React.Component {
         name: notebook.displayName,
         url: '',
         icon: 'OneNoteLogo',
-        key: notebook.id
+        key: notebook.id,
+        openContextMenu: false
       });
-    })
+    });
 
     return (
-      <div className='ms-NavExample-LeftPane'>
+      <div>
         <Nav
           groups={[{
             links:
@@ -47,6 +60,9 @@ export default class Navbar extends React.Component {
           expandedStateText={'expanded'}
           collapsedStateText={'collapsed'}
         />
+        <NotebookNav
+          notebookOrder={this.props.notebookOrder}
+          notebooks={this.props.openedNotebooks} />
         <Modal
           isOpen={this.state.showModal}
           onDismiss={this.closeModal}
@@ -64,7 +80,8 @@ export default class Navbar extends React.Component {
                 <NotebookPicker
                   openedNotebooks={this.props.openedNotebooks}
                   allNotebooks={this.props.allNotebooks}
-                  openNotebooks={this.props.openNotebooks} />
+                  openNotebooks={this.props.openNotebooks}
+                  closeModal={this.closeModal} />
               )}
           </div>
         </Modal>

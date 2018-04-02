@@ -11,7 +11,7 @@ import {
   REAUTHORIZE_USER,
   OPEN_NOTEBOOKS,
   LOAD_SAVED_NOTEBOOKS,
-  UPDATE_NOTEBOOK_ORDER,
+  CLOSE_NOTEBOOK
 } from "./../types";
 import { authentication } from "../actions";
 
@@ -22,7 +22,7 @@ import {
   getPhoto,
   reauthorizeUser
 } from "./authentication";
-import { getAllNotebooks, openNotebooks, loadSavedNotebooks } from "./notebooks";
+import { getAllNotebooks, openNotebooks, loadSavedNotebooks, closeNotebook } from "./notebooks";
 
 export default function* rootSaga() {
   yield takeLatest(AUTHENTICATE, authenticate);
@@ -33,6 +33,7 @@ export default function* rootSaga() {
   yield takeLatest(REAUTHORIZE_USER, reauthorizeUser);
   yield takeLatest(OPEN_NOTEBOOKS, openNotebooks);
   yield takeLatest(LOAD_SAVED_NOTEBOOKS, loadSavedNotebooks);
+  yield takeEvery(CLOSE_NOTEBOOK, closeNotebook);
 }
 
 const urls = new WeakMap();

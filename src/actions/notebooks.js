@@ -1,14 +1,10 @@
-import { OPEN_NOTEBOOKS, LOAD_NOTEBOOK_INTO_REDUX, LOAD_SAVED_NOTEBOOKS, UPDATE_NOTEBOOK_ORDER } from "../types";
+import {
+    OPEN_NOTEBOOKS,
+    LOAD_NOTEBOOK_INTO_REDUX,
+    LOAD_SAVED_NOTEBOOKS,
+    CLOSE_NOTEBOOK
+} from "../types";
 import { app } from "./index";
-
-/**
- * Replaces the notebook order
- * @param {array} notebookOrder New array to replace the currently stored array
- */
-export const updateNotebookOrder = (notebookOrder) => ({
-    type: UPDATE_NOTEBOOK_ORDER,
-    notebookOrder
-});
 
 /**
  * Opens all of the notebooks
@@ -34,4 +30,9 @@ export const loadNotebookIntoRedux = (notebook) => ({
  */
 export const loadSavedNotebooks = () => ({
     type: LOAD_SAVED_NOTEBOOKS
+});
+
+export const closeNotebook = (notebookId) => ({
+    type: CLOSE_NOTEBOOK,
+    notebookId
 });
