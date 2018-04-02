@@ -49,7 +49,7 @@ export default class Header extends React.Component {
             <span className="boldText">
               {this.props.userWithError === undefined
                 ? ""
-                : this.props.userWithError.msal.displayableId + " "}
+                : this.props.userWithError.displayableId + " "}
             </span>
             requires you to reauthorize OneNoteMarkdown.{" "}
             <span className="boldText">
@@ -75,6 +75,6 @@ Header.propTypes = {
   authenticate: PropTypes.func.isRequired,
   reauthorizeUser: PropTypes.func.isRequired,
   signOut: PropTypes.func.isRequired,
-  users: PropTypes.array.isRequired,
+  users: PropTypes.object.isRequired,
   userWithError: PropTypes.object
 };

@@ -44,7 +44,7 @@ export default class UsersComponent extends React.Component {
     });
 
     let templates = [];
-    if (this.props.users.length > 0) {
+    if (this.props.numUsers > 0) {
       templates.push(
         <button
           key="usersButton"
@@ -55,7 +55,7 @@ export default class UsersComponent extends React.Component {
             key="personaFacepile"
             personaSize={PersonaSize.size40}
             personas={this.props.users}
-            showAddButton={this.props.users.length === 0 ? true : false}
+            showAddButton={this.props.numUsers === 0 ? true : false}
           />
         </button>
       );
@@ -66,7 +66,7 @@ export default class UsersComponent extends React.Component {
             key="personaFacepile"
             personaSize={PersonaSize.size40}
             personas={this.props.users}
-            showAddButton={this.props.users.length === 0 ? true : false}
+            showAddButton={this.props.numUsers === 0 ? true : false}
             addButtonProps={{ onClick: this.showUserPanelClicked }}
           />
         </div>
@@ -94,7 +94,7 @@ export default class UsersComponent extends React.Component {
           <ActionButton
             iconProps={{ iconName: "PeopleBlock" }}
             onClick={this.props.signOut}
-            disabled={this.props.users.length === 0 ? true : false}
+            disabled={this.props.numUsers === 0 ? true : false}
           >
             Sign out of all accounts
           </ActionButton>
@@ -106,6 +106,7 @@ export default class UsersComponent extends React.Component {
 
 UsersComponent.propTypes = {
   users: PropTypes.array.isRequired,
+  numUsers: PropTypes.number.isRequired,
   signIn: PropTypes.func.isRequired,
   signOut: PropTypes.func.isRequired
 }

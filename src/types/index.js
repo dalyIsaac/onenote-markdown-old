@@ -5,7 +5,7 @@
 export const AUTHENTICATE = "AUTHENTICATE";
 export const SIGN_IN = "SIGN_IN";
 export const SIGN_OUT = "SIGN_OUT";
-export const NEW_USER_LIST = "NEW_USER_LIST";
+export const NEW_USER_OBJECT = "NEW_USER_OBJECT";
 export const UPDATE_USER = "UPDATE_USER";
 export const GET_ALL_USERS = "GET_ALL_USERS";
 export const GET_PHOTO = "GET_PHOTO";
@@ -32,7 +32,8 @@ export const REMOVE_ONE_NOTEBOOK_LENGTH = "REMOVE_ONE_NOTEBOOK_LENGTH"
 
 export class UserData {
   constructor(msal, photo = "", acquireTokenError = null) {
-    this.msal = msal;
+    this.displayableId = undefined;
+    Object.assign(this, msal);
     this.photo = photo;
     this.acquireTokenError = acquireTokenError;
   }
@@ -48,7 +49,7 @@ export class NotebookRow {
   constructor(notebook, user) {
     this.fileName = notebook.displayName;
     this.lastModifiedDateTime = new Date(notebook.lastModifiedDateTime);
-    this.userDisplayableId = user.msal.displayableId;
+    this.userDisplayableId = user.displayableId;
     this.user = user;
     this.notebook = notebook;
   }

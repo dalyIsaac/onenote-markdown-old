@@ -5,7 +5,7 @@ import { getNotebooks, notebooks } from "../actions";
 const mapStateToProps = state => ({
     allNotebooks: state.allNotebooks,
     openedNotebooks: state.notebooks,
-    userLength: state.users.length,
+    userLength: Object.keys(state.users).length,
     notebookOrder: state.notebookOrder
 });
 

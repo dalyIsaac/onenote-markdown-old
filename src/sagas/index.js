@@ -65,17 +65,17 @@ export function* getToken(app, user) {
       [app, app.acquireTokenSilent],
       graphScopes,
       null,
-      user.msal
+      user
     );
   } catch (error) {
     currentToken = "";
     console.error(
       `Could not acquire a valid token ${
-      user.msal.displayableId
+      user.displayableId
       } by silently querying MSAL.`
     );
     console.error(error);
-    const newUser = new UserData(user.msal, "", error);
+    const newUser = new UserData(user, "", error);
     yield put(authentication.updateUser(newUser));
   }
 }
@@ -92,17 +92,17 @@ export function* getTokenRedirect(app, user) {
       [app, app.acquireTokenRedirect],
       graphScopes,
       null,
-      user.msal
+      user
     );
   } catch (error) {
     currentToken = "";
     console.error(
       `Could not acquire a valid token ${
-      user.msal.displayableId
+      user.displayableId
       } by redirecting to MSAL authentication.`
     );
     console.error(error);
-    const newUser = new UserData(user.msal, "", error);
+    const newUser = new UserData(user, "", error);
     yield put(authentication.updateUser(newUser));
   }
 }
