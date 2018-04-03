@@ -64,8 +64,68 @@ export class Notebook {
    */
   constructor(notebook, user = undefined) {
     this.id = undefined;
-    this.user = user;
-    Object.assign(this, notebook);
-    this.data = {};
+    if (user !== undefined) {
+      this.userId = user.userIdentifier;
+    }
+    deflateObject(this, notebook);
+  }
+}
+
+/**
+ * Deflates an object.  
+ * For example: `{ "hello": { "world": "earth" } }` goes to `{ "hello.world": "earth" }`  
+ * Note: a key which begins with `@` will not be deflated.
+ * @param {Object} target 
+ * @param {Object} source 
+ * @param {string} [parentName='']
+ */
+function deflateObject(target, source, parentName = '') {
+  for (const key in source) {
+    const prop = source[key];
+    if (typeof prop === 'object') {
+      if (parentName !== '') {
+        deflateObject(target, prop, `${parentName}.${key}`);
+      } else {
+        deflateObject(target, prop, `${key}`);
+      }
+    } else {
+      if (parentName !== '') {
+        target[`${parentName}.${key}`] = prop;
+      } else {
+        target[key] = prop;
+      }
+    }
+  }
+}
+
+/**
+ * Inflates an object.
+ * For example: `{ "hello.world": "earth" }` goes to `{ "hello": { "world": "earth" } }` 
+ * @param {any} target 
+ * @param {any} source 
+ * @param {any} key 
+ */
+function inflateObject(target, source, key) {
+  if (typeof source === 'object') {
+    for (const key in source) {
+      _inflateObjectHelper(target, source[key], key);
+    }
+  } else {
+    _inflateObjectHelper(target, source, key);
+  }
+}
+
+function _inflateObjectHelper(target, source, key) {
+  const dotIndex = key[0] === '@' ? -1 : key.indexOf('.');
+
+  if (dotIndex === -1) {
+    target[key] = source;
+  } else {
+    const parentKey = key.slice(0, dotIndex);
+    const childKey = key.slice(dotIndex + 1);
+    if (target[parentKey] === undefined) {
+      target[parentKey] = {};
+    }
+    inflateObject(target[parentKey], source, childKey);
   }
 }
