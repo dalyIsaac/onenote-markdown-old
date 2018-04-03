@@ -8,7 +8,6 @@ class About extends React.Component {
     return (
       <div className="hero">
         <h1>Kia ora</h1>
-        <h2>Very eloquent and witty content can be found here</h2>
         <p>
           As you can see, this page has a lot of informative content describing
           the application in a verbose fashion.

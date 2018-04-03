@@ -18,7 +18,7 @@ export default class UsersContainer extends React.Component {
                 imageUrl: user.photo,
                 personaName: user.displayableId,
                 userName: user.name,
-                initialsColor: PersonaInitialsColor[personas.length % 13]
+                initialsColor: PersonaInitialsColor[personas.length % 13],
             };
             personas.push(persona);
         }

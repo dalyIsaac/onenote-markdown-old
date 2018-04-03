@@ -1,14 +1,15 @@
 .container {
   display: grid;
-  grid-template-columns: 60px auto 200px;
-  grid-template-rows: 56px;
+  grid-template-columns: 60px auto auto;
+  grid-template-rows: 48px;
   border-bottom: 1px solid #b4009e;
   position: relative;
 }
 
-.icon {
-  grid-column: 1;
-  margin: 4px;
+.onenoteIcon {
+  width: 32px;
+  height: 32px;
+  margin: 8px 12px;
 }
 
 .addressBarContainer {
@@ -19,14 +20,9 @@
   transform: translate(-50%, -50%);
 }
 
-.root_eeeb05d5 {
-  margin: 0;
-}
-
 .usersContainer {
   grid-column: 3;
   text-align: right;
-  margin: 4px;
 }
 
 .boldText {

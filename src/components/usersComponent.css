@@ -2,9 +2,13 @@
   background: white;
   border: 0cm white;
   margin: 0px;
-  padding: 0px;
   height: 48px;
   cursor: pointer;
+}
+
+/* this gets rid of some of the margin which appears when there's only one user */
+.facepileContainerSingleUser {
+  margin-right: -16px;
 }
 
 .PersonaContainer {
@@ -16,5 +20,5 @@
   overflow: hidden;
   height: 48px;
   float: right;
-  margin: 4px;
+  margin: 8px 0px;
 }

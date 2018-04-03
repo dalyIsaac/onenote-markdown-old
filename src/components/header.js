@@ -1,6 +1,5 @@
 import * as React from "react";
 import PropTypes from 'prop-types';
-import { Image, ImageFit } from "office-ui-fabric-react/lib/Image";
 import { AddressBarComponent } from "./addressBar";
 import UsersContainer from "../containers/users";
 import "./header.css";
@@ -18,14 +17,11 @@ export default class Header extends React.Component {
   render() {
     return (
       <div className="container">
-        <Image
-          className="icon"
-          src="https://static2.sharepointonline.com/files/fabric/assets/brand-icons/product/png/onenote_96x1.png"
-          imageFit={ImageFit.contain}
-          width={48}
-          height={48}
-        />
-        {this.props.users.length > 0 && (
+        <img
+          className="onenoteIcon"
+          alt="OneNote logo"
+          src="https://static2.sharepointonline.com/files/fabric/assets/brand-icons/product/svg/onenote_16x1.svg" />
+        {Object.keys(this.props.users).length > 0 && (
           <div className="addressBarContainer">
             <AddressBarComponent />
           </div>

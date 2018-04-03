@@ -48,14 +48,14 @@ export default class UsersComponent extends React.Component {
       templates.push(
         <button
           key="usersButton"
-          className="facepileContainer"
+          className={'facepileContainer' + (this.props.numUsers === 1 ? ' facepileContainerSingleUser' : '')}
           onClick={this.showUserPanelClicked}
         >
           <Facepile
             key="personaFacepile"
-            personaSize={PersonaSize.size40}
+            personaSize={PersonaSize.size32}
             personas={this.props.users}
-            showAddButton={this.props.numUsers === 0 ? true : false}
+            showAddButton={false}
           />
         </button>
       );
@@ -64,9 +64,9 @@ export default class UsersComponent extends React.Component {
         <div className="addbuttonContainer">
           <Facepile
             key="personaFacepile"
-            personaSize={PersonaSize.size40}
+            personaSize={PersonaSize.size32}
             personas={this.props.users}
-            showAddButton={this.props.numUsers === 0 ? true : false}
+            showAddButton={true}
             addButtonProps={{ onClick: this.showUserPanelClicked }}
           />
         </div>
