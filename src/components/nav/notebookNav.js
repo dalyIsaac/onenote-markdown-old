@@ -23,7 +23,11 @@ export default class NotebookNav extends React.Component {
             }
         }
         if (this.props.totalNotebookLength !== this.props.notebookOrder.length) {
-            templates.push(<LoadingNavItem number={this.props.totalNotebookLength - this.props.notebookOrder.length} />);
+            templates.push(
+                <LoadingNavItem
+                    number={this.props.totalNotebookLength - this.props.notebookOrder.length}
+                    key="notebookLoadingNumber"
+                />);
         }
 
         templates.push(<AddNavItem
@@ -31,7 +35,7 @@ export default class NotebookNav extends React.Component {
             iconName="Add"
             text="Open notebooks"
             onClick={this.props.addNotebook} />);
-        return (<nav>{templates}</nav>);
+        return (<nav style={{ width: 300 }}>{templates}</nav>);
     }
 }
 

@@ -15,11 +15,11 @@
     outline: none
 }
 
-.addNavItem:hover {
+.addNavItemButton:hover {
     background: #fceffb;
 }
 
-.addNavItem:active {
+.addNavItemButton:active {
     background: #f7e5f5;
 }
 

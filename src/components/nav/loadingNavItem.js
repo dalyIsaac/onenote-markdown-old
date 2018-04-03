@@ -15,7 +15,5 @@ export default class LoadingNavItem extends React.Component {
 }
 
 LoadingNavItem.propTypes = {
-    onClick: PropTypes.func.isRequired,
-    text: PropTypes.string.isRequired,
-    SpinnerName: PropTypes.string
+    number: PropTypes.number.isRequired
 }

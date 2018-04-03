@@ -29,17 +29,6 @@ export default class Navbar extends React.Component {
   }
 
   render() {
-    let notebookList = this.props.notebookOrder.map(id => {
-      const notebook = this.props.openedNotebooks[id];
-      return ({
-        name: notebook.displayName,
-        url: '',
-        icon: 'OneNoteLogo',
-        key: notebook.id,
-        openContextMenu: false
-      });
-    });
-
     return (
       <div>
         <NotebookNav addNotebook={this.showModal} />
