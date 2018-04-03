@@ -30,6 +30,12 @@ export const CLOSE_NOTEBOOK = "CLOSE_NOTEBOOK"; // in general
 export const TOTAL_NOTEBOOK_LENGTH = "TOTAL_NOTEBOOK_LENGTH";
 export const REMOVE_ONE_NOTEBOOK_LENGTH = "REMOVE_ONE_NOTEBOOK_LENGTH"
 
+/**
+ * Custom class which extends MSAL's User class.  
+ * This class is not deflated in order to reduce boilerplate. 
+ * @export
+ * @class UserData
+ */
 export class UserData {
   constructor(msal, photo = "", acquireTokenError = null) {
     this.displayableId = undefined;
@@ -39,6 +45,11 @@ export class UserData {
   }
 }
 
+/**
+ * Used in the DetailsList inside NotebookPicker
+ * @export
+ * @class NotebookRow
+ */
 export class NotebookRow {
   /**
    * Creates an instance of NotebookRow.
@@ -56,6 +67,7 @@ export class NotebookRow {
 }
 
 /**
+ * Deflated notebook from Microsoft Graph with some custom attributes
  * @class Notebook
  */
 export class Notebook {
@@ -63,7 +75,7 @@ export class Notebook {
    * @param {Object} notebook JSON response from the Microsoft Graph for a notebook
    */
   constructor(notebook, user = undefined) {
-    this.id = undefined;
+    this.id = undefined; // this is defined here purely for VSCode
     if (user !== undefined) {
       this.userId = user.userIdentifier;
     }
