@@ -1,17 +1,16 @@
 .addNavItemWrapper {
     width: 100%;
-    padding: 0;
+    padding: 6px 4px;
     margin: 0;
 }
 
-.addNavItem {
+.addNavItemButton {
     background: white;
     border: none;
     width: 100%;
     cursor: pointer;
     text-align: left;
     padding: 0;
-    padding-left: 2px;
     margin: 0;
     outline: none
 }
@@ -26,4 +25,8 @@
 
 .addNavItemLabel {
     color: #b4009e;
+}
+
+.addIcon {
+    padding-left: 3px;
 }

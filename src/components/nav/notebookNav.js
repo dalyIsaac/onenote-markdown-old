@@ -2,6 +2,7 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import NotebookNavItem from "./notebookNavItem";
 import AddNavItem from "./addNavItem";
+import LoadingNavItem from "./loadingNavItem";
 
 export default class NotebookNav extends React.Component {
     render() {
@@ -22,7 +23,7 @@ export default class NotebookNav extends React.Component {
             }
         }
         if (this.props.totalNotebookLength !== this.props.notebookOrder.length) {
-            templates.push(<h1 key="test">Hang on</h1>);
+            templates.push(<LoadingNavItem number={this.props.totalNotebookLength - this.props.notebookOrder.length} />);
         }
 
         templates.push(<AddNavItem

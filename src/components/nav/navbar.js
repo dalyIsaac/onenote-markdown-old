@@ -51,7 +51,7 @@ export default class Navbar extends React.Component {
           <div className="parent">
             {this.props.allNotebooks.length !== this.props.userLength ? (
               <Spinner
-                className="spinner"
+                className="notebookPickerSpinner"
                 size={SpinnerSize.large}
                 label="Hang on, I'm asking around for your notebooks..."
                 ariaLive="assertive"
