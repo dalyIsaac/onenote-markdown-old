@@ -1,7 +1,7 @@
 import { LOAD_NOTEBOOK_INTO_REDUX, CLOSE_NOTEBOOK } from "./../types";
 
 export default function notebooksReducer(state = {}, action) {
-    let data = undefined;
+    let data = {};
     switch (action.type) {
         case CLOSE_NOTEBOOK:
             data = {};
@@ -12,15 +12,10 @@ export default function notebooksReducer(state = {}, action) {
             }
             return data;
         case LOAD_NOTEBOOK_INTO_REDUX:
-            data = deepCopy(state);
-            data[action.notebook.id] = action.notebook;
+            data = { ...state };
+            data[action.notebook.id] = { ...action.notebook };
             return data;
         default:
             return state;
     }
-}
-
-function deepCopy(obj) {
-    let newObj = JSON.parse(JSON.stringify(obj));
-    return newObj;
 }

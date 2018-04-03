@@ -60,9 +60,7 @@ export default class Navbar extends React.Component {
           expandedStateText={'expanded'}
           collapsedStateText={'collapsed'}
         />
-        <NotebookNav
-          notebookOrder={this.props.notebookOrder}
-          notebooks={this.props.openedNotebooks} />
+        <NotebookNav />
         <Modal
           isOpen={this.state.showModal}
           onDismiss={this.closeModal}
