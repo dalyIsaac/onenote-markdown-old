@@ -7,6 +7,7 @@ import { blobUrl, getToken, currentToken } from "./index";
 import { betaUrl } from "../constants";
 
 import axios from "axios";
+import localForage from 'localforage';
 
 /**
  * Adds the users who are currently signed into the store
@@ -49,6 +50,7 @@ export function* signIn(action) {
 }
 
 export function* signOut(action) {
+  yield call([localForage, localForage.clear]);
   yield call([action.app, action.app.logout]);
   // no need for a put because the app redirects
 }
