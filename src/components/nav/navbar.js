@@ -1,6 +1,5 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Nav } from 'office-ui-fabric-react/lib/Nav';
 import { Modal } from "office-ui-fabric-react/lib/Modal";
 import { Spinner, SpinnerSize } from "office-ui-fabric-react/lib/Spinner";
 import NotebookPicker from "./notebookPicker";
@@ -43,24 +42,7 @@ export default class Navbar extends React.Component {
 
     return (
       <div>
-        <Nav
-          groups={[{
-            links:
-              [
-                ...notebookList,
-                {
-                  name: 'Open notebooks',
-                  url: '',
-                  onClick: this.showModal,
-                  icon: 'Add',
-                  key: 'openNotebooks'
-                },
-              ]
-          }]}
-          expandedStateText={'expanded'}
-          collapsedStateText={'collapsed'}
-        />
-        <NotebookNav />
+        <NotebookNav addNotebook={this.showModal} />
         <Modal
           isOpen={this.state.showModal}
           onDismiss={this.closeModal}
