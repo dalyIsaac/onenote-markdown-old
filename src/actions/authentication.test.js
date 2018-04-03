@@ -42,9 +42,9 @@ describe('Tests action creators', () => {
     });
 
     test('Creates an action to replace the user list with a new user list', () => {
-        const type = 'NEW_USER_LIST';
+        const type = 'NEW_USER_OBJECT';
         const users = ['user1', 'user2', 'user3'];
-        expect(actions.newUserList(users)).toEqual({ type, users });
+        expect(actions.newUserObject(users)).toEqual({ type, users });
     });
 
     test('Creates an action to update a user', () => {

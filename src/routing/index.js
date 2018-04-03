@@ -6,16 +6,16 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      rest.users.length > 0 ? (
+      Object.keys(rest.users).length > 0 ? (
         <Component {...props} />
       ) : (
-        <Redirect
-          to={{
-            pathname: "/about",
-            state: { from: props.location }
-          }}
-        />
-      )
+          <Redirect
+            to={{
+              pathname: "/about",
+              state: { from: props.location }
+            }}
+          />
+        )
     }
   />
 );

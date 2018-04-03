@@ -5,7 +5,7 @@ import {
   SIGN_IN,
   SIGN_OUT,
   GET_PHOTO,
-  NEW_USER_LIST,
+  NEW_USER_OBJECT,
   UPDATE_USER,
   GET_ALL_USERS,
   REAUTHORIZE_USER
@@ -60,10 +60,10 @@ export const signOut = () => ({
 
 /**
  * Creates an action to replace the user list with a new user list
- * @param {UserData[]} users
+ * @param {Object} users
  */
-export const newUserList = (users) => ({
-  type: NEW_USER_LIST,
+export const newUserObject = (users) => ({
+  type: NEW_USER_OBJECT,
   users
 });
 

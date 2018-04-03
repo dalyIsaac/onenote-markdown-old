@@ -3,7 +3,7 @@ import NotebookNav from './../components/nav/notebookNav';
 import { selectedNav, notebooks } from "../actions";
 
 const mapStateToProps = state => ({
-    openedNotebooks: state.notebooks,
+    notebooks: state.notebooks,
     notebookOrder: state.notebookOrder,
     selectedNav: state.selectedNav,
     totalNotebookLength: state.totalNotebookLength

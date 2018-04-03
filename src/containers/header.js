@@ -5,7 +5,7 @@ import { authentication } from "../actions";
 
 const mapStateToProps = state => ({
   users: state.users,
-  userWithError: state.users.find(user => user.acquireTokenError !== null)
+  userWithError: findUserWithError(state.users)
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -15,3 +15,12 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
+
+function findUserWithError(users) {
+  for (const user in users) {
+    if (users[user].acquireTokenError !== null) {
+      return users[user];
+    }
+  }
+  return undefined;
+}
