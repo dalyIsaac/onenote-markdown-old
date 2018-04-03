@@ -30,14 +30,14 @@ export default class Navbar extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="navbarParent">
         <NotebookNav addNotebook={this.showModal} />
         <Modal
           isOpen={this.state.showModal}
           onDismiss={this.closeModal}
           isBlocking={false}
         >
-          <div className="parent">
+          <div className="notebookPickerParent">
             {this.props.allNotebooks.length !== this.props.userLength ? (
               <Spinner
                 className="notebookPickerSpinner"
