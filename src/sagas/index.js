@@ -11,6 +11,7 @@ import {
   REAUTHORIZE_USER,
   OPEN_NOTEBOOKS,
   LOAD_SAVED_NOTEBOOKS,
+  CLOSE_NOTEBOOK
 } from "./../types";
 import { authentication } from "../actions";
 
@@ -21,7 +22,7 @@ import {
   getPhoto,
   reauthorizeUser
 } from "./authentication";
-import { getAllNotebooks, openNotebooks, loadSavedNotebooks } from "./notebooks";
+import { getAllNotebooks, openNotebooks, loadSavedNotebooks, closeNotebook } from "./notebooks";
 
 export default function* rootSaga() {
   yield takeLatest(AUTHENTICATE, authenticate);
@@ -32,6 +33,7 @@ export default function* rootSaga() {
   yield takeLatest(REAUTHORIZE_USER, reauthorizeUser);
   yield takeLatest(OPEN_NOTEBOOKS, openNotebooks);
   yield takeLatest(LOAD_SAVED_NOTEBOOKS, loadSavedNotebooks);
+  yield takeEvery(CLOSE_NOTEBOOK, closeNotebook);
 }
 
 const urls = new WeakMap();
@@ -63,17 +65,17 @@ export function* getToken(app, user) {
       [app, app.acquireTokenSilent],
       graphScopes,
       null,
-      user.msal
+      user
     );
   } catch (error) {
     currentToken = "";
     console.error(
       `Could not acquire a valid token ${
-      user.msal.displayableId
+      user.displayableId
       } by silently querying MSAL.`
     );
     console.error(error);
-    const newUser = new UserData(user.msal, "", error);
+    const newUser = new UserData(user, "", error);
     yield put(authentication.updateUser(newUser));
   }
 }
@@ -90,17 +92,17 @@ export function* getTokenRedirect(app, user) {
       [app, app.acquireTokenRedirect],
       graphScopes,
       null,
-      user.msal
+      user
     );
   } catch (error) {
     currentToken = "";
     console.error(
       `Could not acquire a valid token ${
-      user.msal.displayableId
+      user.displayableId
       } by redirecting to MSAL authentication.`
     );
     console.error(error);
-    const newUser = new UserData(user.msal, "", error);
+    const newUser = new UserData(user, "", error);
     yield put(authentication.updateUser(newUser));
   }
 }

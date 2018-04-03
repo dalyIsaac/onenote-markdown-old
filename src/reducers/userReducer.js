@@ -1,19 +1,13 @@
-import { NEW_USER_LIST, UPDATE_USER } from "./../types/";
+import { NEW_USER_OBJECT, UPDATE_USER } from "./../types/";
 
-export default function userReducer(state = [], action) {
+export default function userReducer(state = {}, action) {
   switch (action.type) {
-    case NEW_USER_LIST:
+    case NEW_USER_OBJECT:
       return action.users;
     case UPDATE_USER:
-      let userList = [];
-      state.forEach(element => {
-        if (element.msal.displayableId === action.user.msal.displayableId) {
-          userList.push(action.user);
-        } else {
-          userList.push(element);
-        }
-      });
-      return userList;
+      let users = { ...state };
+      users[action.user.userIdentifier] = action.user;
+      return users;
     default:
       return state;
   }

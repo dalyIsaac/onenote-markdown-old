@@ -1,47 +1,56 @@
-import * as React from "react";
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Modal } from "office-ui-fabric-react/lib/Modal";
-import { DefaultButton } from "office-ui-fabric-react/lib/Button";
 import { Spinner, SpinnerSize } from "office-ui-fabric-react/lib/Spinner";
-import { NotebookPickerList } from "./notebookPickerList";
-import "./notebookPicker.css";
+import NotebookPicker from "./notebookPicker";
+import NotebookNav from "../../containers/notebookNav";
+import "./navbar.css";
 
-export default class NotebookPicker extends React.Component {
+export default class Navbar extends React.Component {
   constructor(props) {
     super(props);
-    this._showModal = this._showModal.bind(this);
-    this._closeModal = this._closeModal.bind(this);
+    this.showModal = this.showModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
     this.state = {
       showModal: false
     };
   }
 
+  /**
+   * Prevents bugs with object references during render
+   * @param {any} nextProps 
+   */
+  shouldComponentUpdate(nextProps) {
+    const { openedNotebooks, notebookOrder } = nextProps;
+    if (Object.keys(openedNotebooks).length !== notebookOrder.length) {
+      return false;
+    }
+    return true;
+  }
+
   render() {
     return (
       <div>
-        <DefaultButton
-          description="Opens the notebook picker"
-          onClick={this._showModal}
-          text="Open Notebooks"
-        />
+        <NotebookNav addNotebook={this.showModal} />
         <Modal
           isOpen={this.state.showModal}
-          onDismiss={this._closeModal}
+          onDismiss={this.closeModal}
           isBlocking={false}
         >
           <div className="parent">
             {this.props.allNotebooks.length !== this.props.userLength ? (
               <Spinner
-                className="spinner"
+                className="notebookPickerSpinner"
                 size={SpinnerSize.large}
                 label="Hang on, I'm asking around for your notebooks..."
                 ariaLive="assertive"
               />
             ) : (
-                <NotebookPickerList
+                <NotebookPicker
                   openedNotebooks={this.props.openedNotebooks}
                   allNotebooks={this.props.allNotebooks}
-                  openNotebooks={this.props.openNotebooks} />
+                  openNotebooks={this.props.openNotebooks}
+                  closeModal={this.closeModal} />
               )}
           </div>
         </Modal>
@@ -49,20 +58,22 @@ export default class NotebookPicker extends React.Component {
     );
   }
 
-  _showModal() {
+  showModal() {
     this.setState({
       showModal: true
     });
     this.props.getAllNotebooks();
   }
 
-  _closeModal() {
+  closeModal() {
     this.setState({ showModal: false });
   }
 }
 
-NotebookPicker.propTypes = {
+Navbar.propTypes = {
   allNotebooks: PropTypes.array.isRequired,
   userLength: PropTypes.number.isRequired,
-  getAllNotebooks: PropTypes.func.isRequired
+  getAllNotebooks: PropTypes.func.isRequired,
+  openedNotebooks: PropTypes.object.isRequired,
+  notebookOrder: PropTypes.array.isRequired
 };

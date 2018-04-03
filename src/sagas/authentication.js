@@ -16,10 +16,13 @@ import axios from "axios";
 export function* authenticate(action) {
   const userList = yield call([action.app, action.app.getAllUsers]);
   if (userList.length > 0) {
-    const userDataList = userList.map(x => new UserData(x));
-    yield put(authentication.newUserList(userDataList));
-    for (let i = 0; i < userDataList.length; i++) {
-      const user = userDataList[i];
+    let userDataObject = {};
+    userList.forEach(user => {
+      userDataObject[user.userIdentifier] = new UserData(user);
+    });
+    yield put(authentication.newUserObject(userDataObject));
+    for (const userId in userDataObject) {
+      const user = userDataObject[userId];
       yield put(authentication.getPhoto(user));
     }
   }
@@ -36,7 +39,7 @@ export function* reauthorizeUser(action) {
     [action.app, action.app.acquireTokenRedirect],
     graphScopes,
     "https://login.microsoftonline.com/common",
-    action.user.msal
+    action.user
   );
 }
 
@@ -66,11 +69,11 @@ export function* getPhoto(action) {
         headers: { Authorization: `Bearer ${currentToken}` }
       });
       const photo = result.data && blobUrl(result.data);
-      const newUser = new UserData(action.user.msal, photo);
+      const newUser = new UserData(action.user, photo);
       yield put(authentication.updateUser(newUser));
     } catch (error) {
       console.error(
-        `Getting photo failed for ${action.user.msal.displayableId}: ${error}`
+        `Getting photo failed for ${action.user.displayableId}: ${error}`
       );
     }
   } else {

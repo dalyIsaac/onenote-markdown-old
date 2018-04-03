@@ -9,10 +9,10 @@ import {
   SelectionMode
 } from "office-ui-fabric-react/lib/DetailsList";
 import { MarqueeSelection } from "office-ui-fabric-react/lib/MarqueeSelection";
-import "./notebookPickerList.css";
-import { NotebookRow } from "../types";
+import "./notebookPicker.css";
+import { NotebookRow } from "../../types";
 
-export class NotebookPickerList extends React.Component {
+export default class NotebookPicker extends React.Component {
   constructor(props) {
     super(props);
 
@@ -94,7 +94,6 @@ export class NotebookPickerList extends React.Component {
             <div>{notebook.lastModifiedDateTime.toLocaleString()}</div>
           );
         }
-
       }
     ];
 
@@ -111,7 +110,7 @@ export class NotebookPickerList extends React.Component {
     const { columns, notebooks } = this.state;
 
     return (
-      <div className="wrapper">
+      <div className="notebookPickerWrapper">
         <SearchBox
           className="filterDiv"
           placeholder="Filter"
@@ -161,8 +160,9 @@ export class NotebookPickerList extends React.Component {
   openNotebooks() {
     const selectionCount = this.selection.getSelectedCount();
     if (selectionCount > 0) {
-      this.props.openNotebooks(this.selection.getSelection())
+      this.props.openNotebooks(this.selection.getSelection());
     }
+    this.props.closeModal();
   }
 
   onColumnClick(ev, column) {
@@ -218,7 +218,7 @@ export class NotebookPickerList extends React.Component {
 }
 
 
-NotebookPickerList.propTypes = {
+NotebookPicker.propTypes = {
   allNotebooks: PropTypes.array.isRequired,
   openNotebooks: PropTypes.func.isRequired,
   openedNotebooks: PropTypes.object
