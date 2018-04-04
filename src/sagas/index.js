@@ -22,7 +22,12 @@ import {
   getPhoto,
   reauthorizeUser
 } from "./authentication";
-import { getAllNotebooks, openNotebooks, loadSavedNotebooks, closeNotebook } from "./notebooks";
+import {
+  getAllNotebooks,
+  openNotebooks,
+  loadSavedNotebooks,
+  closeNotebook
+} from "./notebooks";
 
 export default function* rootSaga() {
   yield takeLatest(AUTHENTICATE, authenticate);
@@ -49,10 +54,6 @@ export const blobUrl = blob => {
   }
 };
 
-// Storing the token as a variable outside instead of yielding is to avoid interfering with redux-saga.
-// It should be thought of as an instance variable
-export let currentToken = "";
-
 /**
  * Gets the users's token with a silent call
  * @export
@@ -61,14 +62,14 @@ export let currentToken = "";
  */
 export function* getToken(app, user) {
   try {
-    currentToken = yield call(
+    const currentToken = yield call(
       [app, app.acquireTokenSilent],
       graphScopes,
       null,
       user
     );
+    return currentToken
   } catch (error) {
-    currentToken = "";
     console.error(
       `Could not acquire a valid token ${
       user.displayableId
@@ -77,6 +78,7 @@ export function* getToken(app, user) {
     console.error(error);
     const newUser = new UserData(user, "", error);
     yield put(authentication.updateUser(newUser));
+    return "";
   }
 }
 
@@ -88,14 +90,14 @@ export function* getToken(app, user) {
  */
 export function* getTokenRedirect(app, user) {
   try {
-    currentToken = yield call(
+    const currentToken = yield call(
       [app, app.acquireTokenRedirect],
       graphScopes,
       null,
       user
     );
+    return currentToken;
   } catch (error) {
-    currentToken = "";
     console.error(
       `Could not acquire a valid token ${
       user.displayableId
@@ -104,5 +106,6 @@ export function* getTokenRedirect(app, user) {
     console.error(error);
     const newUser = new UserData(user, "", error);
     yield put(authentication.updateUser(newUser));
+    return "";
   }
 }
