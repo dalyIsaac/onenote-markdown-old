@@ -92,7 +92,7 @@ export function* closeNotebook(action) {
     yield call(storageRemoveItem, action.notebookId, "notebook");
 
     let notebookOrder = yield call(storageGetItem, "notebookOrder");
-    const index = notebookOrder.indexOf(action.notebookId);
+    const index = notebookOrder.indexOf("notebook." + action.notebookId);
     notebookOrder.splice(index, 1);
     yield call(storageSetItem, 'notebookOrder', notebookOrder);
     yield put(updateNotebookOrder(notebookOrder));
