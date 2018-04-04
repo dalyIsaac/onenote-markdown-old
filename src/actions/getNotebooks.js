@@ -3,12 +3,10 @@ import {
   PUT_ALL_NOTEBOOKS,
   CLEAR_ALL_NOTEBOOKS
 } from "../actionTypes";
-import { app } from "./index";
 import { UserData } from '../types'; // eslint-disable-line
 
 export const getAllNotebooks = () => ({
-  type: GET_ALL_NOTEBOOKS,
-  app
+  type: GET_ALL_NOTEBOOKS
 });
 
 /**

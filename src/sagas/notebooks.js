@@ -1,6 +1,6 @@
 import { call, put, select } from "redux-saga/effects";
 import axios from "axios";
-import { getToken } from "./index";
+import { getToken } from "./authentication";
 import { stableUrl } from "../constants";
 import { getNotebooks, notebooks, totalNotebookLength } from "../actions";
 import { Notebook } from "./../types";
@@ -18,7 +18,7 @@ export function* getAllNotebooks(action) {
   const userObject = yield select(getUsers);
   for (const userId in userObject) {
     const user = userObject[userId];
-    const currentToken = yield call(getToken, action.app, user);
+    const currentToken = yield call(getToken, user);
     if (currentToken !== "") {
       const result = yield call(axios, {
         method: "get",
@@ -44,7 +44,7 @@ export function* openNotebooks(action) {
   for (let i = 0; i < action.notebooks.length; i++) {
     const element = action.notebooks[i];
     const user = element.user;
-    const currentToken = yield call(getToken, action.app, user);
+    const currentToken = yield call(getToken, user);
     if (currentToken !== "") {
       const result = yield call(axios, {
         method: "get",
