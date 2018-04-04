@@ -6,9 +6,7 @@ import { getNotebooks, notebooks, totalNotebookLength } from "../actions";
 import { Notebook } from "./../types";
 import { updateNotebookOrder } from "../actions/notebookOrder";
 import { updateSelectedNotebook } from "../actions/selectedNav";
-
-import localforage from 'localforage';
-import { storageGetItem, storageSetItem, storageGetItems, storageSetNotebookOrder} from "./storage";
+import { storageGetItem, storageSetItem, storageGetItems, storageSetNotebookOrder, storageRemoveItem } from "./storage";
 
 const getUsers = state => state.users;
 
@@ -94,13 +92,15 @@ export function* loadSavedNotebooks(action) {
 export function* closeNotebook(action) {
   try {
     yield put(totalNotebookLength.removeOne());
-    yield call([localforage, localforage.removeItem], action.notebookId);
+    yield call(storageRemoveItem, action.notebookId, "notebook");
+
     let notebookOrder = yield call(storageGetItem, "notebookOrder");
     const index = notebookOrder.indexOf(action.notebookId);
     notebookOrder.splice(index, 1);
     yield call(storageSetItem, 'notebookOrder', notebookOrder);
-    yield put(updateSelectedNotebook([]));
     yield put(updateNotebookOrder(notebookOrder));
+
+    yield put(updateSelectedNotebook([]));
   } catch (error) {
     console.error(error);
   }

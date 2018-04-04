@@ -3,7 +3,7 @@ import {
     LOAD_NOTEBOOK_INTO_REDUX,
     LOAD_SAVED_NOTEBOOKS,
     CLOSE_NOTEBOOK
-} from "../types";
+} from "../actionTypes";
 import { app } from "./index";
 
 /**

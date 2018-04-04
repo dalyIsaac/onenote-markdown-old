@@ -1,4 +1,4 @@
-import { LOAD_NOTEBOOK_INTO_REDUX, CLOSE_NOTEBOOK } from "./../types";
+import { LOAD_NOTEBOOK_INTO_REDUX, CLOSE_NOTEBOOK } from "./../actionTypes";
 
 export default function notebooksReducer(state = {}, action) {
     let data = {};

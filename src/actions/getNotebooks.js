@@ -2,7 +2,7 @@ import {
   GET_ALL_NOTEBOOKS,
   PUT_ALL_NOTEBOOKS,
   CLEAR_ALL_NOTEBOOKS
-} from "../types";
+} from "../actionTypes";
 import { app } from "./index";
 import { UserData } from '../types'; // eslint-disable-line
 

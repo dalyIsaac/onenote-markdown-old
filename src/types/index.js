@@ -1,35 +1,5 @@
 // import { Notebook } from '@microsoft/microsoft-graph-types/microsoft-graph'; // eslint-disable-line
 
-// ActionTypes
-// Users
-export const AUTHENTICATE = "AUTHENTICATE";
-export const SIGN_IN = "SIGN_IN";
-export const SIGN_OUT = "SIGN_OUT";
-export const NEW_USER_OBJECT = "NEW_USER_OBJECT";
-export const UPDATE_USER = "UPDATE_USER";
-export const GET_ALL_USERS = "GET_ALL_USERS";
-export const GET_PHOTO = "GET_PHOTO";
-export const REAUTHORIZE_USER = "REAUTHORIZE_USER";
-
-// Notebooks
-export const GET_ALL_NOTEBOOKS = "GET_ALL_NOTEBOOKS";
-export const PUT_ALL_NOTEBOOKS = "PUT_ALL_NOTEBOOKS";
-export const CLEAR_ALL_NOTEBOOKS = "CLEAR_ALL_NOTEBOOKS";
-export const OPEN_NOTEBOOKS = "OPEN_NOTEBOOKS";
-export const LOAD_NOTEBOOK_INTO_REDUX = "LOAD_NOTEBOOK_INTO_REDUX";
-export const LOAD_SAVED_NOTEBOOKS = "LOAD_SAVED_NOTEBOOKS";
-
-// Notebook order
-export const UPDATE_NOTEBOOK_ORDER = "UPDATE_NOTEBOOK_ORDER";
-
-// Selected Nav
-export const UPDATE_SELECTED_NOTEBOOK = "UPDATE_SELECTED_NOTEBOOK";
-export const CLOSE_NOTEBOOK = "CLOSE_NOTEBOOK"; // in general
-
-// Loading notebooks
-export const TOTAL_NOTEBOOK_LENGTH = "TOTAL_NOTEBOOK_LENGTH";
-export const REMOVE_ONE_NOTEBOOK_LENGTH = "REMOVE_ONE_NOTEBOOK_LENGTH"
-
 /**
  * Custom class which extends MSAL's User class.  
  * This class is not deflated in order to reduce boilerplate. 

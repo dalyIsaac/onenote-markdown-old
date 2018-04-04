@@ -1,4 +1,4 @@
-import { UPDATE_NOTEBOOK_ORDER } from "../types";
+import { UPDATE_NOTEBOOK_ORDER } from "../actionTypes";
 
 export default function notebookOrderReducer(state = [], action) {
     switch (action.type) {

@@ -9,7 +9,7 @@ import {
   UPDATE_USER,
   GET_ALL_USERS,
   REAUTHORIZE_USER
-} from "../types";
+} from "../actionTypes";
 import { app, updateApp } from "./index";
 import { push } from "react-router-redux";
 import { UserData } from "../types"; //eslint-disable-line

@@ -4,50 +4,58 @@ import localforage from "localforage";
 
 /**
  * Sets an object using localforage
- * @param {string} index 
- * @param {any} data 
+ * @param {string} index Index of the data to set
+ * @param {any} data Data to set
+ * @param {string} type notebook/sectionGroup/section
  */
 export function* storageSetItem(index, data, type = "") {
-    try {
-      if (type === "") {
-        yield call([localforage, localforage.setItem], index, data);
-      } else {
-        yield call([localforage, localforage.setItem], `${type}.${index}`, data);
-      }
-    } catch (error) {
-      console.error(`localforage could not write ${index} to ${data}`);
-      console.error(error);
-    }
-  }
-  
-  /**
-   * Returns a promise of the desired item in localforage
-   * @param {any} index 
-   * @param {string} [type=""] 
-   * @returns 
-   */
-  export function storageGetItem(index, type = "") {
+  try {
     if (type === "") {
-      return localforage.getItem(index);
+      yield call([localforage, localforage.setItem], index, data);
     } else {
-      return localforage.getItem(`${type}.${index}`);
+      yield call([localforage, localforage.setItem], `${type}.${index}`, data);
     }
+  } catch (error) {
+    console.error(`localforage could not write ${index} to ${data}`);
+    console.error(error);
   }
-  
-  export function* storageGetItems(type) {
-    let outputList = [];
-    yield call([localforage, localforage.iterate],
-      (value, key) => {
-        if (!Array.isArray(value) && key.slice(0, type.length) === type) {
-          outputList.push(new Notebook(value));
-        }
+}
+
+/**
+ * Returns a promise of the desired item in localforage
+ * @param {any} index 
+ * @param {string} [type=""]
+ * @returns 
+ */
+export function storageGetItem(index, type = "") {
+  if (type === "") {
+    return localforage.getItem(index);
+  } else {
+    return localforage.getItem(`${type}.${index}`);
+  }
+}
+
+export function* storageGetItems(type) {
+  let outputList = [];
+  yield call([localforage, localforage.iterate],
+    (value, key) => {
+      if (!Array.isArray(value) && key.slice(0, type.length) === type) {
+        outputList.push(new Notebook(value));
       }
-    );
-    return outputList;
+    }
+  );
+  return outputList;
+}
+
+export function* storageSetNotebookOrder(notebookOrder) {
+  const newOrder = notebookOrder.map(val => "notebook." + val);
+  yield call(storageSetItem, "notebookOrder", newOrder);
+}
+
+export function storageRemoveItem(index, type = "") {
+  if (type === "") {
+    return localforage.removeItem(index);
+  } else {
+    return localforage.removeItem(`${type}.${index}`);
   }
-  
-  export function* storageSetNotebookOrder(notebookOrder) {
-    const newOrder = notebookOrder.map(val => "notebook." + val);
-    yield call(storageSetItem, "notebookOrder", newOrder);
-  }
-  
+}

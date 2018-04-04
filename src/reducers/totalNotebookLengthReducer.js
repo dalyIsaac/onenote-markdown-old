@@ -1,4 +1,4 @@
-import { TOTAL_NOTEBOOK_LENGTH, REMOVE_ONE_NOTEBOOK_LENGTH } from "../types";
+import { TOTAL_NOTEBOOK_LENGTH, REMOVE_ONE_NOTEBOOK_LENGTH } from "../actionTypes";
 
 export default function updateTotalNotebookLength(state = 0, action) {
     switch (action.type) {

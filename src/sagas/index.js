@@ -2,7 +2,6 @@ import { takeEvery, takeLatest, call, put } from "redux-saga/effects";
 
 import { graphScopes } from "../constants";
 import {
-  UserData,
   AUTHENTICATE,
   SIGN_IN,
   SIGN_OUT,
@@ -12,7 +11,8 @@ import {
   OPEN_NOTEBOOKS,
   LOAD_SAVED_NOTEBOOKS,
   CLOSE_NOTEBOOK
-} from "./../types";
+} from "./../actionTypes";
+import { UserData } from "./../types";
 import { authentication } from "../actions";
 
 import {
