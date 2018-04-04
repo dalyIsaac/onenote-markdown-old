@@ -75,12 +75,9 @@ export function* loadSavedNotebooks(action) {
     const notebookOrder = (yield call(storageGetItem, "notebookOrder")) || [];
     yield put(totalNotebookLength.update(notebookOrder.length));
 
-    let notebookList = yield call(storageGetItems, "notebook");
+    let notebookObject = yield call(storageGetItems, "notebook");
 
-    for (let i = 0; i < notebookList.length; i++) {
-      const element = notebookList[i];
-      yield put(notebooks.loadNotebookIntoRedux(element));
-    }
+    yield put(notebooks.loadNotebooksIntoRedux(notebookObject));
 
     // Update notebook order here so that will be able to find all of the notebooks the order specifies
     yield put(updateNotebookOrder(notebookOrder));

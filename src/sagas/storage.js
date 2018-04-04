@@ -1,5 +1,4 @@
 import { call } from "redux-saga/effects";
-import { Notebook } from "./../types";
 import localforage from "localforage";
 
 /**
@@ -36,15 +35,15 @@ export function storageGetItem(index, type = "") {
 }
 
 export function* storageGetItems(type) {
-  let outputList = [];
+  let output = {};
   yield call([localforage, localforage.iterate],
     (value, key) => {
       if (!Array.isArray(value) && key.slice(0, type.length) === type) {
-        outputList.push(new Notebook(value));
+        output[key] = value;
       }
     }
   );
-  return outputList;
+  return output;
 }
 
 export function* storageSetNotebookOrder(notebookOrder) {

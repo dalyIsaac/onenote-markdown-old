@@ -1,4 +1,4 @@
-import { LOAD_NOTEBOOK_INTO_REDUX, CLOSE_NOTEBOOK } from "./../actionTypes";
+import { LOAD_NOTEBOOK_INTO_REDUX, CLOSE_NOTEBOOK, LOAD_NOTEBOOKS_INTO_REDUX } from "./../actionTypes";
 
 export default function notebooksReducer(state = {}, action) {
     let data = {};
@@ -14,6 +14,10 @@ export default function notebooksReducer(state = {}, action) {
         case LOAD_NOTEBOOK_INTO_REDUX:
             data = { ...state };
             data["notebook." + action.notebook.id] = { ...action.notebook };
+            return data;
+        case LOAD_NOTEBOOKS_INTO_REDUX:
+            data = { ...state };
+            Object.assign(data, action.notebooks);
             return data;
         default:
             return state;

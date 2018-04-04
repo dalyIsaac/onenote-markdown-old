@@ -1,6 +1,7 @@
 import {
     OPEN_NOTEBOOKS,
     LOAD_NOTEBOOK_INTO_REDUX,
+    LOAD_NOTEBOOKS_INTO_REDUX,
     LOAD_SAVED_NOTEBOOKS,
     CLOSE_NOTEBOOK
 } from "../actionTypes";
@@ -23,6 +24,15 @@ export const openNotebooks = (notebooks) => ({
 export const loadNotebookIntoRedux = (notebook) => ({
     type: LOAD_NOTEBOOK_INTO_REDUX,
     notebook
+})
+
+/**
+ * Loads a notebook into the redux store
+ * @param {Object} notebooks 
+ */
+export const loadNotebooksIntoRedux = (notebooks) => ({
+    type: LOAD_NOTEBOOKS_INTO_REDUX,
+    notebooks
 })
 
 /**
