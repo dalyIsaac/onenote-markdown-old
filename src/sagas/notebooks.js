@@ -1,12 +1,14 @@
 import { call, put, select } from "redux-saga/effects";
 import axios from "axios";
-import localForage from 'localforage';
 import { getToken, currentToken } from "./index";
 import { stableUrl } from "../constants";
 import { getNotebooks, notebooks, totalNotebookLength } from "../actions";
 import { Notebook } from "./../types";
 import { updateNotebookOrder } from "../actions/notebookOrder";
 import { updateSelectedNotebook } from "../actions/selectedNav";
+
+import localforage from 'localforage';
+import { storageGetItem, storageSetItem, storageGetItems, storageSetNotebookOrder} from "./storage";
 
 const getUsers = state => state.users;
 
@@ -27,20 +29,6 @@ export function* getAllNotebooks(action) {
       });
       yield put(getNotebooks.putAllNotebooks(user, result.data.value));
     }
-  }
-}
-
-/**
- * Sets an object using localForage
- * @param {string} index 
- * @param {any} data 
- */
-function* storageSetItem(index, data) {
-  try {
-    yield call([localForage, localForage.setItem], index, data);
-  } catch (error) {
-    console.error(`localForage could not write ${index} to ${data}`);
-    console.error(error);
   }
 }
 
@@ -68,11 +56,11 @@ export function* openNotebooks(action) {
 
       const newNotebook = new Notebook(result.data, user);
       yield put(notebooks.loadNotebookIntoRedux(newNotebook));
-      yield call(storageSetItem, newNotebook.id, newNotebook);
+      yield call(storageSetItem, newNotebook.id, newNotebook, "notebook");
 
       // Update notebook order
       notebookOrder.push(newNotebook.id);
-      yield call(storageSetItem, 'notebookOrder', notebookOrder);
+      yield call(storageSetNotebookOrder, notebookOrder);
       yield put(updateNotebookOrder(notebookOrder));
     }
   }
@@ -86,18 +74,10 @@ export function* openNotebooks(action) {
 export function* loadSavedNotebooks(action) {
   try {
     // Retrieve notebook order
-    const notebookOrder = (yield call([localForage, localForage.getItem], "notebookOrder")) || [];
+    const notebookOrder = (yield call(storageGetItem, "notebookOrder")) || [];
     yield put(totalNotebookLength.update(notebookOrder.length));
 
-    // Retrieve notebooks
-    let notebookList = [];
-    yield call([localForage, localForage.iterate],
-      (value) => {
-        if (!Array.isArray(value)) {
-          notebookList.push(new Notebook(value));
-        }
-      }
-    );
+    let notebookList = yield call(storageGetItems, "notebook");
 
     for (let i = 0; i < notebookList.length; i++) {
       const element = notebookList[i];
@@ -114,8 +94,8 @@ export function* loadSavedNotebooks(action) {
 export function* closeNotebook(action) {
   try {
     yield put(totalNotebookLength.removeOne());
-    yield call([localForage, localForage.removeItem], action.notebookId);
-    let notebookOrder = yield call([localForage, localForage.getItem], "notebookOrder");
+    yield call([localforage, localforage.removeItem], action.notebookId);
+    let notebookOrder = yield call(storageGetItem, "notebookOrder");
     const index = notebookOrder.indexOf(action.notebookId);
     notebookOrder.splice(index, 1);
     yield call(storageSetItem, 'notebookOrder', notebookOrder);

@@ -13,7 +13,7 @@ export default function notebooksReducer(state = {}, action) {
             return data;
         case LOAD_NOTEBOOK_INTO_REDUX:
             data = { ...state };
-            data[action.notebook.id] = { ...action.notebook };
+            data["notebook." + action.notebook.id] = { ...action.notebook };
             return data;
         default:
             return state;

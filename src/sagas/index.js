@@ -81,7 +81,7 @@ export function* getToken(app, user) {
 }
 
 /**
- * Gets the users's token with a silent call
+ * Gets the users's token with a redirect
  * @export
  * @param {UserAgentApplication} app
  * @param {UserData} user
