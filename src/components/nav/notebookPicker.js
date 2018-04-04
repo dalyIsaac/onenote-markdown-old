@@ -25,7 +25,7 @@ export default class NotebookPicker extends React.Component {
     for (let i = 0; i < this.props.allNotebooks.length; i++) {
       const account = this.props.allNotebooks[i];
       for (let j = 0; j < account.notebooks.length; j++) {
-        const notebook = new NotebookRow(account.notebooks[j], account.user)
+        const notebook = new NotebookRow(account.notebooks[j], account.userId, account.displayableId)
         if (this.props.openedNotebooks['notebook.' + notebook.notebook.id] === undefined) {
           notebooks.push(notebook);
         }

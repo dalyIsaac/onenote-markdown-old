@@ -11,12 +11,13 @@ export const getAllNotebooks = () => ({
 
 /**
  * Puts freshly fetched notebooks into the store
- * @param {UserData} user 
+ * @param {string} userId 
  * @param {any} notebooks 
  */
-export const putAllNotebooks = (user, notebooks) => ({
+export const putAllNotebooks = (userId, displayableId, notebooks) => ({
   type: PUT_ALL_NOTEBOOKS,
-  user,
+  userId,
+  displayableId,
   notebooks
 });
 
