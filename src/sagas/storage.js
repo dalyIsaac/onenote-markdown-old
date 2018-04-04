@@ -47,7 +47,7 @@ export function* storageGetItems(type) {
 }
 
 export function* storageSetNotebookOrder(notebookOrder) {
-  const newOrder = notebookOrder.map(val => "notebook." + val);
+  const newOrder = notebookOrder.map(val => val.slice(0, 8) === "notebook" ? val : "notebook." + val);
   yield call(storageSetItem, "notebookOrder", newOrder);
 }
 
