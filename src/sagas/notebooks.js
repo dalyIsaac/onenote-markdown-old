@@ -15,9 +15,9 @@ const getUsers = state => state.users;
  */
 export function* getAllNotebooks(action) {
   yield put(getNotebooks.clearAllNotebooks());
-  const userObject = yield select(getUsers);
-  for (const userId in userObject) {
-    const user = userObject[userId];
+  const usersObject = yield select(getUsers);
+  for (const userId in usersObject) {
+    const user = usersObject[userId];
     const currentToken = yield call(getToken, user);
     if (currentToken !== "") {
       const result = yield call(axios, {
@@ -25,7 +25,9 @@ export function* getAllNotebooks(action) {
         url: stableUrl + "me/onenote/notebooks",
         headers: { Authorization: `Bearer ${currentToken}` }
       });
-      yield put(getNotebooks.putAllNotebooks(user, result.data.value));
+      // result.data.value isn't deflated because allNotebooks is wiped every time the user asks for more notebook.
+      // Thus it isn't necessary to worry about React re-rendering on every state change in allNotebooks, because it will
+      yield put(getNotebooks.putAllNotebooks(userId, user.displayableId, result.data.value));
     }
   }
 }
@@ -41,9 +43,10 @@ export function* openNotebooks(action) {
   });
   yield put(totalNotebookLength.update(notebookOrder.length + action.notebooks.length));
 
+  const usersObject = yield select(getUsers);
   for (let i = 0; i < action.notebooks.length; i++) {
     const element = action.notebooks[i];
-    const user = element.user;
+    const user = usersObject[action.userId];
     const currentToken = yield call(getToken, user);
     if (currentToken !== "") {
       const result = yield call(axios, {

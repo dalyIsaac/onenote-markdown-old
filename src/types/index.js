@@ -12,6 +12,7 @@ export class UserData {
     Object.assign(this, msal);
     this.photo = photo;
     this.acquireTokenError = acquireTokenError;
+    this.sectionGroups = [];
   }
 }
 
@@ -24,14 +25,14 @@ export class NotebookRow {
   /**
    * Creates an instance of NotebookRow.
    * @param {Object} notebook 
-   * @param {UserData} user 
+   * @param {string} userId
    * @memberof NotebookRow
    */
-  constructor(notebook, user) {
+  constructor(notebook, userId, displayableId) {
     this.fileName = notebook.displayName;
     this.lastModifiedDateTime = new Date(notebook.lastModifiedDateTime);
-    this.userDisplayableId = user.displayableId;
-    this.user = user;
+    this.userDisplayableId = displayableId;
+    this.userId = userId;
     this.notebook = notebook;
   }
 }
