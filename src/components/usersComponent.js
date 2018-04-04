@@ -61,7 +61,7 @@ export default class UsersComponent extends React.Component {
       );
     } else {
       templates.push(
-        <div className="addbuttonContainer">
+        <div className="addbuttonContainer" key="addButtonContainer">
           <Facepile
             key="personaFacepile"
             personaSize={PersonaSize.size32}
