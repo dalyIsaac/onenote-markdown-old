@@ -1,6 +1,5 @@
-import { takeEvery, takeLatest, call, put } from "redux-saga/effects";
+import { takeEvery, takeLatest } from "redux-saga/effects";
 
-import { graphScopes } from "../constants";
 import {
   AUTHENTICATE,
   SIGN_IN,
@@ -12,8 +11,6 @@ import {
   LOAD_SAVED_NOTEBOOKS,
   CLOSE_NOTEBOOK
 } from "./../actionTypes";
-import { UserData } from "./../types";
-import { authentication } from "../actions";
 
 import {
   authenticate,
@@ -53,59 +50,3 @@ export const blobUrl = blob => {
     return url;
   }
 };
-
-/**
- * Gets the users's token with a silent call
- * @export
- * @param {UserAgentApplication} app
- * @param {UserData} user
- */
-export function* getToken(app, user) {
-  try {
-    const currentToken = yield call(
-      [app, app.acquireTokenSilent],
-      graphScopes,
-      null,
-      user
-    );
-    return currentToken
-  } catch (error) {
-    console.error(
-      `Could not acquire a valid token ${
-      user.displayableId
-      } by silently querying MSAL.`
-    );
-    console.error(error);
-    const newUser = new UserData(user, "", error);
-    yield put(authentication.updateUser(newUser));
-    return "";
-  }
-}
-
-/**
- * Gets the users's token with a redirect
- * @export
- * @param {UserAgentApplication} app
- * @param {UserData} user
- */
-export function* getTokenRedirect(app, user) {
-  try {
-    const currentToken = yield call(
-      [app, app.acquireTokenRedirect],
-      graphScopes,
-      null,
-      user
-    );
-    return currentToken;
-  } catch (error) {
-    console.error(
-      `Could not acquire a valid token ${
-      user.displayableId
-      } by redirecting to MSAL authentication.`
-    );
-    console.error(error);
-    const newUser = new UserData(user, "", error);
-    yield put(authentication.updateUser(newUser));
-    return "";
-  }
-}

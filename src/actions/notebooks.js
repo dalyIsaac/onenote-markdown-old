@@ -5,7 +5,6 @@ import {
     LOAD_SAVED_NOTEBOOKS,
     CLOSE_NOTEBOOK
 } from "../actionTypes";
-import { app } from "./index";
 
 /**
  * Opens all of the notebooks
@@ -13,8 +12,7 @@ import { app } from "./index";
  */
 export const openNotebooks = (notebooks) => ({
     type: OPEN_NOTEBOOKS,
-    notebooks,
-    app
+    notebooks
 });
 
 /**
