@@ -1,5 +1,3 @@
-import * as Msal from "msal";
-import { appId, cacheLocation } from "../constants";
 import {
   AUTHENTICATE,
   SIGN_IN,
@@ -10,35 +8,15 @@ import {
   GET_ALL_USERS,
   REAUTHORIZE_USER
 } from "../actionTypes";
-import { app, updateApp } from "./index";
-import { push } from "react-router-redux";
 import { UserData } from "../types"; //eslint-disable-line
 
 /**
  * Creates an action to start the authentication process with MSAL
  */
 export function authenticate(dispatch) {
-  const redirectUri = window.location.href.includes("localhost:3000")
-    ? "http://localhost:3000"
-    : "";
-  updateApp(
-    new Msal.UserAgentApplication(
-      appId,
-      "",
-      () => {
-        // callback
-        dispatch(push("/"));
-      },
-      {
-        cacheLocation,
-        redirectUri,
-        postLogoutRedirectUri: redirectUri
-      }
-    )
-  );
   return {
     type: AUTHENTICATE,
-    app
+    dispatch
   };
 }
 
@@ -46,16 +24,14 @@ export function authenticate(dispatch) {
  * Creates an action to start the signin process with MSAL
  */
 export const signIn = () => ({
-  type: SIGN_IN,
-  app
+  type: SIGN_IN
 });
 
 /**
  * Creates an action to start the signout process with MSAL
  */
 export const signOut = () => ({
-  type: SIGN_OUT,
-  app
+  type: SIGN_OUT
 });
 
 /**
@@ -82,7 +58,6 @@ export const updateUser = user => ({
  */
 export const getPhoto = user => ({
   type: GET_PHOTO,
-  app,
   user
 });
 
@@ -90,8 +65,7 @@ export const getPhoto = user => ({
  * Creates an action to get a list of all of the users who are currently logged in
  */
 export const getAllUsers = () => ({
-  type: GET_ALL_USERS,
-  app
+  type: GET_ALL_USERS
 });
 
 /**
@@ -100,6 +74,5 @@ export const getAllUsers = () => ({
  */
 export const reauthorizeUser = (user) => ({
   type: REAUTHORIZE_USER,
-  app,
   user
 });

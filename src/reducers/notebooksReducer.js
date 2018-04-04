@@ -5,8 +5,9 @@ export default function notebooksReducer(state = {}, action) {
     switch (action.type) {
         case CLOSE_NOTEBOOK:
             data = {};
+            const notebookId = 'notebook.' + action.notebookId;
             for (const key in state) {
-                if (key !== action.notebookId) {
+                if (key !== notebookId) {
                     data[key] = state[key];
                 }
             }

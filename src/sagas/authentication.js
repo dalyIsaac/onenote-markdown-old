@@ -1,13 +1,18 @@
 import { call, put } from "redux-saga/effects";
+import { push } from "react-router-redux";
 
 import { UserData } from "./../types";
 import { authentication, notebooks } from "../actions";
 import { graphScopes } from "../constants";
-import { blobUrl, getToken } from "./index";
+import { blobUrl } from "./index";
 import { betaUrl } from "../constants";
 
 import axios from "axios";
 import localforage from 'localforage';
+import * as Msal from "msal";
+import { appId, cacheLocation } from "../constants";
+
+let app = null;
 
 /**
  * Adds the users who are currently signed into the store
@@ -15,7 +20,23 @@ import localforage from 'localforage';
  * @param {any} action
  */
 export function* authenticate(action) {
-  const userList = yield call([action.app, action.app.getAllUsers]);
+  const redirectUri = window.location.href.includes("localhost:3000")
+    ? "http://localhost:3000"
+    : "";
+  app = new Msal.UserAgentApplication(
+    appId,
+    "",
+    () => {
+      // callback
+      action.dispatch(push("/"));
+    },
+    {
+      cacheLocation,
+      redirectUri,
+      postLogoutRedirectUri: redirectUri
+    }
+  )
+  const userList = yield call([app, app.getAllUsers]);
   if (userList.length > 0) {
     let userDataObject = {};
     userList.forEach(user => {
@@ -37,7 +58,7 @@ export function* authenticate(action) {
  */
 export function* reauthorizeUser(action) {
   yield call(
-    [action.app, action.app.acquireTokenRedirect],
+    [app, app.acquireTokenRedirect],
     graphScopes,
     "https://login.microsoftonline.com/common",
     action.user
@@ -45,13 +66,13 @@ export function* reauthorizeUser(action) {
 }
 
 export function* signIn(action) {
-  yield call([action.app, action.app.loginRedirect], graphScopes);
+  yield call([app, app.loginRedirect], graphScopes);
   // no need for a put because the app redirects
 }
 
 export function* signOut(action) {
   yield call([localforage, localforage.clear]);
-  yield call([action.app, action.app.logout]);
+  yield call([app, app.logout]);
   // no need for a put because the app redirects
 }
 
@@ -61,7 +82,7 @@ export function* signOut(action) {
  * @param {any} action
  */
 export function* getPhoto(action) {
-  const currentToken = yield call(getToken, action.app, action.user);
+  const currentToken = yield call(getToken, action.user);
   if (currentToken !== "") {
     try {
       const result = yield call(axios, {
@@ -82,3 +103,58 @@ export function* getPhoto(action) {
     console.error("No token");
   }
 }
+
+/**
+ * Gets the users's token with a silent call
+ * @export
+ * @param {UserData} user
+ */
+export function* getToken(user) {
+  try {
+    const currentToken = yield call(
+      [app, app.acquireTokenSilent],
+      graphScopes,
+      null,
+      user
+    );
+    return currentToken
+  } catch (error) {
+    console.error(
+      `Could not acquire a valid token ${
+      user.displayableId
+      } by silently querying MSAL.`
+    );
+    console.error(error);
+    const newUser = new UserData(user, "", error);
+    yield put(authentication.updateUser(newUser));
+    return "";
+  }
+}
+
+/**
+ * Gets the users's token with a redirect
+ * @export
+ * @param {UserData} user
+ */
+export function* getTokenRedirect(user) {
+  try {
+    const currentToken = yield call(
+      [app, app.acquireTokenRedirect],
+      graphScopes,
+      null,
+      user
+    );
+    return currentToken;
+  } catch (error) {
+    console.error(
+      `Could not acquire a valid token ${
+      user.displayableId
+      } by redirecting to MSAL authentication.`
+    );
+    console.error(error);
+    const newUser = new UserData(user, "", error);
+    yield put(authentication.updateUser(newUser));
+    return "";
+  }
+}
+
