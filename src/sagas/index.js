@@ -2,7 +2,6 @@ import { takeEvery, takeLatest, call, put } from "redux-saga/effects";
 
 import { graphScopes } from "../constants";
 import {
-  UserData,
   AUTHENTICATE,
   SIGN_IN,
   SIGN_OUT,
@@ -12,7 +11,8 @@ import {
   OPEN_NOTEBOOKS,
   LOAD_SAVED_NOTEBOOKS,
   CLOSE_NOTEBOOK
-} from "./../types";
+} from "./../actionTypes";
+import { UserData } from "./../types";
 import { authentication } from "../actions";
 
 import {
@@ -81,7 +81,7 @@ export function* getToken(app, user) {
 }
 
 /**
- * Gets the users's token with a silent call
+ * Gets the users's token with a redirect
  * @export
  * @param {UserAgentApplication} app
  * @param {UserData} user

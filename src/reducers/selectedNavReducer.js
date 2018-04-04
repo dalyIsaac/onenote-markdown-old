@@ -1,4 +1,4 @@
-import { UPDATE_SELECTED_NOTEBOOK } from "./../types";
+import { UPDATE_SELECTED_NOTEBOOK } from "./../actionTypes";
 
 export default function SelectedNavReducer(state = [], action) {
     switch (action.type) {

@@ -1,4 +1,4 @@
-import { PUT_ALL_NOTEBOOKS, CLEAR_ALL_NOTEBOOKS } from "./../types";
+import { PUT_ALL_NOTEBOOKS, CLEAR_ALL_NOTEBOOKS } from "./../actionTypes";
 
 export default function notebooksReducer(state = [], action) {
   switch (action.type) {

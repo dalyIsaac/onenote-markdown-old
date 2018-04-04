@@ -1,4 +1,4 @@
-import { UPDATE_NOTEBOOK_ORDER } from "../types";
+import { UPDATE_NOTEBOOK_ORDER } from "../actionTypes";
 
 /**
  * Replaces the notebook order

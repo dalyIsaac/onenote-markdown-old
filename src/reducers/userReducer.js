@@ -1,4 +1,4 @@
-import { NEW_USER_OBJECT, UPDATE_USER } from "./../types/";
+import { NEW_USER_OBJECT, UPDATE_USER } from "./../actionTypes";
 
 export default function userReducer(state = {}, action) {
   switch (action.type) {
