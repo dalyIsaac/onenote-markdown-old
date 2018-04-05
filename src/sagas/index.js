@@ -12,7 +12,9 @@ import {
   CLOSE_NOTEBOOK,
   GET_SECTION_GROUPS,
   UPDATE_NOTEBOOK_ORDER,
-  LOAD_NOTEBOOK
+  LOAD_NOTEBOOK,
+  LOAD_SECTION_GROUPS,
+  LOAD_SAVED_SECTION_GROUPS
 } from "./../actionTypes";
 
 import {
@@ -28,8 +30,8 @@ import {
   loadSavedNotebooks,
   closeNotebook
 } from "./notebooks";
-import { getSectionGroups } from "./sectionGroups";
-import { storageSetNotebookOrder, loadNotebook } from "./storage";
+import { getSectionGroups, loadSavedSectionGroups } from "./sectionGroups";
+import { storageSetNotebookOrder, loadNotebook, loadSectionGroups } from "./storage";
 
 export default function* rootSaga() {
   yield takeLatest(AUTHENTICATE, authenticate);
@@ -44,6 +46,8 @@ export default function* rootSaga() {
   yield takeEvery(GET_SECTION_GROUPS, getSectionGroups);
   yield takeEvery(UPDATE_NOTEBOOK_ORDER, storageSetNotebookOrder);
   yield takeEvery(LOAD_NOTEBOOK, loadNotebook);
+  yield takeEvery(LOAD_SECTION_GROUPS, loadSectionGroups);
+  yield takeEvery(LOAD_SAVED_SECTION_GROUPS, loadSavedSectionGroups);
 }
 
 const urls = new WeakMap();

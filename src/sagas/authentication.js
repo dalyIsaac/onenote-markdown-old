@@ -2,7 +2,7 @@ import { call, put } from "redux-saga/effects";
 import { push } from "react-router-redux";
 
 import { UserData } from "./../types";
-import { authentication, notebooks } from "../actions";
+import { authentication, notebooks, sectionGroups } from "../actions";
 import { graphScopes } from "../constants";
 import { blobUrl } from "./index";
 import { betaUrl } from "../constants";
@@ -49,6 +49,7 @@ export function* authenticate(action) {
     }
   }
   yield put(notebooks.loadSavedNotebooks());
+  yield put(sectionGroups.loadSavedSectionGroups());
 }
 
 /**

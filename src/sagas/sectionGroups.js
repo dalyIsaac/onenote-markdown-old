@@ -4,6 +4,7 @@ import axios from "axios";
 import { SectionGroup } from "../types";
 import { updateNotebookSectionGroups } from "../actions/notebooks";
 import { sectionGroups } from "../actions";
+import { storageGetItems } from "./storage";
 
 export function* getSectionGroups(action) {
     const notebook = action.notebook;
@@ -24,5 +25,14 @@ export function* getSectionGroups(action) {
         }
         yield put(updateNotebookSectionGroups(sectionGroupsObject, notebook.id));
         yield put(sectionGroups.loadSectionGroups(sectionGroupsObject));
+    }
+}
+
+export function* loadSavedSectionGroups(action) {
+    try {
+        const sectionGroupsObject = yield call(storageGetItems, "sectionGroup");
+        yield put(sectionGroups.loadSavedSectionGroupsIntoRedux(sectionGroupsObject));
+    } catch (error) {
+        console.error(error);
     }
 }

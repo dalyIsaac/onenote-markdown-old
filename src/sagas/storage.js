@@ -62,3 +62,9 @@ export function* storageSetNotebookOrder(action) {
 export function* loadNotebook(action) {
   yield call(storageSetItem, action.notebook.id, action.notebook, "notebook");
 }
+
+export function* loadSectionGroups(action) {
+  for (const key of Object.keys(action.sectionGroups)) {
+    yield call(storageSetItem, key, action.sectionGroups[key], "sectionGroup");
+  }
+}
