@@ -31,7 +31,7 @@ export default class Navbar extends React.Component {
   render() {
     return (
       <div className="navbarParent">
-        <NotebookNav addNotebook={this.showModal} />
+        {/* <NotebookNav addNotebook={this.showModal} /> */}
         <Modal
           isOpen={this.state.showModal}
           onDismiss={this.closeModal}
