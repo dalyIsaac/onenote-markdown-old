@@ -46,15 +46,19 @@ export function* storageGetItems(type) {
   return output;
 }
 
-export function* storageSetNotebookOrder(notebookOrder) {
-  const newOrder = notebookOrder.map(val => val.slice(0, 8) === "notebook" ? val : "notebook." + val);
-  yield call(storageSetItem, "notebookOrder", newOrder);
-}
-
 export function storageRemoveItem(index, type = "") {
   if (type === "") {
     return localforage.removeItem(index);
   } else {
     return localforage.removeItem(`${type}.${index}`);
   }
+}
+
+export function* storageSetNotebookOrder(action) {
+  const newOrder = action.notebookOrder.map(val => val.slice(0, 8) === "notebook" ? val : "notebook." + val);
+  yield call(storageSetItem, "notebookOrder", newOrder);
+}
+
+export function* loadNotebook(action) {
+  yield call(storageSetItem, action.notebook.id, action.notebook, "notebook");
 }

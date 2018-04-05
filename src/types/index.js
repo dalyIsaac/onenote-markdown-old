@@ -12,7 +12,6 @@ export class UserData {
     Object.assign(this, msal);
     this.photo = photo;
     this.acquireTokenError = acquireTokenError;
-    this.sectionGroups = [];
   }
 }
 
@@ -44,13 +43,33 @@ export class NotebookRow {
 export class Notebook {
   /**
    * @param {Object} notebook JSON response from the Microsoft Graph for a notebook
+   * @param {string} userId
    */
-  constructor(notebook, user = undefined) {
+  constructor(notebook, userId = undefined) {
     this.id = undefined; // this is defined here purely for VSCode
-    if (user !== undefined) {
-      this.userId = user.userIdentifier;
+    this.sectionGroups = [];
+    this.sections = [];
+    if (userId !== undefined) {
+      this.userId = userId;
     }
     deflateObject(this, notebook);
+  }
+}
+
+/**
+ * Deflated section group from Microsoft Graph with some custom attributes
+ * @export
+ * @class SectionGroup
+ */
+export class SectionGroup {
+  constructor(sectionGroup, userId) {
+    this.id = undefined;
+    this.sectionGroups = [];
+    this.sections = [];
+    if (userId !== undefined) {
+      this.userId = userId;
+    }
+    deflateObject(this, sectionGroup);
   }
 }
 

@@ -2,11 +2,11 @@ import { call, put, select } from "redux-saga/effects";
 import axios from "axios";
 import { getToken } from "./authentication";
 import { stableUrl } from "../constants";
-import { getNotebooks, notebooks, totalNotebookLength } from "../actions";
+import { getNotebooks, notebooks, totalNotebookLength, sectionGroups } from "../actions";
 import { Notebook } from "./../types";
 import { updateNotebookOrder } from "../actions/notebookOrder";
 import { updateSelectedNotebook } from "../actions/selectedNav";
-import { storageGetItem, storageSetItem, storageGetItems, storageSetNotebookOrder, storageRemoveItem } from "./storage";
+import { storageGetItem, storageGetItems, storageRemoveItem } from "./storage";
 
 const getUsers = state => state.users;
 
@@ -46,7 +46,7 @@ export function* openNotebooks(action) {
   const usersObject = yield select(getUsers);
   for (let i = 0; i < action.notebooks.length; i++) {
     const element = action.notebooks[i];
-    const user = usersObject[action.userId];
+    const user = usersObject[element.userId];
     const currentToken = yield call(getToken, user);
     if (currentToken !== "") {
       const result = yield call(axios, {
@@ -55,13 +55,14 @@ export function* openNotebooks(action) {
         headers: { Authorization: `Bearer ${currentToken}` }
       });
 
-      const newNotebook = new Notebook(result.data, user);
-      yield put(notebooks.loadNotebookIntoRedux(newNotebook));
-      yield call(storageSetItem, newNotebook.id, newNotebook, "notebook");
+      const newNotebook = new Notebook(result.data, element.userId);
+      yield put(notebooks.loadNotebook(newNotebook));
+
+      // Section groups
+      yield put(sectionGroups.getSectionGroups(newNotebook));
 
       // Update notebook order
       notebookOrder.push(newNotebook.id);
-      yield call(storageSetNotebookOrder, notebookOrder);
       yield put(updateNotebookOrder(notebookOrder));
     }
   }
@@ -94,10 +95,9 @@ export function* closeNotebook(action) {
     yield put(totalNotebookLength.removeOne());
     yield call(storageRemoveItem, action.notebookId, "notebook");
 
-    let notebookOrder = yield call(storageGetItem, "notebookOrder");
+    let notebookOrder = [...(yield select(state => state.notebookOrder))];
     const index = notebookOrder.indexOf("notebook." + action.notebookId);
     notebookOrder.splice(index, 1);
-    yield call(storageSetItem, 'notebookOrder', notebookOrder);
     yield put(updateNotebookOrder(notebookOrder));
 
     yield put(updateSelectedNotebook([]));

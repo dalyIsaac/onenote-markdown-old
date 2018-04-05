@@ -1,9 +1,10 @@
 import {
     OPEN_NOTEBOOKS,
-    LOAD_NOTEBOOK_INTO_REDUX,
+    LOAD_NOTEBOOK,
     LOAD_NOTEBOOKS_INTO_REDUX,
     LOAD_SAVED_NOTEBOOKS,
-    CLOSE_NOTEBOOK
+    CLOSE_NOTEBOOK,
+    UPDATE_NOTEBOOK_SECTION_GROUPS
 } from "../actionTypes";
 
 /**
@@ -19,8 +20,8 @@ export const openNotebooks = (notebooks) => ({
  * Loads a notebook into the redux store
  * @param {Notebook} notebook 
  */
-export const loadNotebookIntoRedux = (notebook) => ({
-    type: LOAD_NOTEBOOK_INTO_REDUX,
+export const loadNotebook = (notebook) => ({
+    type: LOAD_NOTEBOOK,
     notebook
 })
 
@@ -42,5 +43,12 @@ export const loadSavedNotebooks = () => ({
 
 export const closeNotebook = (notebookId) => ({
     type: CLOSE_NOTEBOOK,
+    notebookId
+});
+
+// this should be used in the reducer and a saga
+export const updateNotebookSectionGroups = (sectionGroups, notebookId) => ({
+    type: UPDATE_NOTEBOOK_SECTION_GROUPS,
+    sectionGroups,
     notebookId
 });
