@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Modal } from "office-ui-fabric-react/lib/Modal";
 import { Spinner, SpinnerSize } from "office-ui-fabric-react/lib/Spinner";
 import NotebookPicker from "./notebookPicker";
-import NotebookNav from "../../containers/notebookNav";
+// import NotebookNav from "../../containers/notebookNav";
 import "./navbar.css";
 
 export default class Navbar extends React.Component {

@@ -53,18 +53,3 @@ export function storageRemoveItem(index, type = "") {
     return localforage.removeItem(`${type}.${index}`);
   }
 }
-
-export function* storageSetNotebookOrder(action) {
-  const newOrder = action.notebookOrder.map(val => val.slice(0, 8) === "notebook" ? val : "notebook." + val);
-  yield call(storageSetItem, "notebookOrder", newOrder);
-}
-
-export function* loadNotebook(action) {
-  yield call(storageSetItem, action.notebook.id, action.notebook, "notebook");
-}
-
-export function* loadSectionGroups(action) {
-  for (const key of Object.keys(action.sectionGroups)) {
-    yield call(storageSetItem, key, action.sectionGroups[key], "sectionGroup");
-  }
-}
