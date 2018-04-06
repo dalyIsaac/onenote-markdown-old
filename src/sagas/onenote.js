@@ -3,7 +3,7 @@ import { call, put } from "redux-saga/effects";
 import Axios from "axios";
 import { stableUrl } from "../constants";
 import { onenote, notebookOrder } from "../actions";
-import { Notebook, SectionGroup, Section } from "../types";
+import { Notebook, SectionGroup, Section, Page } from "../types";
 import { storageSetItem } from "./storage";
 
 export function* openNotebooks(action) {
@@ -88,7 +88,31 @@ export function* getSection(action) {
 
         const section = new Section(sectionResult.data, pagesResult.data, userId);
         yield put(onenote.saveSection(section));
-        // now I need to get pages
+
+        for (const pageId of section.pages) {
+            yield put(onenote.getPage(userId, pageId));
+        }
+    }
+}
+
+export function* getPage(action) {
+    const { userId, pageId } = action;
+    const token = yield call(getToken, userId);
+    if (token !== "") {
+        const pageResult = yield call(Axios, {
+            method: "get",
+            url: `${stableUrl}me/onenote/pages/${pageId}`,
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        const pageContent = yield call(Axios, {
+            method: "get",
+            url: `${stableUrl}me/onenote/pages/${pageId}/content`,
+            responseType: 'text',
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        const page = new Page(pageResult.data, pageContent.data, userId);
+        yield put(onenote.savePage(page));
+        // get resources?
     }
 }
 
@@ -105,4 +129,9 @@ export function* saveSectionGroup(action) {
 export function* saveSection(action) {
     const { section } = action;
     yield call(storageSetItem, section.id, section);
+}
+
+export function* savePage(action) {
+    const { page } = action;
+    yield call(storageSetItem, page.id, page);
 }

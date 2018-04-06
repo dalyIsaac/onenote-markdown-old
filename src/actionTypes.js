@@ -33,3 +33,6 @@ export const SAVE_SECTION_GROUP = "SAVE_SECTION_GROUP";
 //sections
 export const GET_SECTION = "GET_SECTION";
 export const SAVE_SECTION = "SAVE_SECTION";
+// pages
+export const GET_PAGE = "GET_PAGE";
+export const SAVE_PAGE = "SAVE_PAGE";

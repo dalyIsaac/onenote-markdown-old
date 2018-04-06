@@ -1,4 +1,4 @@
-import { OPEN_NOTEBOOKS, GET_NOTEBOOK, SAVE_NOTEBOOK, GET_SECTION_GROUP, GET_SECTION, SAVE_SECTION_GROUP, SAVE_SECTION } from "../actionTypes";
+import { OPEN_NOTEBOOKS, GET_NOTEBOOK, SAVE_NOTEBOOK, GET_SECTION_GROUP, GET_SECTION, SAVE_SECTION_GROUP, SAVE_SECTION, GET_PAGE, SAVE_PAGE } from "../actionTypes";
 
 export const openNotebooks = (notebookList) => ({
     type: OPEN_NOTEBOOKS,
@@ -65,4 +65,25 @@ export const getSection = (userId, sectionId) => ({
 export const saveSection = (section) => ({
     type: SAVE_SECTION,
     section
+});
+
+
+/**
+ * Fetches a page and it's content
+ * @param {string} userId
+ * @param {string} pageId
+ */
+export const getPage = (userId, pageId) => ({
+    type: GET_PAGE,
+    userId,
+    pageId
+});
+
+/**
+ * Saves a page in Redux and in localforage
+ * @param {Page} page 
+ */
+export const savePage = (page) => ({
+    type: SAVE_PAGE,
+    page
 });

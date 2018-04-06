@@ -15,6 +15,8 @@ import {
   GET_SECTION,
   SAVE_SECTION,
   ADD_NOTEBOOK_TO_ORDER,
+  GET_PAGE,
+  SAVE_PAGE,
 } from "./../actionTypes";
 
 import {
@@ -31,7 +33,9 @@ import {
   getSectionGroup,
   saveSectionGroup,
   getSection,
-  saveSection
+  saveSection,
+  getPage,
+  savePage
 } from "./onenote";
 import { getAllNotebooks } from "./allNotebooks";
 import { addNotebookToOrder } from "./notebookOrder";
@@ -52,6 +56,8 @@ export default function* rootSaga() {
   yield takeEvery(SAVE_SECTION_GROUP, saveSectionGroup);
   yield takeEvery(GET_SECTION, getSection);
   yield takeEvery(SAVE_SECTION, saveSection);
+  yield takeEvery(GET_PAGE, getPage);
+  yield takeEvery(SAVE_PAGE, savePage);
   yield takeEvery(ADD_NOTEBOOK_TO_ORDER, addNotebookToOrder);
 }
 

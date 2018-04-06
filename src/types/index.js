@@ -95,6 +95,22 @@ export class Section {
     }
 }
 
+export class Page {
+    /**
+     * @param {Object} page Result from the Microsoft Graph query
+     * @param {string} content Result from the Microsoft Graph query on the /content method
+     * @param {string} userId 
+     */
+    constructor(page, content, userId = undefined) {
+        this.id = undefined; // the following explicitly defined properties are here purely for VSCode
+        this.content = content;
+        if (userId !== undefined) {
+            this.userId = userId;
+        }
+        deflateObject(this, page);
+    }
+}
+
 /**
  * Deflates an object.  
  * For example: `{ "hello": { "world": "earth" } }` goes to `{ "hello.world": "earth" }`  

@@ -1,4 +1,4 @@
-import { select, call } from "redux-saga/effects";
+import { call } from "redux-saga/effects";
 import { storageSetItem, storageGetItem } from "./storage";
 
 export function* addNotebookToOrder(action) {
