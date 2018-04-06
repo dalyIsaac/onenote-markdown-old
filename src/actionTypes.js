@@ -19,6 +19,9 @@ export const TOTAL_NOTEBOOK_LENGTH = "TOTAL_NOTEBOOK_LENGTH";
 // Selected nav
 export const UPDATE_SELECTED_NOTEBOOK = "UPDATE_SELECTED_NOTEBOOK";
 
+// Notebook order
+export const ADD_NOTEBOOK_TO_ORDER = "ADD_NOTEBOOK_TO_ORDER";
+
 // ======== ONENOTE ========
 // notebooks
 export const OPEN_NOTEBOOKS = "OPEN_NOTEBOOKS";

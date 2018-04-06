@@ -2,7 +2,7 @@ import { getToken } from "./authentication";
 import { call, put } from "redux-saga/effects";
 import Axios from "axios";
 import { stableUrl } from "../constants";
-import { onenote } from "../actions";
+import { onenote, notebookOrder } from "../actions";
 import { Notebook, SectionGroup, Section } from "../types";
 import { storageSetItem } from "./storage";
 
@@ -31,6 +31,7 @@ export function* getNotebook(action) {
         });
         const notebook = new Notebook(result.data, userId);
         yield put(onenote.saveNotebook(notebook));
+        yield put(notebookOrder.addNotebookToOrder(notebookId));
         for (const sectionGroupId of notebook.sectionGroups) {
             yield put(onenote.getSectionGroup(userId, sectionGroupId));
         }

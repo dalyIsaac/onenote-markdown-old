@@ -14,6 +14,7 @@ import {
   SAVE_SECTION_GROUP,
   GET_SECTION,
   SAVE_SECTION,
+  ADD_NOTEBOOK_TO_ORDER,
 } from "./../actionTypes";
 
 import {
@@ -32,7 +33,8 @@ import {
   getSection,
   saveSection
 } from "./onenote";
-import { getAllNotebooks } from "./notebooks";
+import { getAllNotebooks } from "./allNotebooks";
+import { addNotebookToOrder } from "./notebookOrder";
 
 // import { openNotebooks } from "./onenote";
 
@@ -50,6 +52,7 @@ export default function* rootSaga() {
   yield takeEvery(SAVE_SECTION_GROUP, saveSectionGroup);
   yield takeEvery(GET_SECTION, getSection);
   yield takeEvery(SAVE_SECTION, saveSection);
+  yield takeEvery(ADD_NOTEBOOK_TO_ORDER, addNotebookToOrder);
 }
 
 const urls = new WeakMap();

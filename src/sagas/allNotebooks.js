@@ -1,11 +1,8 @@
 import { call, put, select } from "redux-saga/effects";
-import axios from "axios";
+import Axios from "axios";
 import { getToken } from "./authentication";
 import { stableUrl } from "../constants";
-import { getNotebooks, totalNotebookLength } from "../actions";
-import { Notebook } from "./../types";
-import { updateSelectedNotebook } from "../actions/selectedNav";
-import { storageGetItem, storageGetItems, storageRemoveItem } from "./storage";
+import { getNotebooks } from "../actions";
 
 const getUsers = state => state.users;
 
@@ -19,7 +16,7 @@ export function* getAllNotebooks(action) {
     const user = usersObject[userId];
     const currentToken = yield call(getToken, user.userIdentifier);
     if (currentToken !== "") {
-      const result = yield call(axios, {
+      const result = yield call(Axios, {
         method: "get",
         url: stableUrl + "me/onenote/notebooks",
         headers: { Authorization: `Bearer ${currentToken}` }
