@@ -2,9 +2,8 @@ import { call, put, select } from "redux-saga/effects";
 import axios from "axios";
 import { getToken } from "./authentication";
 import { stableUrl } from "../constants";
-import { getNotebooks, notebooks, totalNotebookLength, sectionGroups } from "../actions";
+import { getNotebooks, totalNotebookLength } from "../actions";
 import { Notebook } from "./../types";
-import { updateNotebookOrder } from "../actions/notebookOrder";
 import { updateSelectedNotebook } from "../actions/selectedNav";
 import { storageGetItem, storageGetItems, storageRemoveItem } from "./storage";
 
@@ -18,7 +17,7 @@ export function* getAllNotebooks(action) {
   const usersObject = yield select(getUsers);
   for (const userId in usersObject) {
     const user = usersObject[userId];
-    const currentToken = yield call(getToken, user);
+    const currentToken = yield call(getToken, user.userIdentifier);
     if (currentToken !== "") {
       const result = yield call(axios, {
         method: "get",

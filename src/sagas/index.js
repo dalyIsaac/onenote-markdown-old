@@ -6,6 +6,14 @@ import {
   SIGN_OUT,
   GET_PHOTO,
   REAUTHORIZE_USER,
+  OPEN_NOTEBOOKS,
+  GET_NOTEBOOK,
+  GET_ALL_NOTEBOOKS,
+  SAVE_NOTEBOOK,
+  GET_SECTION_GROUP,
+  SAVE_SECTION_GROUP,
+  GET_SECTION,
+  SAVE_SECTION,
 } from "./../actionTypes";
 
 import {
@@ -15,6 +23,18 @@ import {
   getPhoto,
   reauthorizeUser
 } from "./authentication";
+import {
+  openNotebooks,
+  getNotebook,
+  saveNotebook,
+  getSectionGroup,
+  saveSectionGroup,
+  getSection,
+  saveSection
+} from "./onenote";
+import { getAllNotebooks } from "./notebooks";
+
+// import { openNotebooks } from "./onenote";
 
 export default function* rootSaga() {
   yield takeLatest(AUTHENTICATE, authenticate);
@@ -22,6 +42,14 @@ export default function* rootSaga() {
   yield takeLatest(SIGN_OUT, signOut);
   yield takeEvery(GET_PHOTO, getPhoto);
   yield takeLatest(REAUTHORIZE_USER, reauthorizeUser);
+  yield takeEvery(GET_ALL_NOTEBOOKS, getAllNotebooks);
+  yield takeEvery(OPEN_NOTEBOOKS, openNotebooks);
+  yield takeEvery(GET_NOTEBOOK, getNotebook);
+  yield takeEvery(SAVE_NOTEBOOK, saveNotebook);
+  yield takeEvery(GET_SECTION_GROUP, getSectionGroup);
+  yield takeEvery(SAVE_SECTION_GROUP, saveSectionGroup);
+  yield takeEvery(GET_SECTION, getSection);
+  yield takeEvery(SAVE_SECTION, saveSection);
 }
 
 const urls = new WeakMap();

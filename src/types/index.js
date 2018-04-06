@@ -7,12 +7,12 @@
  * @class UserData
  */
 export class UserData {
-  constructor(msal, photo = "", acquireTokenError = null) {
-    this.displayableId = undefined;
-    Object.assign(this, msal);
-    this.photo = photo;
-    this.acquireTokenError = acquireTokenError;
-  }
+    constructor(msal, photo = "", acquireTokenError = null) {
+        this.displayableId = undefined;
+        Object.assign(this, msal);
+        this.photo = photo;
+        this.acquireTokenError = acquireTokenError;
+    }
 }
 
 /**
@@ -21,19 +21,19 @@ export class UserData {
  * @class NotebookRow
  */
 export class NotebookRow {
-  /**
-   * Creates an instance of NotebookRow.
-   * @param {Object} notebook 
-   * @param {string} userId
-   * @memberof NotebookRow
-   */
-  constructor(notebook, userId, displayableId) {
-    this.fileName = notebook.displayName;
-    this.lastModifiedDateTime = new Date(notebook.lastModifiedDateTime);
-    this.userDisplayableId = displayableId;
-    this.userId = userId;
-    this.notebook = notebook;
-  }
+    /**
+     * Creates an instance of NotebookRow.
+     * @param {Object} notebook 
+     * @param {string} userId
+     * @memberof NotebookRow
+     */
+    constructor(notebook, userId, displayableId) {
+        this.fileName = notebook.displayName;
+        this.lastModifiedDateTime = new Date(notebook.lastModifiedDateTime);
+        this.userDisplayableId = displayableId;
+        this.userId = userId;
+        this.notebook = notebook;
+    }
 }
 
 /**
@@ -41,19 +41,19 @@ export class NotebookRow {
  * @class Notebook
  */
 export class Notebook {
-  /**
-   * @param {Object} notebook JSON response from the Microsoft Graph for a notebook
-   * @param {string} userId
-   */
-  constructor(notebook, userId = undefined) {
-    this.id = undefined; // this is defined here purely for VSCode
-    this.sectionGroups = [];
-    this.sections = [];
-    if (userId !== undefined) {
-      this.userId = userId;
+    /**
+     * @param {Object} notebook JSON response from the Microsoft Graph for a notebook
+     * @param {string} userId
+     */
+    constructor(notebook, userId = undefined) {
+        this.id = undefined; // the following explicitly defined properties are here purely for VSCode
+        this.sectionGroups = [];
+        this.sections = [];
+        if (userId !== undefined) {
+            this.userId = userId;
+        }
+        deflateObject(this, notebook);
     }
-    deflateObject(this, notebook);
-  }
 }
 
 /**
@@ -62,15 +62,37 @@ export class Notebook {
  * @class SectionGroup
  */
 export class SectionGroup {
-  constructor(sectionGroup, userId) {
-    this.id = undefined;
-    this.sectionGroups = [];
-    this.sections = [];
-    if (userId !== undefined) {
-      this.userId = userId;
+    constructor(sectionGroup, userId = undefined) {
+        this.id = undefined; // the following explicitly defined properties are here purely for VSCode
+        this.sectionGroups = [];
+        this.sections = [];
+        if (userId !== undefined) {
+            this.userId = userId;
+        }
+        deflateObject(this, sectionGroup);
     }
-    deflateObject(this, sectionGroup);
-  }
+}
+
+/**
+ * Deflated section group from Microsoft Graph with some custom attributes
+ * @export
+ * @class Section
+ */
+export class Section {
+
+    /**
+     * @param {Object} section Result from the Microsoft Graph query
+     * @param {*} pages Result from the Microsoft Graph query on the /pages method
+     * @param {*} userId 
+     */
+    constructor(section, pages, userId = undefined) {
+        this.id = undefined; // the following explicitly defined properties are here purely for VSCode
+        this.pages = getIds(pages.value);
+        if (userId !== undefined) {
+            this.userId = userId;
+        }
+        deflateObject(this, section);
+    }
 }
 
 /**
@@ -81,23 +103,42 @@ export class SectionGroup {
  * @param {Object} source 
  * @param {string} [parentName='']
  */
-function deflateObject(target, source, parentName = '') {
-  for (const key in source) {
-    const prop = source[key];
-    if (typeof prop === 'object') {
-      if (parentName !== '') {
-        deflateObject(target, prop, `${parentName}.${key}`);
-      } else {
-        deflateObject(target, prop, `${key}`);
-      }
-    } else {
-      if (parentName !== '') {
-        target[`${parentName}.${key}`] = prop;
-      } else {
-        target[key] = prop;
-      }
+export function deflateObject(target, source, parentName = '') {
+    for (const key in source) {
+        const prop = source[key];
+        if (Array.isArray(prop)) {
+            if (parentName !== '') {
+                target[`${parentName}.${key}`] = getIds(prop);
+            } else {
+                target[key] = getIds(prop);
+            }
+        } else if (typeof prop === 'object') {
+            if (parentName !== '') {
+                deflateObject(target, prop, `${parentName}.${key}`);
+            } else {
+                deflateObject(target, prop, `${key}`);
+            }
+        } else {
+            if (parentName !== '') {
+                target[`${parentName}.${key}`] = prop;
+            } else {
+                target[key] = prop;
+            }
+        }
     }
-  }
+}
+
+/**
+ * Gets the IDs from an array of objects
+ * @param {array} element
+ * @returns {array} idList List of IDs
+ */
+function getIds(element) {
+    let idList = [];
+    element.forEach(element => {
+        idList.push(element.id);
+    });
+    return idList;
 }
 
 /**
@@ -108,26 +149,26 @@ function deflateObject(target, source, parentName = '') {
  * @param {any} key 
  */
 function inflateObject(target, source, key) {
-  if (typeof source === 'object') {
-    for (const key in source) {
-      _inflateObjectHelper(target, source[key], key);
+    if (typeof source === 'object') {
+        for (const key in source) {
+            _inflateObjectHelper(target, source[key], key)
+        }
+    } else {
+        _inflateObjectHelper(target, source, key)
     }
-  } else {
-    _inflateObjectHelper(target, source, key);
-  }
 }
 
 function _inflateObjectHelper(target, source, key) {
-  const dotIndex = key[0] === '@' ? -1 : key.indexOf('.');
+    const dotIndex = key.includes('@odata') ? -1 : key.indexOf('.');
 
-  if (dotIndex === -1) {
-    target[key] = source;
-  } else {
-    const parentKey = key.slice(0, dotIndex);
-    const childKey = key.slice(dotIndex + 1);
-    if (target[parentKey] === undefined) {
-      target[parentKey] = {};
+    if (dotIndex === -1) {
+        target[key] = source;
+    } else {
+        const parentKey = key.slice(0, dotIndex);
+        const childKey = key.slice(dotIndex + 1);
+        if (target[parentKey] === undefined) {
+            target[parentKey] = {};
+        }
+        inflateObject(target[parentKey], source, childKey)
     }
-    inflateObject(target[parentKey], source, childKey);
-  }
 }

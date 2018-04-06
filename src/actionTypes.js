@@ -16,6 +16,17 @@ export const CLEAR_ALL_NOTEBOOKS = "CLEAR_ALL_NOTEBOOKS";
 // Total notebook length
 export const TOTAL_NOTEBOOK_LENGTH = "TOTAL_NOTEBOOK_LENGTH";
 
-
 // Selected nav
 export const UPDATE_SELECTED_NOTEBOOK = "UPDATE_SELECTED_NOTEBOOK";
+
+// ======== ONENOTE ========
+// notebooks
+export const OPEN_NOTEBOOKS = "OPEN_NOTEBOOKS";
+export const GET_NOTEBOOK = "GET_NOTEBOOK";
+export const SAVE_NOTEBOOK = "SAVE_NOTEBOOK";
+//section groups
+export const GET_SECTION_GROUP = "GET_SECTION_GROUP";
+export const SAVE_SECTION_GROUP = "SAVE_SECTION_GROUP";
+//sections
+export const GET_SECTION = "GET_SECTION";
+export const SAVE_SECTION = "SAVE_SECTION";
