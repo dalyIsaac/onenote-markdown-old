@@ -2,12 +2,13 @@ import { getToken } from "./authentication";
 import { call, put } from "redux-saga/effects";
 import Axios from "axios";
 import { stableUrl } from "../constants";
-import { onenote, notebookOrder } from "../actions";
+import { onenote, notebookOrder, totalNotebookLength } from "../actions";
 import { Notebook, SectionGroup, Section, Page } from "../types";
 import { storageSetItem, storageGetItem, storageGetItems } from "./storage";
 
 export function* openNotebooks(action) {
     const { notebookList } = action; // notebookList is a list of NotebookRows
+    yield put(totalNotebookLength.updateLength(notebookList.length));
     for (let i = 0; i < notebookList.length; i++) {
         const element = notebookList[i];
         yield put(onenote.getNotebook(element.userId, element.notebook.id));
@@ -32,12 +33,6 @@ export function* getNotebook(action) {
         const notebook = new Notebook(result.data, userId);
         yield put(onenote.saveNotebook(notebook));
         yield put(notebookOrder.addNotebookToOrder(notebookId));
-        for (const sectionGroupId of notebook.sectionGroups) {
-            yield put(onenote.getSectionGroup(userId, sectionGroupId));
-        }
-        for (const sectionId of notebook.sections) {
-            yield put(onenote.getSection(userId, sectionId));
-        }
     }
 }
 
@@ -58,12 +53,6 @@ export function* getSectionGroup(action) {
         });
         const sectionGroup = new SectionGroup(result.data, userId);
         yield put(onenote.saveSectionGroup(sectionGroup));
-        for (const sectionGroupId of sectionGroup.sectionGroups) {
-            yield put(onenote.getSectionGroup(userId, sectionGroupId));
-        }
-        for (const sectionId of sectionGroup.sections) {
-            yield put(onenote.getSection(userId, sectionId));
-        }
     }
 }
 
@@ -88,10 +77,6 @@ export function* getSection(action) {
 
         const section = new Section(sectionResult.data, pagesResult.data, userId);
         yield put(onenote.saveSection(section));
-
-        for (const pageId of section.pages) {
-            yield put(onenote.getPage(userId, pageId));
-        }
     }
 }
 
@@ -101,18 +86,25 @@ export function* getPage(action) {
     if (token !== "") {
         const pageResult = yield call(Axios, {
             method: "get",
-            url: `${stableUrl}me/onenote/pages/${pageId}`,
+            url: `${stableUrl}me/onenote/pages/${pageId}?$expand=parentNotebook,parentSection`,
             headers: { Authorization: `Bearer ${token}` }
         });
-        const pageContent = yield call(Axios, {
-            method: "get",
-            url: `${stableUrl}me/onenote/pages/${pageId}/content`,
-            responseType: 'text',
-            headers: { Authorization: `Bearer ${token}` }
-        });
-        const page = new Page(pageResult.data, pageContent.data, userId);
-        yield put(onenote.savePage(page));
-        // get resources?
+        try {
+            const pageContent = yield call(Axios, {
+                method: "get",
+                url: `${stableUrl}me/onenote/pages/${pageId}/content`,
+                responseType: 'text',
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            const page = new Page(pageResult.data, pageContent.data, userId);
+            yield put(onenote.savePage(page));
+            // get resources?
+        } catch (error) {
+            console.info(`The content for the page titled '${pageResult.data.title}' could not be found in Microsoft Graph. 
+Supposedly the page could be found in the notebook '${pageResult.data.parentNotebook.displayName}', inside the section '${pageResult.data.parentSection.displayName}'. 
+It is assumed that the page does not actually exist anymore.`);
+            console.info(error);
+        }
     }
 }
 
@@ -137,8 +129,9 @@ export function* savePage(action) {
 }
 
 export function* getOneNote(action) {
-    const order = yield call(storageGetItem, "notebookOrder");
+    const order = (yield call(storageGetItem, "notebookOrder")) || [];
     yield put(notebookOrder.loadNotebookOrder(order));
-    const everythingElse = yield call(storageGetItems);
+    yield put(totalNotebookLength.update(order.length));
+    const everythingElse = (yield call(storageGetItems)) || {};
     yield put(onenote.loadOneNote(everythingElse));
 }
