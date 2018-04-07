@@ -4,7 +4,7 @@ import Axios from "axios";
 import { stableUrl } from "../constants";
 import { onenote, notebookOrder } from "../actions";
 import { Notebook, SectionGroup, Section, Page } from "../types";
-import { storageSetItem } from "./storage";
+import { storageSetItem, storageGetItem, storageGetItems } from "./storage";
 
 export function* openNotebooks(action) {
     const { notebookList } = action; // notebookList is a list of NotebookRows
@@ -134,4 +134,11 @@ export function* saveSection(action) {
 export function* savePage(action) {
     const { page } = action;
     yield call(storageSetItem, page.id, page);
+}
+
+export function* getOneNote(action) {
+    const order = yield call(storageGetItem, "notebookOrder");
+    yield put(notebookOrder.loadNotebookOrder(order));
+    const everythingElse = yield call(storageGetItems);
+    yield put(onenote.loadOneNote(everythingElse));
 }

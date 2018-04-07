@@ -1,4 +1,4 @@
-import { SAVE_NOTEBOOK, SAVE_SECTION_GROUP, SAVE_SECTION, SAVE_PAGE } from "../actionTypes";
+import { SAVE_NOTEBOOK, SAVE_SECTION_GROUP, SAVE_SECTION, SAVE_PAGE, LOAD_ONENOTE } from "../actionTypes";
 
 export default function onenote(state = {}, action) {
     let data = { ...state };
@@ -24,6 +24,9 @@ export default function onenote(state = {}, action) {
             let page = { ...action.page };
             data[page.id] = page;
             return data;
+        case LOAD_ONENOTE:
+            const { onenote } = action;
+            return onenote;
         default:
             return state;
     }

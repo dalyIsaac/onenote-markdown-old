@@ -1,8 +1,24 @@
-import { OPEN_NOTEBOOKS, GET_NOTEBOOK, SAVE_NOTEBOOK, GET_SECTION_GROUP, GET_SECTION, SAVE_SECTION_GROUP, SAVE_SECTION, GET_PAGE, SAVE_PAGE } from "../actionTypes";
+import { OPEN_NOTEBOOKS, GET_NOTEBOOK, SAVE_NOTEBOOK, GET_SECTION_GROUP, GET_SECTION, SAVE_SECTION_GROUP, SAVE_SECTION, GET_PAGE, SAVE_PAGE, LOAD_ONENOTE, GET_ONENOTE } from "../actionTypes";
 
 export const openNotebooks = (notebookList) => ({
     type: OPEN_NOTEBOOKS,
     notebookList
+});
+
+/**
+ * Load all OneNote objects
+ * @param {Object} onenote 
+ */
+export const loadOneNote = (onenote) => ({
+    type: LOAD_ONENOTE,
+    onenote
+});
+
+/**
+ * Gets OneNote from localforage
+ */
+export const getOneNote = () => ({
+    type: GET_ONENOTE
 });
 
 /**

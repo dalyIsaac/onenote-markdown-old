@@ -21,8 +21,11 @@ export const UPDATE_SELECTED_NOTEBOOK = "UPDATE_SELECTED_NOTEBOOK";
 
 // Notebook order
 export const ADD_NOTEBOOK_TO_ORDER = "ADD_NOTEBOOK_TO_ORDER";
+export const LOAD_NOTEBOOK_ORDER = "LOAD_NOTEBOOK_ORDER";
 
 // ======== ONENOTE ========
+export const GET_ONENOTE = "GET_ONENOTE";
+export const LOAD_ONENOTE = "LOAD_ONENOTE";
 // notebooks
 export const OPEN_NOTEBOOKS = "OPEN_NOTEBOOKS";
 export const GET_NOTEBOOK = "GET_NOTEBOOK";

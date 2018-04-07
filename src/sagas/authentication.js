@@ -2,7 +2,7 @@ import { call, put, select } from "redux-saga/effects";
 import { push } from "react-router-redux";
 
 import { UserData } from "./../types";
-import { authentication } from "../actions";
+import { authentication, onenote } from "../actions";
 import { graphScopes } from "../constants";
 import { blobUrl } from "./index";
 import { betaUrl } from "../constants";
@@ -48,6 +48,7 @@ export function* authenticate(action) {
       yield put(authentication.getPhoto(user));
     }
   }
+  yield put(onenote.getOneNote());
 }
 
 /**
