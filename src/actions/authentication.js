@@ -13,12 +13,10 @@ import { UserData } from "../types"; //eslint-disable-line
 /**
  * Creates an action to start the authentication process with MSAL
  */
-export function authenticate(dispatch) {
-  return {
-    type: AUTHENTICATE,
-    dispatch
-  };
-}
+export const authenticate = (dispatch) => ({
+  type: AUTHENTICATE,
+  dispatch
+});
 
 /**
  * Creates an action to start the signin process with MSAL

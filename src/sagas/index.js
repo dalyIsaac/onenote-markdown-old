@@ -5,11 +5,19 @@ import {
   SIGN_IN,
   SIGN_OUT,
   GET_PHOTO,
-  GET_ALL_NOTEBOOKS,
   REAUTHORIZE_USER,
   OPEN_NOTEBOOKS,
-  LOAD_SAVED_NOTEBOOKS,
-  CLOSE_NOTEBOOK
+  GET_NOTEBOOK,
+  GET_ALL_NOTEBOOKS,
+  SAVE_NOTEBOOK,
+  GET_SECTION_GROUP,
+  SAVE_SECTION_GROUP,
+  GET_SECTION,
+  SAVE_SECTION,
+  ADD_NOTEBOOK_TO_ORDER,
+  GET_PAGE,
+  SAVE_PAGE,
+  GET_ONENOTE,
 } from "./../actionTypes";
 
 import {
@@ -20,22 +28,40 @@ import {
   reauthorizeUser
 } from "./authentication";
 import {
-  getAllNotebooks,
   openNotebooks,
-  loadSavedNotebooks,
-  closeNotebook
-} from "./notebooks";
+  getNotebook,
+  saveNotebook,
+  getSectionGroup,
+  saveSectionGroup,
+  getSection,
+  saveSection,
+  getPage,
+  savePage,
+  getOneNote
+} from "./onenote";
+import { getAllNotebooks } from "./allNotebooks";
+import { addNotebookToOrder } from "./notebookOrder";
+
+// import { openNotebooks } from "./onenote";
 
 export default function* rootSaga() {
   yield takeLatest(AUTHENTICATE, authenticate);
   yield takeLatest(SIGN_IN, signIn);
   yield takeLatest(SIGN_OUT, signOut);
   yield takeEvery(GET_PHOTO, getPhoto);
-  yield takeLatest(GET_ALL_NOTEBOOKS, getAllNotebooks);
   yield takeLatest(REAUTHORIZE_USER, reauthorizeUser);
-  yield takeLatest(OPEN_NOTEBOOKS, openNotebooks);
-  yield takeLatest(LOAD_SAVED_NOTEBOOKS, loadSavedNotebooks);
-  yield takeEvery(CLOSE_NOTEBOOK, closeNotebook);
+  yield takeEvery(GET_ALL_NOTEBOOKS, getAllNotebooks);
+  yield takeEvery(OPEN_NOTEBOOKS, openNotebooks);
+  yield takeEvery(GET_NOTEBOOK, getNotebook);
+  yield takeEvery(SAVE_NOTEBOOK, saveNotebook);
+  yield takeEvery(GET_SECTION_GROUP, getSectionGroup);
+  yield takeEvery(SAVE_SECTION_GROUP, saveSectionGroup);
+  yield takeEvery(GET_SECTION, getSection);
+  yield takeEvery(SAVE_SECTION, saveSection);
+  yield takeEvery(GET_PAGE, getPage);
+  yield takeEvery(SAVE_PAGE, savePage);
+  yield takeEvery(ADD_NOTEBOOK_TO_ORDER, addNotebookToOrder);
+  yield takeLatest(GET_ONENOTE, getOneNote);
 }
 
 const urls = new WeakMap();

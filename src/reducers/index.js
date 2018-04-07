@@ -1,19 +1,17 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import userReducer from './userReducer';
-import getNotebooksReducer from './getNotebooksReducer';
-import notebooksReducer from './notebooksReducer';
-import sectionGroupsReducer from './sectionGroupsReducer';
+import allNotebooksReducer from './allNotebooksReducer';
 import notebookOrderReducer from './notebookOrderReducer'
 import selectedNavReducer from './selectedNavReducer';
 import totalNotebookLength from './totalNotebookLengthReducer';
+import onenoteReducer from './onenoteReducer';
 
 export default combineReducers({
+    onenote: onenoteReducer,
     router: routerReducer,
     users: userReducer,
-    allNotebooks: getNotebooksReducer, // used for opening notebooks
-    notebooks: notebooksReducer, // used for the open notebooks
-    sectionGroups: sectionGroupsReducer,
+    allNotebooks: allNotebooksReducer, // used for opening notebooks
     notebookOrder: notebookOrderReducer,
     selectedNav: selectedNavReducer,
     totalNotebookLength: totalNotebookLength

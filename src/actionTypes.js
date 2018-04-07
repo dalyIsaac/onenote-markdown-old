@@ -12,18 +12,30 @@ export const REAUTHORIZE_USER = "REAUTHORIZE_USER";
 export const GET_ALL_NOTEBOOKS = "GET_ALL_NOTEBOOKS";
 export const PUT_ALL_NOTEBOOKS = "PUT_ALL_NOTEBOOKS";
 export const CLEAR_ALL_NOTEBOOKS = "CLEAR_ALL_NOTEBOOKS";
-export const OPEN_NOTEBOOKS = "OPEN_NOTEBOOKS";
-export const LOAD_NOTEBOOK_INTO_REDUX = "LOAD_NOTEBOOK_INTO_REDUX";
-export const LOAD_SAVED_NOTEBOOKS = "LOAD_SAVED_NOTEBOOKS";
+
+// Total notebook length
+export const TOTAL_NOTEBOOK_LENGTH = "TOTAL_NOTEBOOK_LENGTH";
+
+// Selected nav
+export const UPDATE_SELECTED_NOTEBOOK = "UPDATE_SELECTED_NOTEBOOK";
 
 // Notebook order
-export const UPDATE_NOTEBOOK_ORDER = "UPDATE_NOTEBOOK_ORDER";
+export const ADD_NOTEBOOK_TO_ORDER = "ADD_NOTEBOOK_TO_ORDER";
+export const LOAD_NOTEBOOK_ORDER = "LOAD_NOTEBOOK_ORDER";
 
-// Selected Nav
-export const UPDATE_SELECTED_NOTEBOOK = "UPDATE_SELECTED_NOTEBOOK";
-export const CLOSE_NOTEBOOK = "CLOSE_NOTEBOOK"; // in general
-
-// Loading notebooks
-export const TOTAL_NOTEBOOK_LENGTH = "TOTAL_NOTEBOOK_LENGTH";
-export const REMOVE_ONE_NOTEBOOK_LENGTH = "REMOVE_ONE_NOTEBOOK_LENGTH"
-export const LOAD_NOTEBOOKS_INTO_REDUX = "LOAD_NOTEBOOKS_INTO_REDUX";
+// ======== ONENOTE ========
+export const GET_ONENOTE = "GET_ONENOTE";
+export const LOAD_ONENOTE = "LOAD_ONENOTE";
+// notebooks
+export const OPEN_NOTEBOOKS = "OPEN_NOTEBOOKS";
+export const GET_NOTEBOOK = "GET_NOTEBOOK";
+export const SAVE_NOTEBOOK = "SAVE_NOTEBOOK";
+//section groups
+export const GET_SECTION_GROUP = "GET_SECTION_GROUP";
+export const SAVE_SECTION_GROUP = "SAVE_SECTION_GROUP";
+//sections
+export const GET_SECTION = "GET_SECTION";
+export const SAVE_SECTION = "SAVE_SECTION";
+// pages
+export const GET_PAGE = "GET_PAGE";
+export const SAVE_PAGE = "SAVE_PAGE";

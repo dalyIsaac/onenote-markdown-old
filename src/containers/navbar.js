@@ -1,17 +1,17 @@
 import { connect } from "react-redux";
 import Navbar from './../components/nav/navbar';
-import { getNotebooks, notebooks } from "../actions";
+import { getNotebooks, onenote } from "../actions";
 
 const mapStateToProps = state => ({
     allNotebooks: state.allNotebooks,
-    openedNotebooks: state.notebooks,
+    openedNotebooks: state.onenote,
     userLength: Object.keys(state.users).length,
     notebookOrder: state.notebookOrder
 });
 
 const mapDispatchToProps = dispatch => ({
     getAllNotebooks: () => dispatch(getNotebooks.getAllNotebooks()),
-    openNotebooks: (notebookList) => dispatch(notebooks.openNotebooks(notebookList))
+    openNotebooks: (notebookList) => dispatch(onenote.openNotebooks(notebookList))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { Modal } from "office-ui-fabric-react/lib/Modal";
 import { Spinner, SpinnerSize } from "office-ui-fabric-react/lib/Spinner";
 import NotebookPicker from "./notebookPicker";
-import NotebookNav from "../../containers/notebookNav";
+// import NotebookNav from "../../containers/notebookNav";
 import "./navbar.css";
+import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
 
 export default class Navbar extends React.Component {
   constructor(props) {
@@ -31,7 +32,8 @@ export default class Navbar extends React.Component {
   render() {
     return (
       <div className="navbarParent">
-        <NotebookNav addNotebook={this.showModal} />
+        {/* <NotebookNav addNotebook={this.showModal} /> */}
+        <DefaultButton onClick={this.showModal} >Add notebook</DefaultButton>
         <Modal
           isOpen={this.state.showModal}
           onDismiss={this.closeModal}

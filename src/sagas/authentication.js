@@ -1,8 +1,8 @@
-import { call, put } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import { push } from "react-router-redux";
 
 import { UserData } from "./../types";
-import { authentication, notebooks } from "../actions";
+import { authentication, onenote } from "../actions";
 import { graphScopes } from "../constants";
 import { blobUrl } from "./index";
 import { betaUrl } from "../constants";
@@ -48,7 +48,7 @@ export function* authenticate(action) {
       yield put(authentication.getPhoto(user));
     }
   }
-  yield put(notebooks.loadSavedNotebooks());
+  yield put(onenote.getOneNote());
 }
 
 /**
@@ -82,7 +82,7 @@ export function* signOut(action) {
  * @param {any} action
  */
 export function* getPhoto(action) {
-  const currentToken = yield call(getToken, action.user);
+  const currentToken = yield call(getToken, action.user.userIdentifier);
   if (currentToken !== "") {
     try {
       const result = yield call(axios, {
@@ -107,9 +107,10 @@ export function* getPhoto(action) {
 /**
  * Gets the users's token with a silent call
  * @export
- * @param {UserData} user
+ * @param {string} userId
  */
-export function* getToken(user) {
+export function* getToken(userId) {
+  const user = yield select(state => state.users[userId]);
   try {
     const currentToken = yield call(
       [app, app.acquireTokenSilent],
@@ -121,10 +122,11 @@ export function* getToken(user) {
   } catch (error) {
     console.error(
       `Could not acquire a valid token ${
-      user.displayableId
+      userId
       } by silently querying MSAL.`
     );
     console.error(error);
+    const user = yield select(state => state.users[userId]);
     const newUser = new UserData(user, "", error);
     yield put(authentication.updateUser(newUser));
     return "";
@@ -134,24 +136,25 @@ export function* getToken(user) {
 /**
  * Gets the users's token with a redirect
  * @export
- * @param {UserData} user
+ * @param {string} userId
  */
-export function* getTokenRedirect(user) {
+export function* getTokenRedirect(userId) {
   try {
     const currentToken = yield call(
       [app, app.acquireTokenRedirect],
       graphScopes,
       null,
-      user
+      userId
     );
     return currentToken;
   } catch (error) {
     console.error(
       `Could not acquire a valid token ${
-      user.displayableId
+      userId
       } by redirecting to MSAL authentication.`
     );
     console.error(error);
+    const user = yield select(state => state.users[userId]);
     const newUser = new UserData(user, "", error);
     yield put(authentication.updateUser(newUser));
     return "";

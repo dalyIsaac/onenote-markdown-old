@@ -1,10 +1,11 @@
-import { UPDATE_NOTEBOOK_ORDER } from "../actionTypes";
+import { ADD_NOTEBOOK_TO_ORDER, LOAD_NOTEBOOK_ORDER } from "../actionTypes";
 
-/**
- * Replaces the notebook order
- * @param {array} notebookOrder New array to replace the currently stored array
- */
-export const updateNotebookOrder = (notebookOrder) => ({
-    type: UPDATE_NOTEBOOK_ORDER,
+export const addNotebookToOrder = (notebookId) => ({
+    type: ADD_NOTEBOOK_TO_ORDER,
+    notebookId
+});
+
+export const loadNotebookOrder = (notebookOrder) => ({
+    type: LOAD_NOTEBOOK_ORDER,
     notebookOrder
 });
