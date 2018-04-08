@@ -1,25 +1,23 @@
-import * as React from "react";
-import { Icon } from "office-ui-fabric-react/lib/Icon";
+import React from "react";
+import PropTypes from "prop-types";
 import { Callout, DirectionalHint } from "office-ui-fabric-react/lib/Callout";
-import NavContextItem from "./navContextItem";
-import "./notebookNavItem.css";
+import "./navItem.css";
 
-export default class NotebookNavItem extends React.Component {
+export default class NavItem extends React.Component {
     constructor(props) {
         super(props);
         this.onContextMenu = this.onContextMenu.bind(this);
         this.onClick = this.onClick.bind(this);
         this.assignRef = this.assignRef.bind(this);
         this.calloutDismiss = this.calloutDismiss.bind(this);
-        this.closeNotebook = this.closeNotebook.bind(this);
         this.targetElement = null;
         this.state = { rightClick: false };
     }
 
     render() {
         // handles overflows
-        let text = this.props.notebook.displayName.slice(0, 20);
-        if (text !== this.props.notebook.displayName) {
+        let text = this.props.item.displayName.slice(0, 20);
+        if (text !== this.props.item.displayName) {
             text += "...";
         }
         return (
@@ -30,7 +28,7 @@ export default class NotebookNavItem extends React.Component {
                     onContextMenu={this.onContextMenu}
                     ref={this.assignRef}>
                     <div className="navItemWrapper">
-                        <Icon iconName="Dictionary" className="icon" />
+                        {this.props.icon}
                         <label>{text}</label>
                     </div>
                 </button>
@@ -41,20 +39,12 @@ export default class NotebookNavItem extends React.Component {
                         directionalHint={DirectionalHint.rightTopEdge}
                         isBeakVisible={false}>
                         <div>
-                            <NavContextItem
-                                text="Close notebook"
-                                iconName="DictionaryRemove"
-                                onClick={this.closeNotebook}
-                                calloutDismiss={this.calloutDismiss} />
+                            { this.props.navItemContexts }
                         </div>
                     </Callout> : null
                 }
             </div>
         );
-    }
-
-    closeNotebook() {
-        this.props.closeNotebook(this.props.notebook.id);
     }
 
     assignRef(targetElement) {
@@ -72,6 +62,13 @@ export default class NotebookNavItem extends React.Component {
     }
 
     onClick() {
-        this.props.updateSelectedNotebook(this.props.notebook.id);
+        this.props.updateSelected(this.props.item.id);
     }
+}
+
+NavItem.propTypes = {
+    item: PropTypes.object.isRequired,
+    navItemContexts: PropTypes.array.isRequired, // context menu items
+    updateSelected: PropTypes.func.isRequired,
+    icon: PropTypes.element.isRequired
 }

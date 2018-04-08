@@ -1,5 +1,5 @@
 import { getToken } from "./authentication";
-import { call, put } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import Axios from "axios";
 import { stableUrl } from "../constants";
 import { onenote, notebookOrder, totalNotebookLength } from "../actions";
@@ -19,8 +19,6 @@ export function* getNotebook(action) {
     // Using OData, it should get all section groups and sections.
     // The notebook, its section groups and sections should be then put into Redux and localforage as:
     // notebookId: { ...metadata, sectionGroups: {...sectionGroupIds }, sections: { ...sections }}
-    // Then, getSectionGroup should be called on each section group.
-    // Then, getSection should be called on each section.
 
     const { userId, notebookId } = action;
     const token = yield call(getToken, userId);
@@ -36,12 +34,21 @@ export function* getNotebook(action) {
     }
 }
 
+export function* getNotebookChildren(action) {
+    const notebookId = action.data;
+    const notebook = yield select(state => state.onenote[notebookId]);
+    for (const sectionGroupId of notebook.sectionGroups) {
+        yield put(onenote.getSectionGroup(notebook.userId, sectionGroupId));
+    }
+    for (const sectionId of notebook.sections) {
+        yield put(onenote.getSection(notebook.userId, sectionId));
+    }
+}
+
 export function* getSectionGroup(action) {
     // Using OData, it should get all section groups and sections.
     // The parent section group, its section groups and sections should be then put into Redux and localforage as:
     // sectionGroupId: { ...metadata, sectionGroups: {...sectionGroupIds }, sections: { ...sections }}
-    // Then, getSectionGroup should be called on each section group.
-    // Then, getSection should be called on each section.
 
     const { userId, sectionGroupId } = action;
     const token = yield call(getToken, userId);

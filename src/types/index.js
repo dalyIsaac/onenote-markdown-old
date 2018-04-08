@@ -49,6 +49,7 @@ export class Notebook {
         this.id = undefined; // the following explicitly defined properties are here purely for VSCode
         this.sectionGroups = [];
         this.sections = [];
+        this.childrenDownloaded = false;
         if (userId !== undefined) {
             this.userId = userId;
         }
@@ -66,6 +67,7 @@ export class SectionGroup {
         this.id = undefined; // the following explicitly defined properties are here purely for VSCode
         this.sectionGroups = [];
         this.sections = [];
+        this.childrenDownloaded = false;
         if (userId !== undefined) {
             this.userId = userId;
         }
@@ -88,6 +90,7 @@ export class Section {
     constructor(section, pages, userId = undefined) {
         this.id = undefined; // the following explicitly defined properties are here purely for VSCode
         this.pages = getIds(pages.value);
+        this.childrenDownloaded = false;
         if (userId !== undefined) {
             this.userId = userId;
         }

@@ -1,17 +1,16 @@
 import { connect } from "react-redux";
 import NotebookNav from './../components/nav/notebookNav';
-import { selectedNav, notebooks } from "../actions";
+import { selectedNav, onenote } from "../actions";
 
 const mapStateToProps = state => ({
-    notebooks: state.notebooks,
+    onenote: state.onenote,
     notebookOrder: state.notebookOrder,
     selectedNav: state.selectedNav,
     totalNotebookLength: state.totalNotebookLength
 });
 
 const mapDispatchToProps = dispatch => ({
-    updateSelectedNotebook: (newNotebook) => dispatch(selectedNav.updateSelectedNotebook([newNotebook])),
-    closeNotebook: (notebookId) => dispatch(notebooks.closeNotebook(notebookId))
+    updateSelectedNotebook: (newNotebook) => dispatch(selectedNav.updateSelectedNotebook(newNotebook))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotebookNav);
