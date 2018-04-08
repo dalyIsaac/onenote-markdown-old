@@ -34,13 +34,21 @@ export function* getNotebook(action) {
     }
 }
 
+/**
+ * Gets all of the child sections and section groups of a notebook. It gets the children of each section group.
+ * @param {any} action 
+ */
 export function* getNotebookChildren(action) {
     const notebookId = action.data;
     const notebook = yield select(state => state.onenote[notebookId]);
-    for (const sectionGroupId of notebook.sectionGroups) {
+    console.log(notebook)
+    for (let i = 0; i < notebook.sectionGroups.length; i++) {
+        const sectionGroupId = notebook.sectionGroups[i];
         yield put(onenote.getSectionGroup(notebook.userId, sectionGroupId));
     }
-    for (const sectionId of notebook.sections) {
+
+    for (let i = 0; i < notebook.sections.length; i++) {
+        const sectionId = notebook.sections[i];
         yield put(onenote.getSection(notebook.userId, sectionId));
     }
 }

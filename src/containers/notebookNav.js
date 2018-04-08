@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import NotebookNav from './../components/nav/notebookNav';
-import { selectedNav, onenote } from "../actions";
+import { selectedNav } from "../actions";
 
 const mapStateToProps = state => ({
     onenote: state.onenote,

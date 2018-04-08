@@ -12,6 +12,7 @@ export default class NotebookNav extends React.Component {
             icon: <Icon iconName="Dictionary" className="icon"/>
         };
     }
+
     render() {
         let templates = [];
         for (let i = 0; i < this.props.notebookOrder.length; i++) {
@@ -34,6 +35,7 @@ export default class NotebookNav extends React.Component {
             templates.push(
                 <LoadingNavItem
                     number={this.props.totalNotebookLength - this.props.notebookOrder.length}
+                    type="notebooks"
                     key="notebookLoadingNumber"
                 />);
         }
@@ -55,4 +57,4 @@ NotebookNav.propTypes = {
     totalNotebookLength: PropTypes.number.isRequired,
     updateSelectedNotebook: PropTypes.func.isRequired,
     addNotebook: PropTypes.func.isRequired
-}
+};

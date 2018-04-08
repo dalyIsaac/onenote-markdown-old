@@ -4,6 +4,7 @@ import { Modal } from "office-ui-fabric-react/lib/Modal";
 import { Spinner, SpinnerSize } from "office-ui-fabric-react/lib/Spinner";
 import NotebookPicker from "./notebookPicker";
 import NotebookNav from "../../containers/notebookNav";
+import SectionsNav from "../../containers/sectionsNav";
 import "./navbar.css";
 
 export default class Navbar extends React.Component {
@@ -32,6 +33,7 @@ export default class Navbar extends React.Component {
     return (
       <div className="navbarParent">
         <NotebookNav addNotebook={this.showModal} />
+        <SectionsNav />
         <Modal
           isOpen={this.state.showModal}
           onDismiss={this.closeModal}
