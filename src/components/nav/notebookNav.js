@@ -23,7 +23,7 @@ export default class NotebookNav extends React.Component {
                     <NavItem 
                         item={notebook}
                         key={notebook.id}
-                        selected={this.props.selectedNav[0] === notebook.id}
+                        isSelected={this.props.selectedNav[0] === notebook.id}
                         updateSelected={this.props.updateSelected}
                         icon={this.state.icon}              
                         navItemContexts={[]}

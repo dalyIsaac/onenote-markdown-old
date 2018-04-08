@@ -39,7 +39,7 @@ import {
   getPage,
   savePage,
   getOneNote,
-  getNotebookChildren
+  getChildren
 } from "./onenote";
 import { getAllNotebooks } from "./allNotebooks";
 import { addNotebookToOrder } from "./notebookOrder";
@@ -65,7 +65,7 @@ export default function* rootSaga() {
   yield takeEvery(SAVE_PAGE, savePage);
   yield takeEvery(ADD_NOTEBOOK_TO_ORDER, addNotebookToOrder);
   yield takeLatest(GET_ONENOTE, getOneNote);
-  yield takeLatest(UPDATE_SELECTED, getNotebookChildren);
+  yield takeLatest(UPDATE_SELECTED, getChildren);
   yield takeLatest(UPDATE_SELECTED, updateSelected);
 }
 

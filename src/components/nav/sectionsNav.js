@@ -49,7 +49,7 @@ export default class SectionsNav extends React.Component {
                     <NavItem
                         item={element}
                         key={element.id}
-                        selected={nextProps.selectedNav.includes(element.id)}
+                        isSelected={nextProps.selectedNav.includes(element.id)}
                         icon={isSection ? prevState["sectionIcon"] : prevState["sectionGroupIcon"]}
                         navItemContexts={[]}
                         updateSelected={nextProps.updateSelected}

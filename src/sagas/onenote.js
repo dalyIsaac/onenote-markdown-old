@@ -38,7 +38,7 @@ export function* getNotebook(action) {
  * Gets all of the immediate children of a notebook, section group, or section
  * @param {any} action 
  */
-export function* getNotebookChildren(action) {
+export function* getChildren(action) {
     const element = yield select(state => state.onenote[action.id]);
     if (element.hasOwnProperty("sectionGroups")) { // it's a notebook or a section group
         for (let i = 0; i < element.sectionGroups.length; i++) {

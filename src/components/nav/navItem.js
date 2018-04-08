@@ -21,9 +21,9 @@ export default class NavItem extends React.Component {
             text += "...";
         }
         return (
-            <div style={{marginLeft: (this.props.indentation * 10 || 0)}}>
+            <div style={{ marginLeft: (this.props.indentation * 10 || 0) }}>
                 <button
-                    className={(this.props.selected ? "navItemSelected" : "") + " navItem"}
+                    className={(this.props.isSelected ? "navItemSelected" : "") + " navItem"}
                     onClick={this.onClick}
                     onContextMenu={this.onContextMenu}
                     ref={this.assignRef}>
@@ -39,7 +39,7 @@ export default class NavItem extends React.Component {
                         directionalHint={DirectionalHint.rightTopEdge}
                         isBeakVisible={false}>
                         <div>
-                            { this.props.navItemContexts }
+                            {this.props.navItemContexts}
                         </div>
                     </Callout> : null
                 }
@@ -62,7 +62,12 @@ export default class NavItem extends React.Component {
     }
 
     onClick() {
-        this.props.updateSelected(this.props.item.id);
+        const item = this.props.item;
+        if (!this.props.isSelected) {
+            this.props.updateSelected(item.id);
+        } else {
+            this.props.updateSelected(item.hasOwnProperty("parentSectionGroup") ? item["parentSectionGroup.id"] : item["parentNotebook.id"]);
+        }
     }
 }
 
@@ -70,6 +75,7 @@ NavItem.propTypes = {
     item: PropTypes.object.isRequired,
     navItemContexts: PropTypes.array.isRequired, // context menu items
     updateSelected: PropTypes.func.isRequired,
+    isSelected: PropTypes.bool.isRequired,
     icon: PropTypes.element.isRequired,
     indentation: PropTypes.number
 }
