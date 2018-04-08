@@ -21,7 +21,7 @@ export default class NavItem extends React.Component {
             text += "...";
         }
         return (
-            <div>
+            <div style={{marginLeft: (this.props.indentation * 10 || 0)}}>
                 <button
                     className={(this.props.selected ? "navItemSelected" : "") + " navItem"}
                     onClick={this.onClick}
@@ -70,5 +70,6 @@ NavItem.propTypes = {
     item: PropTypes.object.isRequired,
     navItemContexts: PropTypes.array.isRequired, // context menu items
     updateSelected: PropTypes.func.isRequired,
-    icon: PropTypes.element.isRequired
+    icon: PropTypes.element.isRequired,
+    indentation: PropTypes.number
 }
