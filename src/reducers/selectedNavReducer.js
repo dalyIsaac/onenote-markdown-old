@@ -1,9 +1,10 @@
-import { UPDATE_SELECTED_NOTEBOOK } from "../actionTypes";
+import { PUT_SELECTED } from "./../actionTypes";
 
 export default function SelectedNavReducer(state = [], action) {
     switch (action.type) {
-        case UPDATE_SELECTED_NOTEBOOK:
-            return [action.data];
+        case PUT_SELECTED:
+            const { order } = action;
+            return order;
         default:
             return state;
     }

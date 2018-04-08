@@ -18,7 +18,7 @@ import {
   GET_PAGE,
   SAVE_PAGE,
   GET_ONENOTE,
-  UPDATE_SELECTED_NOTEBOOK,
+  UPDATE_SELECTED
 } from "./../actionTypes";
 
 import {
@@ -43,6 +43,7 @@ import {
 } from "./onenote";
 import { getAllNotebooks } from "./allNotebooks";
 import { addNotebookToOrder } from "./notebookOrder";
+import { updateSelected } from "./selectedNav";
 
 // import { openNotebooks } from "./onenote";
 
@@ -64,7 +65,8 @@ export default function* rootSaga() {
   yield takeEvery(SAVE_PAGE, savePage);
   yield takeEvery(ADD_NOTEBOOK_TO_ORDER, addNotebookToOrder);
   yield takeLatest(GET_ONENOTE, getOneNote);
-  yield takeLatest(UPDATE_SELECTED_NOTEBOOK, getNotebookChildren);
+  yield takeLatest(UPDATE_SELECTED, getNotebookChildren);
+  yield takeLatest(UPDATE_SELECTED, updateSelected);
 }
 
 const urls = new WeakMap();

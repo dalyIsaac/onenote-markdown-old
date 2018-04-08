@@ -24,7 +24,7 @@ export default class NotebookNav extends React.Component {
                         item={notebook}
                         key={notebook.id}
                         selected={this.props.selectedNav[0] === notebook.id}
-                        updateSelected={this.props.updateSelectedNotebook}
+                        updateSelected={this.props.updateSelected}
                         icon={this.state.icon}              
                         navItemContexts={[]}
                     />
@@ -55,6 +55,6 @@ NotebookNav.propTypes = {
     notebookOrder: PropTypes.array.isRequired,
     selectedNav: PropTypes.array.isRequired,
     totalNotebookLength: PropTypes.number.isRequired,
-    updateSelectedNotebook: PropTypes.func.isRequired,
+    updateSelected: PropTypes.func.isRequired,
     addNotebook: PropTypes.func.isRequired
 };

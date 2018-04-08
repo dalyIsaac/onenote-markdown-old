@@ -41,9 +41,9 @@ export default class SectionsNav extends React.Component {
                         item={element}
                         key={element.id}
                         selected={nextProps.selectedNav.includes(element.id)}
-                        // updateSelected={}
                         icon={icon}
                         navItemContexts={[]}
+                        updateSelected={nextProps.updateSelected}
                     />);
             } else {
                 numLoading += 1;
@@ -54,7 +54,7 @@ export default class SectionsNav extends React.Component {
                 <LoadingNavItem
                     number={numLoading}
                     type={type}
-                    key="sectionLoadingNumber"
+                    key={`${type}loading`}
                 />
             );
         }

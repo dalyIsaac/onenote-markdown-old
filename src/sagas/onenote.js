@@ -35,21 +35,26 @@ export function* getNotebook(action) {
 }
 
 /**
- * Gets all of the child sections and section groups of a notebook. It gets the children of each section group.
+ * Gets all of the immediate children of a notebook, section group, or section
  * @param {any} action 
  */
 export function* getNotebookChildren(action) {
-    const notebookId = action.data;
-    const notebook = yield select(state => state.onenote[notebookId]);
-    console.log(notebook)
-    for (let i = 0; i < notebook.sectionGroups.length; i++) {
-        const sectionGroupId = notebook.sectionGroups[i];
-        yield put(onenote.getSectionGroup(notebook.userId, sectionGroupId));
-    }
-
-    for (let i = 0; i < notebook.sections.length; i++) {
-        const sectionId = notebook.sections[i];
-        yield put(onenote.getSection(notebook.userId, sectionId));
+    const element = yield select(state => state.onenote[action.id]);
+    if (element.hasOwnProperty("sectionGroups")) { // it's a notebook or a section group
+        for (let i = 0; i < element.sectionGroups.length; i++) {
+            const sectionGroupId = element.sectionGroups[i];
+            yield put(onenote.getSectionGroup(element.userId, sectionGroupId));
+        }
+    
+        for (let i = 0; i < element.sections.length; i++) {
+            const sectionId = element.sections[i];
+            yield put(onenote.getSection(element.userId, sectionId));
+        }
+    } else { // it's a section
+        for (let i = 0; i < element.pages.length; i++) {
+            const pageId = element.pages[i];
+            yield put(onenote.getPage(element.userId, pageId));
+        }
     }
 }
 
@@ -63,7 +68,7 @@ export function* getSectionGroup(action) {
     if (token !== "") {
         const result = yield call(Axios, {
             method: "get",
-            url: `${stableUrl}me/onenote/sectionGroups/${sectionGroupId}?$expand=sectionGroups,sections`,
+            url: `${stableUrl}me/onenote/sectionGroups/${sectionGroupId}?$expand=sectionGroups,sections,parentNotebook,parentSectionGroup`,
             headers: { Authorization: `Bearer ${token}` }
         });
         const sectionGroup = new SectionGroup(result.data, userId);
@@ -81,7 +86,7 @@ export function* getSection(action) {
     if (token !== "") {
         const sectionResult = yield call(Axios, {
             method: "get",
-            url: `${stableUrl}me/onenote/sections/${sectionId}`,
+            url: `${stableUrl}me/onenote/sections/${sectionId}?$expand=parentNotebook,parentSectionGroup`,
             headers: { Authorization: `Bearer ${token}` }
         });
         const pagesResult = yield call(Axios, {

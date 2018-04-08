@@ -10,7 +10,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    updateSelectedNotebook: (newNotebook) => dispatch(selectedNav.updateSelectedNotebook(newNotebook))
+    updateSelected: (newNotebook) => dispatch(selectedNav.updateSelected(newNotebook))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotebookNav);
