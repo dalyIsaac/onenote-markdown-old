@@ -54,8 +54,9 @@ export default class SectionsNav extends React.Component {
                         navItemContexts={[]}
                         updateSelected={nextProps.updateSelected}
                         indentation={indentation}
+                        updateIsExpanded={isSection ? undefined : nextProps.updateIsExpanded}                        
                     />);
-                    if (isSelected) {
+                    if (isSelected || element.isExpanded) {
                         if (element.hasOwnProperty("sectionGroups")) {
                             templates.push(...SectionsNav.getNavItems(element.sectionGroups, false, prevState, nextProps, indentation + 1));
                             templates.push(...SectionsNav.getNavItems(element.sections, true, prevState, nextProps, indentation + 1));

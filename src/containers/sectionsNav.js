@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import SectionsNav from './../components/nav/sectionsNav';
-import { selectedNav } from "../actions";
+import { selectedNav, onenote } from "../actions";
 
 const mapStateToProps = state => ({
     onenote: state.onenote,
@@ -8,7 +8,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    updateSelected: (id) => dispatch(selectedNav.updateSelected(id))
+    updateSelected: (id) => dispatch(selectedNav.updateSelected(id)),
+    updateIsExpanded: (id, isExpanded) => dispatch(onenote.updateIsExpanded(id, isExpanded))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SectionsNav);

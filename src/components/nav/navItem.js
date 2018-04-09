@@ -63,19 +63,26 @@ export default class NavItem extends React.Component {
 
     onClick() {
         const item = this.props.item;
-        if (!this.props.isSelected) {
-            this.props.updateSelected(item.id);
+        if (this.props.isSelected) {
+            this.props.updateSelected(item.hasOwnProperty("parentSectionGroup.id") ? item["parentSectionGroup.id"] : item["parentNotebook.id"])
+            if (this.props.updateIsExpanded !== undefined) {
+                this.props.updateIsExpanded(item.id, false);
+            }
         } else {
-            this.props.updateSelected(item.hasOwnProperty("parentSectionGroup") ? item["parentSectionGroup.id"] : item["parentNotebook.id"]);
+            this.props.updateSelected(item.id);
+            if (this.props.updateIsExpanded !== undefined) {
+                this.props.updateIsExpanded(item.id, true);
+            }
         }
     }
 }
 
 NavItem.propTypes = {
-    item: PropTypes.object.isRequired,
+    item: PropTypes.object.isRequired, // actual object (notebook/section group/section)
     navItemContexts: PropTypes.array.isRequired, // context menu items
     updateSelected: PropTypes.func.isRequired,
     isSelected: PropTypes.bool.isRequired,
     icon: PropTypes.element.isRequired,
-    indentation: PropTypes.number
+    indentation: PropTypes.number,
+    updateIsExpanded: PropTypes.func // exclusive to section groups
 }

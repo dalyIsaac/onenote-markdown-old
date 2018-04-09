@@ -35,6 +35,7 @@ export const SAVE_NOTEBOOK = "SAVE_NOTEBOOK";
 //section groups
 export const GET_SECTION_GROUP = "GET_SECTION_GROUP";
 export const SAVE_SECTION_GROUP = "SAVE_SECTION_GROUP";
+export const UPDATE_IS_EXPANDED = "UPDATE_IS_EXPANDED";
 //sections
 export const GET_SECTION = "GET_SECTION";
 export const SAVE_SECTION = "SAVE_SECTION";

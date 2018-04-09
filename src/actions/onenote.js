@@ -1,4 +1,4 @@
-import { OPEN_NOTEBOOKS, GET_NOTEBOOK, SAVE_NOTEBOOK, GET_SECTION_GROUP, GET_SECTION, SAVE_SECTION_GROUP, SAVE_SECTION, GET_PAGE, SAVE_PAGE, LOAD_ONENOTE, GET_ONENOTE } from "../actionTypes";
+import { OPEN_NOTEBOOKS, GET_NOTEBOOK, SAVE_NOTEBOOK, GET_SECTION_GROUP, GET_SECTION, SAVE_SECTION_GROUP, SAVE_SECTION, GET_PAGE, SAVE_PAGE, LOAD_ONENOTE, GET_ONENOTE, UPDATE_IS_EXPANDED } from "../actionTypes";
 
 export const openNotebooks = (notebookList) => ({
     type: OPEN_NOTEBOOKS,
@@ -102,4 +102,15 @@ export const getPage = (userId, pageId) => ({
 export const savePage = (page) => ({
     type: SAVE_PAGE,
     page
+});
+
+/**
+ * Updates a section group to indicate whether it is expanded in sectionsNav
+ * @param {string} id 
+ * @param {boolean} isExpanded 
+ */
+export const updateIsExpanded = (id, isExpanded) => ({
+    type: UPDATE_IS_EXPANDED,
+    id,
+    isExpanded
 });
