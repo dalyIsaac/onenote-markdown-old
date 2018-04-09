@@ -64,7 +64,6 @@ export default class NavItem extends React.Component {
     onClick() {
         const item = this.props.item;
         if (this.props.isSelected) {
-            // this.props.updateSelected(item.hasOwnProperty("parentSectionGroup.id") ? item["parentSectionGroup.id"] : item["parentNotebook.id"])
             this.props.updateSelected(item["parentSectionGroup.id"] || item["parentNotebook.id"] || item.id);
             if (this.props.updateIsExpanded !== undefined) {
                 this.props.updateIsExpanded(item.id, false);
