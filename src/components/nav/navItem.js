@@ -16,8 +16,9 @@ export default class NavItem extends React.Component {
 
     render() {
         // handles overflows
-        let text = this.props.item.displayName.slice(0, 20);
-        if (text !== this.props.item.displayName) {
+        const displayName = this.props.item.displayName || this.props.item.title; // allows for pages
+        let text = displayName.slice(0, 20);
+        if (text !== displayName) {
             text += "...";
         }
         return (
@@ -89,7 +90,7 @@ NavItem.propTypes = {
     navItemContexts: PropTypes.array.isRequired, // context menu items
     updateSelected: PropTypes.func.isRequired,
     isSelected: PropTypes.bool.isRequired,
-    icon: PropTypes.element.isRequired,
+    icon: PropTypes.element,
     indentation: PropTypes.number,
     updateIsExpanded: PropTypes.func // exclusive to section groups
 }

@@ -91,7 +91,7 @@ export function* getSection(action) {
         });
         const pagesResult = yield call(Axios, {
             method: "get",
-            url: `${stableUrl}me/onenote/sections/${sectionId}/pages`,
+            url: `${stableUrl}me/onenote/sections/${sectionId}/pages?pagelevel=true`,
             headers: { Authorization: `Bearer ${token}` }
         });
 
@@ -106,7 +106,7 @@ export function* getPage(action) {
     if (token !== "") {
         const pageResult = yield call(Axios, {
             method: "get",
-            url: `${stableUrl}me/onenote/pages/${pageId}?$expand=parentNotebook,parentSection`,
+            url: `${stableUrl}me/onenote/pages/${pageId}?pagelevel=true`,
             headers: { Authorization: `Bearer ${token}` }
         });
         try {
