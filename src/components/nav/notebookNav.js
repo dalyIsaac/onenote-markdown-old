@@ -46,7 +46,7 @@ export default class NotebookNav extends React.Component {
                 iconName="Add"
                 text="Open notebooks"
                 onClick={this.props.addNotebook} />);
-        return (<nav style={{ width: 300 }}>{templates}</nav>); // in future this will be customizable
+        return (<nav>{templates}</nav>);
     }
 }
 

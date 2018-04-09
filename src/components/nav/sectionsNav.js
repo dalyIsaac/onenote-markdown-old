@@ -4,7 +4,6 @@ import NavItem from "./navItem";
 import LoadingNavItem from "./loadingNavItem";
 import { Icon } from "office-ui-fabric-react/lib/Icon";
 import "./sectionsNav.css";
-import { IconFontSizes } from "@uifabric/styling";
 
 export default class SectionsNav extends React.Component {
     constructor(props) {
@@ -29,7 +28,7 @@ export default class SectionsNav extends React.Component {
     }
 
     render() {
-        return (<nav style={{ width: 300 }}>{this.state.templates}</nav>); // in future this will be customizable
+        return (<nav>{this.state.templates}</nav>);
     }
 
     /**
@@ -47,7 +46,6 @@ export default class SectionsNav extends React.Component {
             const id = idList[i];
             const element = nextProps.onenote[id];
             if (element !== undefined) {
-                const isSelected = nextProps.selectedNav.includes(element.id);
                 const icon = isSection ?
                     prevState["sectionIcon"] : (
                         <span>
