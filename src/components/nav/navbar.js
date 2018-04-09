@@ -1,11 +1,11 @@
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal } from "office-ui-fabric-react/lib/Modal";
 import { Spinner, SpinnerSize } from "office-ui-fabric-react/lib/Spinner";
 import NotebookPicker from "./notebookPicker";
-// import NotebookNav from "../../containers/notebookNav";
+import NotebookNav from "../../containers/notebookNav";
+import SectionsNav from "../../containers/sectionsNav";
 import "./navbar.css";
-import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
 
 export default class Navbar extends React.Component {
   constructor(props) {
@@ -17,23 +17,23 @@ export default class Navbar extends React.Component {
     };
   }
 
-  /**
-   * Prevents bugs with object references during render
-   * @param {any} nextProps 
-   */
-  shouldComponentUpdate(nextProps) {
-    const { openedNotebooks, notebookOrder } = nextProps;
-    if (Object.keys(openedNotebooks).length !== notebookOrder.length) {
-      return false;
-    }
-    return true;
-  }
+  // /**
+  //  * Prevents bugs with object references during render
+  //  * @param {any} nextProps 
+  //  */
+  // shouldComponentUpdate(nextProps) {
+  //   const { openedNotebooks, notebookOrder } = nextProps;
+  //   if (Object.keys(openedNotebooks).length !== notebookOrder.length) {
+  //     return false;
+  //   }
+  //   return true;
+  // }
 
   render() {
     return (
       <div className="navbarParent">
-        {/* <NotebookNav addNotebook={this.showModal} /> */}
-        <DefaultButton onClick={this.showModal} >Add notebook</DefaultButton>
+        <NotebookNav addNotebook={this.showModal} className="notebookNav"/>
+        <SectionsNav className="sectionsNav"/>
         <Modal
           isOpen={this.state.showModal}
           onDismiss={this.closeModal}

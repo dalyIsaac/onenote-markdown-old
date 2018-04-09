@@ -66,6 +66,7 @@ export class SectionGroup {
         this.id = undefined; // the following explicitly defined properties are here purely for VSCode
         this.sectionGroups = [];
         this.sections = [];
+        this.isExpanded = false;
         if (userId !== undefined) {
             this.userId = userId;
         }

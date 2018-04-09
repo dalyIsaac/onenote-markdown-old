@@ -15,9 +15,11 @@ export const CLEAR_ALL_NOTEBOOKS = "CLEAR_ALL_NOTEBOOKS";
 
 // Total notebook length
 export const TOTAL_NOTEBOOK_LENGTH = "TOTAL_NOTEBOOK_LENGTH";
+export const TOTAL_NOTEBOOK_LENGTH_ADD = "TOTAL_NOTEBOOK_LENGTH_ADD";
 
 // Selected nav
-export const UPDATE_SELECTED_NOTEBOOK = "UPDATE_SELECTED_NOTEBOOK";
+export const UPDATE_SELECTED = "UPDATE_SELECTED";
+export const PUT_SELECTED = "PUT_SELECTED";
 
 // Notebook order
 export const ADD_NOTEBOOK_TO_ORDER = "ADD_NOTEBOOK_TO_ORDER";
@@ -33,6 +35,7 @@ export const SAVE_NOTEBOOK = "SAVE_NOTEBOOK";
 //section groups
 export const GET_SECTION_GROUP = "GET_SECTION_GROUP";
 export const SAVE_SECTION_GROUP = "SAVE_SECTION_GROUP";
+export const UPDATE_IS_EXPANDED = "UPDATE_IS_EXPANDED";
 //sections
 export const GET_SECTION = "GET_SECTION";
 export const SAVE_SECTION = "SAVE_SECTION";

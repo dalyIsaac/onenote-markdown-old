@@ -1,4 +1,4 @@
-.navContextItemWrapper {
+.navItemContextWrapper {
     background: white;
     border: none;
     width: 160px;
@@ -8,11 +8,11 @@
     padding: 6px;
 }
 
-.navContextItemWrapper:hover {
+.navItemContextWrapper:hover {
     background: #fceffb;
 }
 
-.navContextItemWrapper:active {
+.navItemContextWrapper:active {
     background: #f7e5f5;
 }
 

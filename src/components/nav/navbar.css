@@ -13,4 +13,19 @@
 
 .navbarParent {
   height: calc(100vh - 49px);
+  display: grid;
+  grid-template-columns: 300px 300px 300px auto;
+}
+
+.notebookNav {
+  grid-column: 1;
+}
+
+.sectionsNav {
+  grid-column: 2;
+}
+
+/* overflow is handled by this nav tag as all of the navs are contained within a nav tag */
+nav { 
+  overflow: auto;
 }

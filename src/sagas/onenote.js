@@ -1,13 +1,14 @@
 import { getToken } from "./authentication";
-import { call, put } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import Axios from "axios";
 import { stableUrl } from "../constants";
-import { onenote, notebookOrder } from "../actions";
+import { onenote, notebookOrder, totalNotebookLength } from "../actions";
 import { Notebook, SectionGroup, Section, Page } from "../types";
 import { storageSetItem, storageGetItem, storageGetItems } from "./storage";
 
 export function* openNotebooks(action) {
     const { notebookList } = action; // notebookList is a list of NotebookRows
+    yield put(totalNotebookLength.updateLength(notebookList.length));
     for (let i = 0; i < notebookList.length; i++) {
         const element = notebookList[i];
         yield put(onenote.getNotebook(element.userId, element.notebook.id));
@@ -18,8 +19,6 @@ export function* getNotebook(action) {
     // Using OData, it should get all section groups and sections.
     // The notebook, its section groups and sections should be then put into Redux and localforage as:
     // notebookId: { ...metadata, sectionGroups: {...sectionGroupIds }, sections: { ...sections }}
-    // Then, getSectionGroup should be called on each section group.
-    // Then, getSection should be called on each section.
 
     const { userId, notebookId } = action;
     const token = yield call(getToken, userId);
@@ -32,11 +31,29 @@ export function* getNotebook(action) {
         const notebook = new Notebook(result.data, userId);
         yield put(onenote.saveNotebook(notebook));
         yield put(notebookOrder.addNotebookToOrder(notebookId));
-        for (const sectionGroupId of notebook.sectionGroups) {
-            yield put(onenote.getSectionGroup(userId, sectionGroupId));
+    }
+}
+
+/**
+ * Gets all of the immediate children of a notebook, section group, or section
+ * @param {any} action 
+ */
+export function* getChildren(action) {
+    const element = yield select(state => state.onenote[action.id]);
+    if (element.hasOwnProperty("sectionGroups")) { // it's a notebook or a section group
+        for (let i = 0; i < element.sectionGroups.length; i++) {
+            const sectionGroupId = element.sectionGroups[i];
+            yield put(onenote.getSectionGroup(element.userId, sectionGroupId));
         }
-        for (const sectionId of notebook.sections) {
-            yield put(onenote.getSection(userId, sectionId));
+    
+        for (let i = 0; i < element.sections.length; i++) {
+            const sectionId = element.sections[i];
+            yield put(onenote.getSection(element.userId, sectionId));
+        }
+    } else { // it's a section
+        for (let i = 0; i < element.pages.length; i++) {
+            const pageId = element.pages[i];
+            yield put(onenote.getPage(element.userId, pageId));
         }
     }
 }
@@ -45,25 +62,17 @@ export function* getSectionGroup(action) {
     // Using OData, it should get all section groups and sections.
     // The parent section group, its section groups and sections should be then put into Redux and localforage as:
     // sectionGroupId: { ...metadata, sectionGroups: {...sectionGroupIds }, sections: { ...sections }}
-    // Then, getSectionGroup should be called on each section group.
-    // Then, getSection should be called on each section.
 
     const { userId, sectionGroupId } = action;
     const token = yield call(getToken, userId);
     if (token !== "") {
         const result = yield call(Axios, {
             method: "get",
-            url: `${stableUrl}me/onenote/sectionGroups/${sectionGroupId}?$expand=sectionGroups,sections`,
+            url: `${stableUrl}me/onenote/sectionGroups/${sectionGroupId}?$expand=sectionGroups,sections,parentNotebook,parentSectionGroup`,
             headers: { Authorization: `Bearer ${token}` }
         });
         const sectionGroup = new SectionGroup(result.data, userId);
         yield put(onenote.saveSectionGroup(sectionGroup));
-        for (const sectionGroupId of sectionGroup.sectionGroups) {
-            yield put(onenote.getSectionGroup(userId, sectionGroupId));
-        }
-        for (const sectionId of sectionGroup.sections) {
-            yield put(onenote.getSection(userId, sectionId));
-        }
     }
 }
 
@@ -77,7 +86,7 @@ export function* getSection(action) {
     if (token !== "") {
         const sectionResult = yield call(Axios, {
             method: "get",
-            url: `${stableUrl}me/onenote/sections/${sectionId}`,
+            url: `${stableUrl}me/onenote/sections/${sectionId}?$expand=parentNotebook,parentSectionGroup`,
             headers: { Authorization: `Bearer ${token}` }
         });
         const pagesResult = yield call(Axios, {
@@ -88,10 +97,6 @@ export function* getSection(action) {
 
         const section = new Section(sectionResult.data, pagesResult.data, userId);
         yield put(onenote.saveSection(section));
-
-        for (const pageId of section.pages) {
-            yield put(onenote.getPage(userId, pageId));
-        }
     }
 }
 
@@ -101,18 +106,25 @@ export function* getPage(action) {
     if (token !== "") {
         const pageResult = yield call(Axios, {
             method: "get",
-            url: `${stableUrl}me/onenote/pages/${pageId}`,
+            url: `${stableUrl}me/onenote/pages/${pageId}?$expand=parentNotebook,parentSection`,
             headers: { Authorization: `Bearer ${token}` }
         });
-        const pageContent = yield call(Axios, {
-            method: "get",
-            url: `${stableUrl}me/onenote/pages/${pageId}/content`,
-            responseType: 'text',
-            headers: { Authorization: `Bearer ${token}` }
-        });
-        const page = new Page(pageResult.data, pageContent.data, userId);
-        yield put(onenote.savePage(page));
-        // get resources?
+        try {
+            const pageContent = yield call(Axios, {
+                method: "get",
+                url: `${stableUrl}me/onenote/pages/${pageId}/content`,
+                responseType: 'text',
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            const page = new Page(pageResult.data, pageContent.data, userId);
+            yield put(onenote.savePage(page));
+            // get resources?
+        } catch (error) {
+            console.info(`The content for the page titled '${pageResult.data.title}' could not be found in Microsoft Graph. 
+Supposedly the page could be found in the notebook '${pageResult.data.parentNotebook.displayName}', inside the section '${pageResult.data.parentSection.displayName}'. 
+It is assumed that the page does not actually exist anymore.`);
+            console.info(error);
+        }
     }
 }
 
@@ -137,8 +149,9 @@ export function* savePage(action) {
 }
 
 export function* getOneNote(action) {
-    const order = yield call(storageGetItem, "notebookOrder");
+    const order = (yield call(storageGetItem, "notebookOrder")) || [];
     yield put(notebookOrder.loadNotebookOrder(order));
-    const everythingElse = yield call(storageGetItems);
+    yield put(totalNotebookLength.update(order.length));
+    const everythingElse = (yield call(storageGetItems)) || {};
     yield put(onenote.loadOneNote(everythingElse));
 }
