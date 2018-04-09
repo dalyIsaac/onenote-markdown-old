@@ -41,14 +41,14 @@ export function* getNotebook(action) {
 export function* getChildren(action) {
     const element = yield select(state => state.onenote[action.id]);
     if (element.hasOwnProperty("sectionGroups")) { // it's a notebook or a section group
-        for (let i = 0; i < element.sectionGroups.length; i++) {
-            const sectionGroupId = element.sectionGroups[i];
-            yield put(onenote.getSectionGroup(element.userId, sectionGroupId));
-        }
-    
         for (let i = 0; i < element.sections.length; i++) {
             const sectionId = element.sections[i];
             yield put(onenote.getSection(element.userId, sectionId));
+        }
+
+        for (let i = 0; i < element.sectionGroups.length; i++) {
+            const sectionGroupId = element.sectionGroups[i];
+            yield put(onenote.getSectionGroup(element.userId, sectionGroupId));
         }
     } else { // it's a section
         for (let i = 0; i < element.pages.length; i++) {

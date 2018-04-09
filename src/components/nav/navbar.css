@@ -27,5 +27,6 @@
 
 /* overflow is handled by this nav tag as all of the navs are contained within a nav tag */
 nav { 
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden
 }
