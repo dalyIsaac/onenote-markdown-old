@@ -58,7 +58,8 @@ export default class SectionsNav extends React.Component {
                     <NavItem
                         item={element}
                         key={element.id}
-                        isSelected={nextProps.selectedNav.includes(element.id)}
+                        isSelectable={isSection ? true : false} // prevents section groups from being selectable
+                        isSelected={isSection ? nextProps.selectedNav.includes(element.id) : false} // prevents section groups from being selectable
                         icon={icon}
                         navItemContexts={[]}
                         updateSelected={nextProps.updateSelected}

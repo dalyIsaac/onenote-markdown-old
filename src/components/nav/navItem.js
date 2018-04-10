@@ -10,6 +10,7 @@ export default class NavItem extends React.Component {
         this.onClick = this.onClick.bind(this);
         this.assignRef = this.assignRef.bind(this);
         this.calloutDismiss = this.calloutDismiss.bind(this);
+        this.updateSelected = this.updateSelected.bind(this);
         this.targetElement = null;
         this.state = { rightClick: false };
     }
@@ -17,7 +18,7 @@ export default class NavItem extends React.Component {
     render() {
         // handles overflows
         const displayName = this.props.item.displayName || this.props.item.title; // allows for pages
-        let text = displayName.slice(0, 20);
+        let text = displayName.slice(0, 40);
         if (text !== displayName) {
             text += "...";
         }
@@ -65,7 +66,7 @@ export default class NavItem extends React.Component {
     onClick() {
         const item = this.props.item;
         if (this.props.isSelected) {
-            this.props.updateSelected(item["parentSectionGroup.id"] || item["parentNotebook.id"] || item.id);
+            this.updateSelected(item["parentSectionGroup.id"] || item["parentNotebook.id"] || item.id);
             if (this.props.updateIsExpanded !== undefined) {
                 this.props.updateIsExpanded(item.id, false);
             }
@@ -73,14 +74,24 @@ export default class NavItem extends React.Component {
             if (this.props.updateIsExpanded !== undefined) {
                 if (item.isExpanded) {
                     this.props.updateIsExpanded(item.id, false);
-                    this.props.updateSelected(item.hasOwnProperty("parentSectionGroup.id") ? item["parentSectionGroup.id"] : item["parentNotebook.id"])
+                    this.updateSelected(item.hasOwnProperty("parentSectionGroup.id") ? item["parentSectionGroup.id"] : item["parentNotebook.id"])
                 } else {
-                    this.props.updateSelected(item.id);
+                    this.updateSelected(item.id);
                     this.props.updateIsExpanded(item.id, true);
                 }
             } else {
-                this.props.updateSelected(item.id);
+                this.updateSelected(item.id);
             }
+        }
+    }
+
+    /**
+     * Updates the selected items
+     * @param {string} id Id of the newly selected item
+     */
+    updateSelected(id) {
+        if (this.props.isSelectable !== false) {
+            this.props.updateSelected(id);
         }
     }
 }
@@ -89,6 +100,7 @@ NavItem.propTypes = {
     item: PropTypes.object.isRequired, // actual object (notebook/section group/section)
     navItemContexts: PropTypes.array.isRequired, // context menu items
     updateSelected: PropTypes.func.isRequired,
+    isSelectable: PropTypes.bool,
     isSelected: PropTypes.bool.isRequired,
     icon: PropTypes.element,
     indentation: PropTypes.number,
