@@ -89,13 +89,23 @@ export function* getSection(action) {
             url: `${stableUrl}me/onenote/sections/${sectionId}?$expand=parentNotebook,parentSectionGroup`,
             headers: { Authorization: `Bearer ${token}` }
         });
-        const pagesResult = yield call(Axios, {
-            method: "get",
-            url: `${stableUrl}me/onenote/sections/${sectionId}/pages?pagelevel=true`,
-            headers: { Authorization: `Bearer ${token}` }
-        });
 
-        const section = new Section(sectionResult.data, pagesResult.data, userId);
+        let pagesResult = [];
+        pagesResult.push(yield call(Axios, {
+            method: "get",
+            url: `${stableUrl}me/onenote/sections/${sectionId}/pages?pagelevel=true&$top=100`,
+            headers: { Authorization: `Bearer ${token}` }
+        }));
+
+        while (pagesResult[pagesResult.length - 1].data.value.length > 0) {
+            pagesResult.push(yield call(Axios, {
+                method: "get",
+                url: `${stableUrl}me/onenote/sections/${sectionId}/pages?pagelevel=true&$skip=${pagesResult.length}00`,
+                headers: { Authorization: `Bearer ${token}` }
+            }));
+        }
+
+        const section = new Section(sectionResult.data, pagesResult, userId);
         yield put(onenote.saveSection(section));
     }
 }

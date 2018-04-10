@@ -88,7 +88,11 @@ export class Section {
      */
     constructor(section, pages, userId = undefined) {
         this.id = undefined; // the following explicitly defined properties are here purely for VSCode
-        this.pages = getIds(pages.value);
+        this.pages = pages
+            .map(
+                arr => arr.data.value.map(sec => sec.id))
+            .reduce(
+                (acc, curr) => [].concat(acc, curr));
         if (userId !== undefined) {
             this.userId = userId;
         }
