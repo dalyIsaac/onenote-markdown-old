@@ -20,8 +20,8 @@ export default class SectionsNav extends React.Component {
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.selectedNav.length > 0) {
             const notebook = nextProps.onenote[nextProps.selectedNav[0]];
-            const sectionGroups = SectionsNav.getNavItems(notebook.sectionGroups, false, prevState, nextProps);
-            const sections = SectionsNav.getNavItems(notebook.sections, true, prevState, nextProps);
+            const sections = SectionsNav.getNavItems(notebook.sections, true, prevState, nextProps, notebook.id);
+            const sectionGroups = SectionsNav.getNavItems(notebook.sectionGroups, false, prevState, nextProps, notebook.id);
             return { ...prevState, templates: sections.concat(sectionGroups) };
         }
         return null;
@@ -37,9 +37,10 @@ export default class SectionsNav extends React.Component {
      * @param {boolean} isSection `true` if `idList` is a section, `false` if it is a notebook or a section group
      * @param {Object} prevState Previous state, with keys `sectionIcon` and `sectionGroupIcon`
      * @param {*} nextProps Next props
+     * @param {string} parentId This is used in the LoadingNavItem key
      * @param {number} Indentation The indentation of the nav item
      */
-    static getNavItems(idList, isSection, prevState, nextProps, indentation = 0) {
+    static getNavItems(idList, isSection, prevState, nextProps, parentId, indentation = 0) {
         let templates = [];
         let numLoading = 0;
         for (let i = 0; i < idList.length; i++) {
@@ -57,7 +58,8 @@ export default class SectionsNav extends React.Component {
                     <NavItem
                         item={element}
                         key={element.id}
-                        isSelected={nextProps.selectedNav.includes(element.id)}
+                        isSelectable={isSection ? true : false} // prevents section groups from being selectable
+                        isSelected={isSection ? nextProps.selectedNav.includes(element.id) : false} // prevents section groups from being selectable
                         icon={icon}
                         navItemContexts={[]}
                         updateSelected={nextProps.updateSelected}
@@ -65,8 +67,8 @@ export default class SectionsNav extends React.Component {
                         updateIsExpanded={isSection ? undefined : nextProps.updateIsExpanded}
                     />);
                 if (element.hasOwnProperty("isExpanded") && element.isExpanded) {
-                        templates.push(...SectionsNav.getNavItems(element.sectionGroups, false, prevState, nextProps, indentation + 1));
-                        templates.push(...SectionsNav.getNavItems(element.sections, true, prevState, nextProps, indentation + 1));
+                    templates.push(...SectionsNav.getNavItems(element.sections, true, prevState, nextProps, element.id, indentation + 1));
+                    templates.push(...SectionsNav.getNavItems(element.sectionGroups, false, prevState, nextProps, element.id, indentation + 1));
                 }
             } else {
                 numLoading += 1;
@@ -78,7 +80,7 @@ export default class SectionsNav extends React.Component {
                 <LoadingNavItem
                     number={numLoading}
                     type={type}
-                    key={`${type}loading`}
+                    key={`${type}${parentId}loading`}
                 />
             );
         }

@@ -18,7 +18,8 @@ import {
   GET_PAGE,
   SAVE_PAGE,
   GET_ONENOTE,
-  UPDATE_SELECTED
+  UPDATE_SELECTED,
+  UPDATE_IS_EXPANDED
 } from "./../actionTypes";
 
 import {
@@ -65,6 +66,7 @@ export default function* rootSaga() {
   yield takeEvery(SAVE_PAGE, savePage);
   yield takeEvery(ADD_NOTEBOOK_TO_ORDER, addNotebookToOrder);
   yield takeLatest(GET_ONENOTE, getOneNote);
+  yield takeLatest(UPDATE_IS_EXPANDED, getChildren);
   yield takeLatest(UPDATE_SELECTED, getChildren);
   yield takeLatest(UPDATE_SELECTED, updateSelected);
 }
