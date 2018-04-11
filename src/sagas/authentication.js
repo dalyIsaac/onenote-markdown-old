@@ -4,7 +4,6 @@ import { push } from "react-router-redux";
 import { UserData } from "./../types";
 import { authentication, onenote } from "../actions";
 import { graphScopes } from "../constants";
-import { blobUrl } from "./index";
 import { betaUrl } from "../constants";
 
 import axios from "axios";
@@ -103,6 +102,20 @@ export function* getPhoto(action) {
     console.error("No token");
   }
 }
+
+const urls = new WeakMap();
+
+// code courtesy of https://www.bignerdranch.com/blog/dont-over-react/
+const blobUrl = blob => {
+  if (urls.has(blob)) {
+    return urls.get(blob);
+  } else {
+    let url = URL.createObjectURL(blob);
+    urls.set(blob, url);
+    return url;
+  }
+};
+
 
 /**
  * Gets the users's token with a silent call

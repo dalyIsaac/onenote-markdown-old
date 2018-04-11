@@ -1,4 +1,5 @@
-import { takeEvery, takeLatest } from "redux-saga/effects";
+import { channel } from "redux-saga";
+import { takeEvery, takeLatest, take, fork, call } from "redux-saga/effects";
 
 import {
   AUTHENTICATE,
@@ -49,37 +50,36 @@ import { updateSelected } from "./selectedNav";
 // import { openNotebooks } from "./onenote";
 
 export default function* rootSaga() {
+
+  // AUTH
   yield takeLatest(AUTHENTICATE, authenticate);
   yield takeLatest(SIGN_IN, signIn);
   yield takeLatest(SIGN_OUT, signOut);
-  yield takeEvery(GET_PHOTO, getPhoto);
   yield takeLatest(REAUTHORIZE_USER, reauthorizeUser);
-  yield takeEvery(GET_ALL_NOTEBOOKS, getAllNotebooks);
-  yield takeEvery(OPEN_NOTEBOOKS, openNotebooks);
-  yield takeEvery(GET_NOTEBOOK, getNotebook);
+
+  // UserData
+  yield takeEvery(GET_PHOTO, getPhoto);
+
+  // Get onenote from localforage
+  yield takeLatest(GET_ONENOTE, getOneNote); 
+
+  // Save to localforage and redux
   yield takeEvery(SAVE_NOTEBOOK, saveNotebook);
-  yield takeEvery(GET_SECTION_GROUP, getSectionGroup);
   yield takeEvery(SAVE_SECTION_GROUP, saveSectionGroup);
-  yield takeEvery(GET_SECTION, getSection);
   yield takeEvery(SAVE_SECTION, saveSection);
-  yield takeEvery(GET_PAGE, getPage);
   yield takeEvery(SAVE_PAGE, savePage);
+
+  // GET FROM MSGRAPH
+  yield takeEvery(OPEN_NOTEBOOKS, openNotebooks);
+  yield takeEvery(GET_ALL_NOTEBOOKS, getAllNotebooks);
+  yield takeEvery(GET_NOTEBOOK, getNotebook);
+  yield takeEvery(GET_SECTION_GROUP, getSectionGroup);
+  yield takeEvery(GET_SECTION, getSection);
+  yield takeEvery(GET_PAGE, getPage);
+  
+  // Mainly GUI stuff
   yield takeEvery(ADD_NOTEBOOK_TO_ORDER, addNotebookToOrder);
-  yield takeLatest(GET_ONENOTE, getOneNote);
   yield takeLatest(UPDATE_IS_EXPANDED, getChildren);
   yield takeLatest(UPDATE_SELECTED, getChildren);
   yield takeLatest(UPDATE_SELECTED, updateSelected);
 }
-
-const urls = new WeakMap();
-
-// code courtesy of https://www.bignerdranch.com/blog/dont-over-react/
-export const blobUrl = blob => {
-  if (urls.has(blob)) {
-    return urls.get(blob);
-  } else {
-    let url = URL.createObjectURL(blob);
-    urls.set(blob, url);
-    return url;
-  }
-};
