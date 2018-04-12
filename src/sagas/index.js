@@ -1,5 +1,5 @@
-import { channel } from "redux-saga";
-import { takeEvery, takeLatest, take, fork, call } from "redux-saga/effects";
+import { buffers, channel } from "redux-saga";
+import { takeEvery, takeLatest, take, fork, call, put } from "redux-saga/effects";
 
 import {
   AUTHENTICATE,
@@ -47,7 +47,38 @@ import { getAllNotebooks } from "./allNotebooks";
 import { addNotebookToOrder } from "./notebookOrder";
 import { updateSelected } from "./selectedNav";
 
-// import { openNotebooks } from "./onenote";
+function* handleGraphRequests(chan) {
+  while (true) {
+    const action = yield take(chan);
+    let func = undefined;
+    switch (action.type) {
+      case OPEN_NOTEBOOKS:
+        func = openNotebooks;
+        break;
+      case GET_ALL_NOTEBOOKS:
+        func = getAllNotebooks;
+        break;
+      case GET_NOTEBOOK:
+        func = getNotebook;
+        break;
+      case GET_SECTION_GROUP:
+        func = getSectionGroup;
+        break;
+      case GET_SECTION:
+        func = getSection;
+        break;
+      case GET_PAGE:
+        func = getPage;
+        break;
+      default:
+        func = undefined;
+    }
+    
+    if (func !== undefined) {
+      yield call(func, action);
+    }
+  }
+}
 
 export default function* rootSaga() {
 
@@ -61,7 +92,7 @@ export default function* rootSaga() {
   yield takeEvery(GET_PHOTO, getPhoto);
 
   // Get onenote from localforage
-  yield takeLatest(GET_ONENOTE, getOneNote); 
+  yield takeLatest(GET_ONENOTE, getOneNote);
 
   // Save to localforage and redux
   yield takeEvery(SAVE_NOTEBOOK, saveNotebook);
@@ -69,17 +100,38 @@ export default function* rootSaga() {
   yield takeEvery(SAVE_SECTION, saveSection);
   yield takeEvery(SAVE_PAGE, savePage);
 
-  // GET FROM MSGRAPH
-  yield takeEvery(OPEN_NOTEBOOKS, openNotebooks);
-  yield takeEvery(GET_ALL_NOTEBOOKS, getAllNotebooks);
-  yield takeEvery(GET_NOTEBOOK, getNotebook);
-  yield takeEvery(GET_SECTION_GROUP, getSectionGroup);
-  yield takeEvery(GET_SECTION, getSection);
-  yield takeEvery(GET_PAGE, getPage);
-  
+  // // GET FROM MSGRAPH
+  // yield takeEvery(OPEN_NOTEBOOKS, openNotebooks);
+  // yield takeEvery(GET_ALL_NOTEBOOKS, getAllNotebooks);
+  // yield takeEvery(GET_NOTEBOOK, getNotebook);
+  // yield takeEvery(GET_SECTION_GROUP, getSectionGroup);
+  // yield takeEvery(GET_SECTION, getSection);
+  // yield takeEvery(GET_PAGE, getPage);
+
   // Mainly GUI stuff
   yield takeEvery(ADD_NOTEBOOK_TO_ORDER, addNotebookToOrder);
   yield takeLatest(UPDATE_IS_EXPANDED, getChildren);
   yield takeLatest(UPDATE_SELECTED, getChildren);
   yield takeLatest(UPDATE_SELECTED, updateSelected);
+
+  const chan = channel(buffers.expanding()); // create a channel to queue incoming requests
+
+  // the following ensures that only 5 concurrent calls to MSGraph can be made at once
+  for (let i = 0; i < 5; i++) {
+    yield fork(handleGraphRequests, chan);
+  }
+
+  while (true) {
+    const action = yield take([
+      OPEN_NOTEBOOKS,
+      GET_ALL_NOTEBOOKS,
+      GET_NOTEBOOK,
+      GET_SECTION_GROUP,
+      GET_SECTION,
+      GET_PAGE
+    ]);
+    yield put(chan, action);
+  }
+
+
 }
