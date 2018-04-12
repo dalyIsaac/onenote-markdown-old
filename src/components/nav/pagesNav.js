@@ -12,15 +12,21 @@ export default class PagesNav extends React.Component {
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.selectedNav.length > 0) {
-            const parentSection = nextProps.onenote[nextProps.selectedNav[nextProps.selectedNav.length - 1]];
-            if (parentSection.hasOwnProperty("pages")) {
-                const sortedPages = PagesNav.countingSort(parentSection.pages, nextProps.onenote);
-                const templates = PagesNav.getNavItems(sortedPages, nextProps, prevState, parentSection);
-                return {...prevState, templates};
+        if (nextProps.selectedNav.length > 1) {
+            const element = nextProps.onenote[nextProps.selectedNav[nextProps.selectedNav.length - 1]];
+            let parentSection = undefined;
+            if (element.hasOwnProperty("content")) { // the last selected item is a page
+                parentSection = nextProps.onenote[nextProps.selectedNav[nextProps.selectedNav.length - 2]];
+            } else if (element.hasOwnProperty("sectionGroups")) { // the last selected item is a section group or a notebook
+                return { ...prevState, templates: [] };
+            } else { // the last selected item is a section
+                parentSection = element;
             }
+            const sortedPages = PagesNav.countingSort(parentSection.pages, nextProps.onenote);
+            const templates = PagesNav.getNavItems(sortedPages, nextProps, prevState, parentSection);
+            return { ...prevState, templates };
         }
-        return null;
+        return { ...prevState, templates: [] };
     }
 
     render() {
@@ -43,13 +49,13 @@ export default class PagesNav extends React.Component {
                     <NavItem
                         item={page}
                         key={page.id}
-                        isSelected={nextProps.selectedNav.includes(page.id)}
+                        isSelected={nextProps.selectedNav[nextProps.selectedNav.length - 1] === page.id}
                         navItemContexts={[]}
                         updateSelected={nextProps.updateSelected}
                         indentation={page.level}
                         updateIsExpanded={nextProps.updateIsExpanded}
                     />);
-            } 
+            }
         }
         const numLoading = parentSection.pages.length - templates.length;
         if (numLoading !== 0) {

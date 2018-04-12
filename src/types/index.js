@@ -88,7 +88,11 @@ export class Section {
      */
     constructor(section, pages, userId = undefined) {
         this.id = undefined; // the following explicitly defined properties are here purely for VSCode
-        this.pages = getIds(pages.value);
+        this.pages = pages
+            .map(
+                arr => arr.data.value.map(sec => sec.id))
+            .reduce(
+                (acc, curr) => [].concat(acc, curr));
         if (userId !== undefined) {
             this.userId = userId;
         }
@@ -99,11 +103,12 @@ export class Section {
 export class Page {
     /**
      * @param {Object} page Result from the Microsoft Graph query
-     * @param {string} content Result from the Microsoft Graph query on the /content method
      * @param {string} userId 
+     * @param {string} content Result from the Microsoft Graph query on the /content method
      */
-    constructor(page, content, userId = undefined) {
+    constructor(page, userId, content = undefined, error = undefined) {
         this.id = undefined; // the following explicitly defined properties are here purely for VSCode
+        this.error = error;
         this.content = content;
         if (userId !== undefined) {
             this.userId = userId;

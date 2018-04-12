@@ -42,3 +42,6 @@ export const SAVE_SECTION = "SAVE_SECTION";
 // pages
 export const GET_PAGE = "GET_PAGE";
 export const SAVE_PAGE = "SAVE_PAGE";
+export const GET_PAGE_CONTENT = "GET_PAGE_CONTENT";
+export const SAVE_PAGE_CONTENT = "SAVE_PAGE_CONTENT";
+export const GET_PAGE_CONTENT_ERROR = "GET_PAGE_CONTENT_ERROR";

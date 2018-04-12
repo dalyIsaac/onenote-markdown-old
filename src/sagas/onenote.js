@@ -50,11 +50,13 @@ export function* getChildren(action) {
             const sectionGroupId = element.sectionGroups[i];
             yield put(onenote.getSectionGroup(element.userId, sectionGroupId));
         }
-    } else { // it's a section
+    } else if (element.hasOwnProperty("pages")) { // it's a section
         for (let i = 0; i < element.pages.length; i++) {
             const pageId = element.pages[i];
             yield put(onenote.getPage(element.userId, pageId));
         }
+    } else { // it's a page
+        yield put(onenote.getPageContent(action.id));
     }
 }
 
@@ -89,13 +91,23 @@ export function* getSection(action) {
             url: `${stableUrl}me/onenote/sections/${sectionId}?$expand=parentNotebook,parentSectionGroup`,
             headers: { Authorization: `Bearer ${token}` }
         });
-        const pagesResult = yield call(Axios, {
-            method: "get",
-            url: `${stableUrl}me/onenote/sections/${sectionId}/pages?pagelevel=true`,
-            headers: { Authorization: `Bearer ${token}` }
-        });
 
-        const section = new Section(sectionResult.data, pagesResult.data, userId);
+        let pagesResult = [];
+        pagesResult.push(yield call(Axios, {
+            method: "get",
+            url: `${stableUrl}me/onenote/sections/${sectionId}/pages?pagelevel=true&$top=100`,
+            headers: { Authorization: `Bearer ${token}` }
+        }));
+
+        while (pagesResult[pagesResult.length - 1].data.value.length > 0) {
+            pagesResult.push(yield call(Axios, {
+                method: "get",
+                url: `${stableUrl}me/onenote/sections/${sectionId}/pages?pagelevel=true&$skip=${pagesResult.length}00`,
+                headers: { Authorization: `Bearer ${token}` }
+            }));
+        }
+
+        const section = new Section(sectionResult.data, pagesResult, userId);
         yield put(onenote.saveSection(section));
     }
 }
@@ -104,28 +116,41 @@ export function* getPage(action) {
     const { userId, pageId } = action;
     const token = yield call(getToken, userId);
     if (token !== "") {
-        const pageResult = yield call(Axios, {
+        const result = yield call(Axios, {
             method: "get",
             url: `${stableUrl}me/onenote/pages/${pageId}?pagelevel=true`,
             headers: { Authorization: `Bearer ${token}` }
         });
-        try {
-            const pageContent = yield call(Axios, {
-                method: "get",
-                url: `${stableUrl}me/onenote/pages/${pageId}/content`,
-                responseType: 'text',
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            const page = new Page(pageResult.data, pageContent.data, userId);
-            yield put(onenote.savePage(page));
-            // get resources?
-        } catch (error) {
-            console.info(`The content for the page titled '${pageResult.data.title}' could not be found in Microsoft Graph. 
-Supposedly the page could be found in the notebook '${pageResult.data.parentNotebook.displayName}', inside the section '${pageResult.data.parentSection.displayName}'. 
-It is assumed that the page does not actually exist anymore.`);
-            console.info(error);
-        }
+        const page = new Page(result.data, userId);
+        yield put(onenote.savePage(page));
     }
+}
+
+export function* getPageContent(action) {
+    const { pageId } = action;
+    const userId = yield select(state => state.onenote[pageId].userId);
+    const token = yield call(getToken, userId);
+    try {
+        const result = yield call(Axios, {
+            method: "get",
+            url: `${stableUrl}me/onenote/pages/${pageId}/content`,
+            responseType: 'text',
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        yield put(onenote.savePageContent(pageId, result.data));
+        // get resources?
+    } catch (error) {
+        console.log(`The content for the page with id '${pageId}' could not be found in Microsoft Graph. This is an error with Microsoft Graph, server side, not OneNoteMarkdown`);
+        console.error(error);
+        yield put(onenote.getPageContentError(pageId, error));
+    }
+}
+
+export function* savePageContent(action) {
+    const { pageId, content } = action;
+    let page = yield call(storageGetItem, pageId);
+    page["content"] = content;
+    yield call(storageSetItem, pageId, page);
 }
 
 export function* saveNotebook(action) {

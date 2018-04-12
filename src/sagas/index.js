@@ -1,4 +1,5 @@
-import { takeEvery, takeLatest } from "redux-saga/effects";
+import { buffers, channel } from "redux-saga";
+import { takeEvery, takeLatest, take, fork, call, put } from "redux-saga/effects";
 
 import {
   AUTHENTICATE,
@@ -19,7 +20,9 @@ import {
   SAVE_PAGE,
   GET_ONENOTE,
   UPDATE_SELECTED,
-  UPDATE_IS_EXPANDED
+  UPDATE_IS_EXPANDED,
+  GET_PAGE_CONTENT,
+  SAVE_PAGE_CONTENT
 } from "./../actionTypes";
 
 import {
@@ -39,47 +42,97 @@ import {
   saveSection,
   getPage,
   savePage,
+  savePageContent,
   getOneNote,
-  getChildren
+  getChildren,
+  getPageContent
 } from "./onenote";
 import { getAllNotebooks } from "./allNotebooks";
 import { addNotebookToOrder } from "./notebookOrder";
 import { updateSelected } from "./selectedNav";
 
-// import { openNotebooks } from "./onenote";
+function* handleGraphRequests(chan) {
+  while (true) {
+    const action = yield take(chan);
+    let func = undefined;
+    switch (action.type) {
+      case OPEN_NOTEBOOKS:
+        func = openNotebooks;
+        break;
+      case GET_ALL_NOTEBOOKS:
+        func = getAllNotebooks;
+        break;
+      case GET_NOTEBOOK:
+        func = getNotebook;
+        break;
+      case GET_SECTION_GROUP:
+        func = getSectionGroup;
+        break;
+      case GET_SECTION:
+        func = getSection;
+        break;
+      case GET_PAGE:
+        func = getPage;
+        break;
+      case GET_PAGE_CONTENT:
+        func = getPageContent;
+        break;
+      default:
+        func = undefined;
+    }
+
+    if (func !== undefined) {
+      yield call(func, action);
+    }
+  }
+}
 
 export default function* rootSaga() {
+
+  // AUTH
   yield takeLatest(AUTHENTICATE, authenticate);
   yield takeLatest(SIGN_IN, signIn);
   yield takeLatest(SIGN_OUT, signOut);
-  yield takeEvery(GET_PHOTO, getPhoto);
   yield takeLatest(REAUTHORIZE_USER, reauthorizeUser);
-  yield takeEvery(GET_ALL_NOTEBOOKS, getAllNotebooks);
-  yield takeEvery(OPEN_NOTEBOOKS, openNotebooks);
-  yield takeEvery(GET_NOTEBOOK, getNotebook);
-  yield takeEvery(SAVE_NOTEBOOK, saveNotebook);
-  yield takeEvery(GET_SECTION_GROUP, getSectionGroup);
-  yield takeEvery(SAVE_SECTION_GROUP, saveSectionGroup);
-  yield takeEvery(GET_SECTION, getSection);
-  yield takeEvery(SAVE_SECTION, saveSection);
-  yield takeEvery(GET_PAGE, getPage);
-  yield takeEvery(SAVE_PAGE, savePage);
-  yield takeEvery(ADD_NOTEBOOK_TO_ORDER, addNotebookToOrder);
+
+  // UserData
+  yield takeEvery(GET_PHOTO, getPhoto);
+
+  // Get onenote from localforage
   yield takeLatest(GET_ONENOTE, getOneNote);
+
+  // Save to localforage and redux
+  yield takeEvery(SAVE_NOTEBOOK, saveNotebook);
+  yield takeEvery(SAVE_SECTION_GROUP, saveSectionGroup);
+  yield takeEvery(SAVE_SECTION, saveSection);
+  yield takeEvery(SAVE_PAGE, savePage);
+  yield takeEvery(SAVE_PAGE_CONTENT, savePageContent);
+
+  // Mainly GUI stuff
+  yield takeEvery(ADD_NOTEBOOK_TO_ORDER, addNotebookToOrder);
   yield takeLatest(UPDATE_IS_EXPANDED, getChildren);
   yield takeLatest(UPDATE_SELECTED, getChildren);
   yield takeLatest(UPDATE_SELECTED, updateSelected);
-}
 
-const urls = new WeakMap();
+  const chan = channel(buffers.expanding()); // create a channel to queue incoming requests
 
-// code courtesy of https://www.bignerdranch.com/blog/dont-over-react/
-export const blobUrl = blob => {
-  if (urls.has(blob)) {
-    return urls.get(blob);
-  } else {
-    let url = URL.createObjectURL(blob);
-    urls.set(blob, url);
-    return url;
+  // the following ensures that only 5 concurrent calls to MSGraph can be made at once
+  for (let i = 0; i < 5; i++) {
+    yield fork(handleGraphRequests, chan);
   }
-};
+
+  while (true) {
+    const action = yield take([
+      OPEN_NOTEBOOKS,
+      GET_ALL_NOTEBOOKS,
+      GET_NOTEBOOK,
+      GET_SECTION_GROUP,
+      GET_SECTION,
+      GET_PAGE,
+      GET_PAGE_CONTENT
+    ]);
+    yield put(chan, action);
+  }
+
+
+}
