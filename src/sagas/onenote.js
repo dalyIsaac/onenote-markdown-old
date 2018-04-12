@@ -140,8 +140,7 @@ export function* getPageContent(action) {
         yield put(onenote.savePageContent(pageId, result.data));
         // get resources?
     } catch (error) {
-        console.log(`The content for the page with id '${pageId}' could not be found in Microsoft Graph. 
-        It is assumed that the page consists only of data which cannot be read by OneNoteMarkdown.`);
+        console.log(`The content for the page with id '${pageId}' could not be found in Microsoft Graph. This is an error with Microsoft Graph, server side, not OneNoteMarkdown`);
         console.error(error);
         yield put(onenote.getPageContentError(pageId, error));
     }
