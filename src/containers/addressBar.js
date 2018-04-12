@@ -1,4 +1,5 @@
 import { connect } from "react-redux";
+import { selectedNav } from "../actions";
 import AddressBar from "../components/addressBar";
 
 const mapStateToProps = state => ({
@@ -6,4 +7,8 @@ const mapStateToProps = state => ({
   selectedNav: state.selectedNav
 });
 
-export default connect(mapStateToProps)(AddressBar);
+const mapDispatchToProps = dispatch => ({
+  updateSelected: (id) => dispatch(selectedNav.updateSelected(id))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddressBar);

@@ -5,12 +5,18 @@ import "./addressBar.css";
 export default class AddressBar extends React.Component {
     constructor(props) {
         super(props);
+        AddressBar.updateSelected = this.props.updateSelected;
         this.state = { items: [] };
     }
 
-    static _onBreadcrumbItemClicked(event, item) {
-        console.log(`Breadcrumb item with key "${item.key}" has been clicked.`);
+    static onBreadcrumbItemClicked(event, item) {
+        const id = item.key.slice(0, -("breadcrumb".length));
+        if (AddressBar.updateSelected !== undefined) {
+            AddressBar.updateSelected(id);
+        }
     }
+
+    static updateSelected = undefined;
 
     static getDerivedStateFromProps(nextProps, prevState) {
         let items = [];
@@ -20,8 +26,8 @@ export default class AddressBar extends React.Component {
             const element = onenote[id];
             items.push({
                 text: element.displayName || element.title,
-                key: (element.displayName || element.title) + "breadcrumb",
-                onClick: AddressBar._onBreadcrumbItemClicked,
+                key: id + "breadcrumb",
+                onClick: AddressBar.onBreadcrumbItemClicked,
                 isCurrentItem: (i === selectedNav.length - 1)
             });
         }
