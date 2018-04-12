@@ -1,4 +1,4 @@
-import { OPEN_NOTEBOOKS, GET_NOTEBOOK, SAVE_NOTEBOOK, GET_SECTION_GROUP, GET_SECTION, SAVE_SECTION_GROUP, SAVE_SECTION, GET_PAGE, SAVE_PAGE, LOAD_ONENOTE, GET_ONENOTE, UPDATE_IS_EXPANDED } from "../actionTypes";
+import { OPEN_NOTEBOOKS, GET_NOTEBOOK, SAVE_NOTEBOOK, GET_SECTION_GROUP, GET_SECTION, SAVE_SECTION_GROUP, SAVE_SECTION, GET_PAGE, SAVE_PAGE, LOAD_ONENOTE, GET_ONENOTE, UPDATE_IS_EXPANDED, GET_PAGE_CONTENT, SAVE_PAGE_CONTENT, GET_PAGE_CONTENT_ERROR } from "../actionTypes";
 
 export const openNotebooks = (notebookList) => ({
     type: OPEN_NOTEBOOKS,
@@ -93,6 +93,37 @@ export const getPage = (userId, pageId) => ({
     type: GET_PAGE,
     userId,
     pageId
+});
+
+/**
+ * Gets page content
+ * @param {string} pageId 
+ */
+export const getPageContent = (pageId) => ({
+    type: GET_PAGE_CONTENT,
+    pageId
+});
+
+/**
+ * Saves page content
+ * @param {string} pageId 
+ * @param {string} content 
+ */
+export const savePageContent = (pageId, content) => ({
+    type: SAVE_PAGE_CONTENT,
+    pageId,
+    content
+});
+
+/**
+ * Saves the error for the request to Redux (but not to localforage)
+ * @param {string} pageId 
+ * @param {string} content 
+ */
+export const getPageContentError = (pageId, error) => ({
+    type: GET_PAGE_CONTENT_ERROR,
+    pageId,
+    error
 });
 
 /**
