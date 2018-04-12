@@ -20,7 +20,9 @@ import {
   SAVE_PAGE,
   GET_ONENOTE,
   UPDATE_SELECTED,
-  UPDATE_IS_EXPANDED
+  UPDATE_IS_EXPANDED,
+  GET_PAGE_CONTENT,
+  SAVE_PAGE_CONTENT
 } from "./../actionTypes";
 
 import {
@@ -40,8 +42,10 @@ import {
   saveSection,
   getPage,
   savePage,
+  savePageContent,
   getOneNote,
-  getChildren
+  getChildren,
+  getPageContent
 } from "./onenote";
 import { getAllNotebooks } from "./allNotebooks";
 import { addNotebookToOrder } from "./notebookOrder";
@@ -70,10 +74,13 @@ function* handleGraphRequests(chan) {
       case GET_PAGE:
         func = getPage;
         break;
+      case GET_PAGE_CONTENT:
+        func = getPageContent;
+        break;
       default:
         func = undefined;
     }
-    
+
     if (func !== undefined) {
       yield call(func, action);
     }
@@ -99,14 +106,7 @@ export default function* rootSaga() {
   yield takeEvery(SAVE_SECTION_GROUP, saveSectionGroup);
   yield takeEvery(SAVE_SECTION, saveSection);
   yield takeEvery(SAVE_PAGE, savePage);
-
-  // // GET FROM MSGRAPH
-  // yield takeEvery(OPEN_NOTEBOOKS, openNotebooks);
-  // yield takeEvery(GET_ALL_NOTEBOOKS, getAllNotebooks);
-  // yield takeEvery(GET_NOTEBOOK, getNotebook);
-  // yield takeEvery(GET_SECTION_GROUP, getSectionGroup);
-  // yield takeEvery(GET_SECTION, getSection);
-  // yield takeEvery(GET_PAGE, getPage);
+  yield takeEvery(SAVE_PAGE_CONTENT, savePageContent);
 
   // Mainly GUI stuff
   yield takeEvery(ADD_NOTEBOOK_TO_ORDER, addNotebookToOrder);
@@ -128,7 +128,8 @@ export default function* rootSaga() {
       GET_NOTEBOOK,
       GET_SECTION_GROUP,
       GET_SECTION,
-      GET_PAGE
+      GET_PAGE,
+      GET_PAGE_CONTENT
     ]);
     yield put(chan, action);
   }

@@ -135,11 +135,10 @@ export function* getToken(userId) {
   } catch (error) {
     console.error(
       `Could not acquire a valid token ${
-      userId
+      user.displayableId
       } by silently querying MSAL.`
     );
     console.error(error);
-    const user = yield select(state => state.users[userId]);
     const newUser = new UserData(user, "", error);
     yield put(authentication.updateUser(newUser));
     return "";

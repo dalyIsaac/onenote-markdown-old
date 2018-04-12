@@ -1,4 +1,4 @@
-import { SAVE_NOTEBOOK, SAVE_SECTION_GROUP, SAVE_SECTION, SAVE_PAGE, LOAD_ONENOTE, UPDATE_IS_EXPANDED } from "../actionTypes";
+import { SAVE_NOTEBOOK, SAVE_SECTION_GROUP, SAVE_SECTION, SAVE_PAGE, LOAD_ONENOTE, UPDATE_IS_EXPANDED, SAVE_PAGE_CONTENT, GET_PAGE_CONTENT_ERROR } from "../actionTypes";
 
 export default function onenote(state = {}, action) {
     let data = { ...state };
@@ -37,6 +37,18 @@ export default function onenote(state = {}, action) {
             sectionGroup.isExpanded = isExpanded;
             data[id] = sectionGroup;
             return data;
+        case SAVE_PAGE_CONTENT: {
+            const { pageId, content } = action;
+            const newPage = { ...state[pageId], content };
+            data[pageId] = newPage;
+            return { ...data };
+        }
+        case GET_PAGE_CONTENT_ERROR: {
+            const { pageId, error } = action;
+            const page = { ...state[pageId], error };
+            data[pageId] = page;
+            return { ...data };
+        }
         default:
             return state;
     }
