@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import { AddressBarComponent } from "./addressBar";
+import AddressBar from "../containers/addressBar";
 import UsersContainer from "../containers/users";
 import "./header.css";
 import { Dialog, DialogType, DialogFooter } from "office-ui-fabric-react";
@@ -23,7 +23,7 @@ export default class Header extends React.Component {
           src="https://static2.sharepointonline.com/files/fabric/assets/brand-icons/product/svg/onenote_16x1.svg" />
         {Object.keys(this.props.users).length > 0 && (
           <div className="addressBarContainer">
-            <AddressBarComponent />
+            <AddressBar />
           </div>
         )}
         <div className="usersContainer">

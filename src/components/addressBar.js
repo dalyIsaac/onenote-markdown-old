@@ -1,24 +1,50 @@
-import * as React from 'react';
+import React from 'react';
 import { Breadcrumb } from 'office-ui-fabric-react/lib/Breadcrumb';
+import "./addressBar.css";
 
-export class AddressBarComponent extends React.Component {
-    _onBreadcrumbItemClicked(event, item) {
-        console.log(`Breadcrumb item with key "${item.key}" has been clicked.`);
+export default class AddressBar extends React.Component {
+    constructor(props) {
+        super(props);
+        AddressBar.updateSelected = this.props.updateSelected;
+        this.state = { items: [] };
+    }
+
+    static onBreadcrumbItemClicked(event, item) {
+        const id = item.key.slice(0, -("breadcrumb".length));
+        if (AddressBar.updateSelected !== undefined) {
+            AddressBar.updateSelected(id);
+        }
+    }
+
+    static updateSelected = undefined;
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        let items = [];
+        const { selectedNav, onenote } = nextProps;
+        for (let i = 0; i < selectedNav.length; i++) {
+            const id = selectedNav[i];
+            const element = onenote[id];
+            items.push({
+                text: element.displayName || element.title,
+                key: id + "breadcrumb",
+                onClick: AddressBar.onBreadcrumbItemClicked,
+                isCurrentItem: (i === selectedNav.length - 1)
+            });
+        }
+        return { ...prevState, items };
+    }
+
+    returnUndefined() {
+        return undefined;
     }
 
     render() {
         return (
             <Breadcrumb
-                items={[
-                    { text: 'Notebook', 'key': 'f1', onClick: this._onBreadcrumbItemClicked },
-                    { text: 'Section Group', 'key': 'f2', onClick: this._onBreadcrumbItemClicked },
-                    { text: 'Section', 'key': 'f3', onClick: this._onBreadcrumbItemClicked },
-                    { text: 'Page', 'key': 'f4', onClick: this._onBreadcrumbItemClicked, isCurrentItem: true }
-                ]}
+                items={this.state.items}
                 // Returning undefined to OnReduceData tells the breadcrumb not to shrink
-                // onReduceData={ this._returnUndefined }
+                onReduceData={ this.returnUndefined }
                 maxDisplayedItems={4}
-                ariaLabel={'Website breadcrumb'}
             />
         );
     }
