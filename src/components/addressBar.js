@@ -1,5 +1,6 @@
 import React from 'react';
 import { Breadcrumb } from 'office-ui-fabric-react/lib/Breadcrumb';
+import "./addressBar.css";
 
 export default class AddressBar extends React.Component {
     constructor(props) {
