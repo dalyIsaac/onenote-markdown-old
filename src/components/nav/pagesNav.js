@@ -62,7 +62,7 @@ export default class PagesNav extends React.Component {
             templates.push(
                 <LoadingNavItem
                     number={numLoading}
-                    type="pages"
+                    type="page"
                     key="pagesLoading"
                 />
             );

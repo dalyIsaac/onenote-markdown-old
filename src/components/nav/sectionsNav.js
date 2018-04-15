@@ -75,7 +75,7 @@ export default class SectionsNav extends React.Component {
             }
         }
         if (numLoading !== 0) {
-            const type = isSection ? "sections" : "section groups";
+            const type = isSection ? "section" : "section group";
             templates.push(
                 <LoadingNavItem
                     number={numLoading}

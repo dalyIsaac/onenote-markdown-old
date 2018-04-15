@@ -8,7 +8,7 @@ export default class LoadingNavItem extends React.Component {
         return (
             <div className="loadingItemWrapper">
                 <Spinner size={SpinnerSize.xSmall} className="loadingNavItemSpinner" />
-                <label className="loadingNavItemSpinnerLabel">Loading {this.props.number} {this.props.type}</label>
+                <label className="loadingNavItemSpinnerLabel">Loading {this.props.number} {this.props.number === 1 ? this.props.type : this.props.type + 's'}</label>
             </div>
         );
     }

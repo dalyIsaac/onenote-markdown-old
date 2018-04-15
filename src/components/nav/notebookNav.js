@@ -35,7 +35,7 @@ export default class NotebookNav extends React.Component {
             templates.push(
                 <LoadingNavItem
                     number={this.props.totalNotebookLength - this.props.notebookOrder.length}
-                    type="notebooks"
+                    type="notebook"
                     key="notebookLoadingNumber"
                 />);
         }
