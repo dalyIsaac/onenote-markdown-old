@@ -192,28 +192,54 @@ export default class NotebookPicker extends React.Component {
     });
   }
 
+  /**
+   * Sorts the array by the specified property
+   * @param {Array<NotebookRow>} items 
+   * @param {string} sortBy Property by which the array is to be sorted by
+   * @param {boolean} descending 
+   */
   sortItems(items, sortBy, descending = false) {
     if (descending) {
       return items.sort((a, b) => {
-        if (a[sortBy] < b[sortBy]) {
+        const { x, y } = this.getSortValues(a, b, sortBy);
+        if (x < y) {
           return 1;
         }
-        if (a[sortBy] > b[sortBy]) {
+        if (x > y) {
           return -1;
         }
         return 0;
       });
     } else {
       return items.sort((a, b) => {
-        if (a[sortBy] < b[sortBy]) {
+        const { x, y } = this.getSortValues(a, b, sortBy);
+        if (x < y) {
           return -1;
         }
-        if (a[sortBy] > b[sortBy]) {
+        if (x > y) {
           return 1;
         }
         return 0;
       });
     }
+  }
+
+  /**
+   * Returns the key (in lowercase if it's a string)
+   * @param {Object} a 
+   * @param {Object} b 
+   * @param {string} sortBy 
+   */
+  getSortValues(a, b, sortBy) {
+    let x, y;
+    try {
+      x = a[sortBy].toLocaleLowerCase();
+      y = b[sortBy].toLocaleLowerCase();
+    } catch (error) {
+      x = a[sortBy];
+      y = b[sortBy];
+    }
+    return { x, y };
   }
 }
 
