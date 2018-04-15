@@ -15,6 +15,9 @@ export function* get(url, userId, responseType = responseTypes.JSON) {
             method: "GET",
             headers: { Authorization: `Bearer ${token}` }
         });
+        if (response.ok === false) {
+            return { error: { ...response } };
+        }
         switch (responseType) {
             case responseTypes.JSON:
                 return yield call([response, response.json]);

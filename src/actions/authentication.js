@@ -52,11 +52,11 @@ export const updateUser = user => ({
 
 /**
  * Creates an action to get the user's photo
- * @param {UserData} user
+ * @param {string} userId
  */
-export const getPhoto = user => ({
+export const getPhoto = (userId) => ({
   type: GET_PHOTO,
-  user
+  userId
 });
 
 /**

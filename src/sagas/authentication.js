@@ -6,7 +6,7 @@ import { authentication, onenote } from "../actions";
 import { graphScopes } from "../constants";
 import { betaUrl } from "../constants";
 
-import axios from "axios";
+import * as fetch from "./fetch";
 import localforage from 'localforage';
 import * as Msal from "msal";
 import { appId, cacheLocation } from "../constants";
@@ -43,8 +43,7 @@ export function* authenticate(action) {
     });
     yield put(authentication.newUserObject(userDataObject));
     for (const userId in userDataObject) {
-      const user = userDataObject[userId];
-      yield put(authentication.getPhoto(user));
+      yield put(authentication.getPhoto(userId));
     }
   }
   yield put(onenote.getOneNote());
@@ -81,25 +80,16 @@ export function* signOut(action) {
  * @param {any} action
  */
 export function* getPhoto(action) {
-  const currentToken = yield call(getToken, action.user.userIdentifier);
-  if (currentToken !== "") {
-    try {
-      const result = yield call(axios, {
-        method: "get",
-        responseType: "blob",
-        url: betaUrl + "me/photo/$value",
-        headers: { Authorization: `Bearer ${currentToken}` }
-      });
-      const photo = result.data && blobUrl(result.data);
-      const newUser = new UserData(action.user, photo);
-      yield put(authentication.updateUser(newUser));
-    } catch (error) {
-      console.error(
-        `Getting photo failed for ${action.user.displayableId}: ${error}`
-      );
-    }
+  const { userId } = action;
+  const user = yield select(state => state.users[userId]);
+  // the beta URL is used because the v1.0 URl doesn't seem to return the pictures
+  const result = yield call(fetch.get, betaUrl + "me/photo/$value", userId, fetch.responseTypes.BLOB);
+  if (result.error === undefined) {
+    const photo = result && blobUrl(result);
+    const newUser = new UserData(user, photo);
+    yield put(authentication.updateUser(newUser));
   } else {
-    console.error("No token");
+    console.log(`Getting photo failed for ${user.displayableId}`);
   }
 }
 
