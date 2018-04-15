@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import PropTypes from 'prop-types';
 import { Facepile } from "office-ui-fabric-react/lib/Facepile";
 import { Persona, PersonaSize } from "office-ui-fabric-react/lib/Persona";

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { ActionButton } from "office-ui-fabric-react/lib/Button";
 import PropTypes from "prop-types";
 import "./about.css";

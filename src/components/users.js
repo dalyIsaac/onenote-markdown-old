@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import UsersComponent from './usersComponent';
 import { PersonaInitialsColor } from 'office-ui-fabric-react/lib/Persona';
 

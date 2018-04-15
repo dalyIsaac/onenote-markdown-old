@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import PropTypes from 'prop-types';
 import { SearchBox } from "office-ui-fabric-react/lib/SearchBox";
 import { DefaultButton } from "office-ui-fabric-react/lib/Button";
