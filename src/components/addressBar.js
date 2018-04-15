@@ -53,6 +53,7 @@ export default class AddressBar extends React.Component {
     }
 
     render() {
+        document.title = this.state.items.length > 0 ? this.state.items.map(item => item.text).join(">") : "OneNoteMarkdown";
         return (
             <Breadcrumb
                 items={this.state.items}

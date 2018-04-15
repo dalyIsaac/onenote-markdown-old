@@ -8,6 +8,7 @@ import {
   PrimaryButton,
   DefaultButton
 } from "office-ui-fabric-react/lib/Button";
+import Image from './../onenote.svg';
 
 export default class Header extends React.Component {
   componentWillMount() {
@@ -20,7 +21,7 @@ export default class Header extends React.Component {
         <img
           className="onenoteIcon"
           alt="OneNote logo"
-          src="https://static2.sharepointonline.com/files/fabric/assets/brand-icons/product/svg/onenote_16x1.svg" />
+          src={Image} />
         {Object.keys(this.props.users).length > 0 && (
           <div className="addressBarContainer">
             <AddressBar />
