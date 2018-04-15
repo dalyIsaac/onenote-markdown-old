@@ -35,20 +35,21 @@ export function* getNotebook(action) {
  */
 export function* getChildren(action) {
     const element = yield select(state => state.onenote[action.id]);
+    const parentSelfUser = element.self.split("/")[5];
     if (element.hasOwnProperty("sectionGroups")) { // it's a notebook or a section group
         for (let i = 0; i < element.sections.length; i++) {
             const sectionId = element.sections[i];
-            yield put(onenote.getSection(element.userId, sectionId));
+            yield put(onenote.getSection(element.userId, sectionId, parentSelfUser));
         }
 
         for (let i = 0; i < element.sectionGroups.length; i++) {
             const sectionGroupId = element.sectionGroups[i];
-            yield put(onenote.getSectionGroup(element.userId, sectionGroupId));
+            yield put(onenote.getSectionGroup(element.userId, sectionGroupId, parentSelfUser));
         }
     } else if (element.hasOwnProperty("pages")) { // it's a section
         for (let i = 0; i < element.pages.length; i++) {
             const pageId = element.pages[i];
-            yield put(onenote.getPage(element.userId, pageId));
+            yield put(onenote.getPage(element.userId, pageId, parentSelfUser));
         }
     } else { // it's a page
         yield put(onenote.getPageContent(action.id));
@@ -60,8 +61,8 @@ export function* getSectionGroup(action) {
     // The parent section group, its section groups and sections should be then put into Redux and localforage as:
     // sectionGroupId: { ...metadata, sectionGroups: {...sectionGroupIds }, sections: { ...sections }}
 
-    const { userId, sectionGroupId } = action;
-    const url = `${stableUrl}me/onenote/sectionGroups/${sectionGroupId}?$expand=sectionGroups,sections,parentNotebook,parentSectionGroup`;
+    const { userId, sectionGroupId, parentSelfUser } = action;
+    const url = `${stableUrl}users/${parentSelfUser}/onenote/sectionGroups/${sectionGroupId}?$expand=sectionGroups,sections,parentNotebook,parentSectionGroup`;
     const result = yield call(fetch.get, url, userId);
     if (result.error === undefined) {
         const sectionGroup = new SectionGroup(result, userId);
@@ -74,15 +75,15 @@ export function* getSection(action) {
     // The section, and all of its pages should be then put into Redux and localforage as:
     // sectionId: { ...metadata, pages: { ...pages }}
 
-    const { userId, sectionId } = action;
-    const url = `${stableUrl}me/onenote/sections/${sectionId}?$expand=parentNotebook,parentSectionGroup`;
+    const { userId, sectionId, parentSelfUser } = action;
+    const url = `${stableUrl}users/${parentSelfUser}/onenote/sections/${sectionId}?$expand=parentNotebook,parentSectionGroup`;
     const sectionResult = yield call(fetch.get, url, userId);
     if (sectionResult.error === undefined) {
         let pagesResult = [];
-        const url = `${stableUrl}me/onenote/sections/${sectionId}/pages?pagelevel=true&$top=100`;
+        const url = `${stableUrl}users/${parentSelfUser}/onenote/sections/${sectionId}/pages?pagelevel=true&$top=100`;
         pagesResult.push(yield call(fetch.get, url, userId));
         while (pagesResult[pagesResult.length - 1].value.length > 0) {
-            const url = `${stableUrl}me/onenote/sections/${sectionId}/pages?pagelevel=true&$skip=${pagesResult.length}00`;
+            const url = `${stableUrl}users/${parentSelfUser}/onenote/sections/${sectionId}/pages?pagelevel=true&$skip=${pagesResult.length}00`;
             pagesResult.push(yield call(fetch.get, url, userId));
         }
 
@@ -92,8 +93,8 @@ export function* getSection(action) {
 }
 
 export function* getPage(action) {
-    const { userId, pageId } = action;
-    const url = `${stableUrl}me/onenote/pages/${pageId}?pagelevel=true`;
+    const { userId, pageId, parentSelfUser } = action;
+    const url = `${stableUrl}users/${parentSelfUser}/onenote/pages/${pageId}?pagelevel=true`;
     const result = yield call(fetch.get, url, userId);
     if (result.error === undefined) {
         const page = new Page(result, userId);
@@ -103,8 +104,9 @@ export function* getPage(action) {
 
 export function* getPageContent(action) {
     const { pageId } = action;
-    const userId = yield select(state => state.onenote[pageId].userId);
-    const url = `${stableUrl}me/onenote/pages/${pageId}/content`;    
+    const { userId, self } = yield select(state => state.onenote[pageId]);
+    const parentSelfUser = self.split("/")[5]
+    const url = `${stableUrl}users/${parentSelfUser}/onenote/pages/${pageId}/content`;
     const result = yield call(fetch.get, url, userId, fetch.responseTypes.TEXT);
     if (result.error === undefined) {
         yield put(onenote.savePageContent(pageId, result));

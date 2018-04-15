@@ -24,7 +24,7 @@ export const getOneNote = () => ({
 /**
  * Fetches a notebook
  * @param {string} userId 
- * @param {string} notebookUrl 
+ * @param {string} notebookUrl Notebook URL for self
  */
 export const getNotebook = (userId, notebookUrl) => ({
     type: GET_NOTEBOOK,
@@ -46,11 +46,13 @@ export const saveNotebook = (notebook) => ({
  * Fetches a section group
  * @param {string} userId 
  * @param {string} sectionGroupId 
+ * @param {string} parentSelfUser user as defined in the self URL for the parent
  */
-export const getSectionGroup = (userId, sectionGroupId) => ({
+export const getSectionGroup = (userId, sectionGroupId, parentSelfUser) => ({
     type: GET_SECTION_GROUP,
     userId, 
-    sectionGroupId
+    sectionGroupId,
+    parentSelfUser
 });
 
 /**
@@ -67,11 +69,13 @@ export const saveSectionGroup = (sectionGroup) => ({
  * Fetches a section
  * @param {string} userId 
  * @param {string} sectionId 
+ * @param {string} parentSelfUser user as defined in the self URL for the parent
  */
-export const getSection = (userId, sectionId) => ({
+export const getSection = (userId, sectionId, parentSelfUser) => ({
     type: GET_SECTION,
     userId, 
-    sectionId
+    sectionId,
+    parentSelfUser
 });
 
 /**
@@ -88,11 +92,13 @@ export const saveSection = (section) => ({
  * Fetches a page and it's content
  * @param {string} userId
  * @param {string} pageId
+ * @param {string} parentSelfUser user as defined in the self URL for the parent
  */
-export const getPage = (userId, pageId) => ({
+export const getPage = (userId, pageId, parentSelfUser) => ({
     type: GET_PAGE,
     userId,
-    pageId
+    pageId,
+    parentSelfUser
 });
 
 /**
