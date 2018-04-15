@@ -24,12 +24,12 @@ export const getOneNote = () => ({
 /**
  * Fetches a notebook
  * @param {string} userId 
- * @param {string} notebookId 
+ * @param {string} notebookUrl 
  */
-export const getNotebook = (userId, notebookId) => ({
+export const getNotebook = (userId, notebookUrl) => ({
     type: GET_NOTEBOOK,
     userId,
-    notebookId
+    notebookUrl
 });
 
 /**
