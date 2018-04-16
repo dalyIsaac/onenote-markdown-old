@@ -2,6 +2,8 @@
 
 The aim of this project is to build a web app which is a client for OneNote notebooks, where text can be written as Markdown. The user interface is built using [React](https://reactjs.org/) and [Office UI Fabric React](https://developer.microsoft.com/en-us/fabric#/components). The state is managed using [Redux](https://redux.js.org/), with [Redux-Saga](https://redux-saga.js.org/) for managing side effects. [localForage](https://localforage.github.io/localForage/) is used to store OneNote data such as notebooks, section groups, sections, notes, and contents.
 
+Currently, the source code is hosted on [GitHub](https://github.com/dalyIsaac/onenote-markdown). The master branch is built in Visual Studio Team Services using their GitHub integration, and deployed to Azure App Service via continuous integration.
+
 ## Features
 
 - [x] Signing in with multiple accounts
@@ -116,8 +118,7 @@ google-chrome --remote-debugging-port=9222
 | `totalNotebookLength` | `number` | Stores the total number of notebooks which are open. This is used for notifying the user of the number of notebooks yet to be loaded. |
 | `router`              | `Object` | [`react-router-redux`](https://github.com/ReactTraining/react-router/tree/master/packages/react-router-redux) uses this.              |
 
-
-Objects which occupy `onenote` have their Microsoft Graph structure flattened, or deflated.  
+Objects which occupy `onenote` have their Microsoft Graph structure flattened, or deflated.
 For example:
 
 ``` Javascript
