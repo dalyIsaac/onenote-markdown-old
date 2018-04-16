@@ -21,7 +21,7 @@ let app = null;
 export function* authenticate(action) {
   const redirectUri = window.location.href.includes("localhost:3000")
     ? "http://localhost:3000"
-    : "";
+    : "https://onenotemarkdown.azurewebsites.net";
   app = new Msal.UserAgentApplication(
     appId,
     "",
