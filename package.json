@@ -5,7 +5,6 @@
   "private": true,
   "dependencies": {
     "eslint-plugin-react": "^7.7.0",
-    "gh-pages": "^1.1.0",
     "history": "^4.7.2",
     "localforage": "^1.7.1",
     "msal": "^0.1.4",
@@ -21,8 +20,6 @@
     "whatwg-fetch": "^2.0.4"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
