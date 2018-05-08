@@ -19,6 +19,17 @@ class About extends React.Component {
         >
           Sign in
         </ActionButton>
+
+        <h2>Privacy statement</h2>
+        <p>
+          This application collects only your OneNote and Microsoft Account data. 
+          This data is stored locally. Your data is not processed and transmitted to any other parties other than the Microsoft Graph. 
+          This application only stores data, allows the editing of your OneNote data, and transmits the changes back to the Microsoft Graph.
+        </p>
+        <h2>Terms of service</h2>
+        <p>
+          This is not ready for any sort of use, so we do not take responsibility for any possible damages to your data. By signing in you agree with these terms. 
+        </p>
       </div>
     );
   }
