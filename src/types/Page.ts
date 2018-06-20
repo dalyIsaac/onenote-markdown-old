@@ -1,7 +1,7 @@
 import { deflateObject } from "src/types";
-import { IOneNoteBase } from "./IOneNoteBase";
+import { OneNoteBase } from "./OneNoteBase";
 
-export class Page implements IOneNoteBase {
+export class Page extends OneNoteBase {
   public userId: string;
   public error: string | undefined;
   public content: string | undefined;
@@ -16,6 +16,7 @@ export class Page implements IOneNoteBase {
     content: undefined,
     error: undefined
   ) {
+    super();
     this.error = error;
     this.content = content;
     if (userId !== undefined) {

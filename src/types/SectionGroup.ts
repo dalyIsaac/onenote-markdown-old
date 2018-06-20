@@ -1,6 +1,6 @@
 import { SectionGroup as ISectionGroup } from "@microsoft/microsoft-graph-types";
 import { deflateObject } from "src/types";
-import { IOneNoteBase } from "./IOneNoteBase";
+import { OneNoteBase } from "./OneNoteBase";
 import { Section } from "./Section";
 
 /**
@@ -8,13 +8,14 @@ import { Section } from "./Section";
  * @export
  * @class SectionGroup
  */
-export class SectionGroup implements IOneNoteBase {
+export class SectionGroup extends OneNoteBase {
   public userId: string | undefined;
   public sectionGroups: SectionGroup[];
   public sections: Section[];
   public isExpanded = false;
 
   constructor(sectionGroup: ISectionGroup, userId: undefined) {
+    super();
     this.sectionGroups = [];
     this.sections = [];
     this.userId = userId;

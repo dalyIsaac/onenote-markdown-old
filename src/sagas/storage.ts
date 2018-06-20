@@ -25,8 +25,7 @@ export function storageGetItem(index: string) {
 }
 
 export function* storageGetItems() {
-  /* tslint:disable-next-line */
-  let output = {};
+  const output = {};
   yield call([localforage, localforage.iterate], (value: any, key: string) => {
     if (!Array.isArray(value)) {
       output[key] = value;

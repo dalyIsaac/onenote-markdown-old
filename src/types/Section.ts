@@ -3,14 +3,14 @@ import {
   OnenoteSection as ISection
 } from "@microsoft/microsoft-graph-types";
 import { deflateObject } from "src/types";
-import { IOneNoteBase } from "./IOneNoteBase";
+import { OneNoteBase } from "./OneNoteBase";
 
 /**
  * Deflated section group from Microsoft Graph with some custom attributes
  * @export
  * @class Section
  */
-export class Section implements IOneNoteBase {
+export class Section extends OneNoteBase {
   public pages: Array<string | undefined>;
   public userId: string | undefined;
 
@@ -20,6 +20,7 @@ export class Section implements IOneNoteBase {
    * @param userId
    */
   constructor(section: ISection, pages: IPage[][], userId: undefined) {
+    super();
     for (const group of pages) {
       for (const page of group) {
         this.pages.push(page.id);
