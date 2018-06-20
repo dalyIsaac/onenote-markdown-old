@@ -16,19 +16,19 @@ import {
   SAVE_SECTION_GROUP,
   UPDATE_IS_EXPANDED
 } from "../actionTypes";
-import { OneNoteBase } from "../types/OneNoteBase";
 import { Notebook } from "../types/Notebook";
 import { NotebookRow } from "../types/NotebookRow";
+import { OneNoteBase } from "../types/OneNoteBase";
 import { Page } from "../types/Page";
 import { Section } from "../types/Section";
 import { SectionGroup } from "../types/SectionGroup";
 
 export interface IOpenNotebooks {
-  notebookList: NotebookRow;
+  notebookList: NotebookRow[];
   type: string;
 }
 
-export const openNotebooks = (notebookList: NotebookRow): IOpenNotebooks => ({
+export const openNotebooks = (notebookList: NotebookRow[]): IOpenNotebooks => ({
   notebookList,
   type: OPEN_NOTEBOOKS
 });
@@ -55,7 +55,7 @@ export const getOneNote = (): IAction => ({
 });
 
 export interface IGetNotebook {
-  notebookUrl: string;
+  notebookUrl?: string;
   userId: string;
   type: string;
 }
@@ -67,7 +67,7 @@ export interface IGetNotebook {
  */
 export const getNotebook = (
   userId: string,
-  notebookUrl: string
+  notebookUrl?: string
 ): IGetNotebook => ({
   notebookUrl,
   type: GET_NOTEBOOK,
@@ -91,7 +91,7 @@ export const saveNotebook = (notebook: Notebook): ISaveNotebook => ({
 export interface IGetSectionGroup {
   parentSelfUser: string;
   sectionGroupId: string;
-  userId: string;
+  userId?: string;
   type: string;
 }
 
@@ -102,7 +102,7 @@ export interface IGetSectionGroup {
  * @param parentSelfUser user as defined in the self URL for the parent
  */
 export const getSectionGroup = (
-  userId: string,
+  userId: string | undefined,
   sectionGroupId: string,
   parentSelfUser: string
 ): IGetSectionGroup => ({
@@ -129,7 +129,7 @@ export const saveSectionGroup = (
 });
 
 export interface IGetSection {
-  userId: string;
+  userId?: string;
   sectionId: string;
   parentSelfUser: string;
   type: string;
@@ -142,7 +142,7 @@ export interface IGetSection {
  * @param parentSelfUser user as defined in the self URL for the parent
  */
 export const getSection = (
-  userId: string,
+  userId: string | undefined,
   sectionId: string,
   parentSelfUser: string
 ): IGetSection => ({
@@ -167,10 +167,10 @@ export const saveSection = (section: Section): ISaveSection => ({
 });
 
 export interface IGetPage {
-  pageId: string;
+  pageId?: string;
   parentSelfUser: string;
   type: string;
-  userId: string;
+  userId?: string;
 }
 
 /**
@@ -180,8 +180,8 @@ export interface IGetPage {
  * @param parentSelfUser user as defined in the self URL for the parent
  */
 export const getPage = (
-  userId: string,
-  pageId: string,
+  userId: string | undefined,
+  pageId: string | undefined,
   parentSelfUser: string
 ): IGetPage => ({
   pageId,

@@ -12,14 +12,13 @@ import { OneNoteBase } from "./OneNoteBase";
  */
 export class Section extends OneNoteBase {
   public pages: Array<string | undefined>;
-  public userId: string | undefined;
 
   /**
    * @param section - Result from the Microsoft Graph query
    * @param pages - Result from the Microsoft Graph query on the /pages method
    * @param userId
    */
-  constructor(section: ISection, pages: IPage[][], userId: undefined) {
+  constructor(section: ISection, pages: IPage[][], userId?: string) {
     super();
     for (const group of pages) {
       for (const page of group) {

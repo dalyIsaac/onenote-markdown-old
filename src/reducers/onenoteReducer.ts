@@ -1,4 +1,4 @@
-import { Page } from "csstype";
+import { IStateOneNote } from "src/reducers";
 import {
   IGetPageContent,
   IGetPageContentError,
@@ -20,8 +20,6 @@ import {
   SAVE_SECTION_GROUP,
   UPDATE_IS_EXPANDED
 } from "../actionTypes";
-import { Notebook } from "../types/Notebook";
-import { Section } from "../types/Section";
 import { SectionGroup } from "../types/SectionGroup";
 
 type actionType = ISaveNotebook &
@@ -34,12 +32,8 @@ type actionType = ISaveNotebook &
   IGetPageContent &
   IUpdateIsExpanded;
 
-interface IStateObject {
-  [key: string]: Notebook | SectionGroup | Section | Page;
-}
-
-export default function onenote(state: IStateObject = {}, action: actionType) {
-  const data: IStateObject = { ...state };
+export default function onenote(state: IStateOneNote = {}, action: actionType) {
+  const data: IStateOneNote = { ...state };
   let sectionGroup: SectionGroup;
   let page: any;
   switch (action.type) {

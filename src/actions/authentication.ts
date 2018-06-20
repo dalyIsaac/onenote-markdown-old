@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { IAction, IActionUser } from "src/actions";
-import { UserData } from "src/types/UserData";
+import { IUserDataObject, UserData } from "src/types/UserData";
 import {
   AUTHENTICATE,
   GET_ALL_USERS,
@@ -41,13 +41,13 @@ export const signOut = (): IAction => ({
 
 export interface INewUserObject {
   type: string;
-  users: UserData[];
+  users: IUserDataObject;
 }
 
 /**
  * Creates an action to replace the user list with a new user list
  */
-export const newUserObject = (users: UserData[]): INewUserObject => ({
+export const newUserObject = (users: IUserDataObject): INewUserObject => ({
   type: NEW_USER_OBJECT,
   users
 });

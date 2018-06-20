@@ -2,9 +2,8 @@ import { deflateObject } from "src/types";
 import { OneNoteBase } from "./OneNoteBase";
 
 export class Page extends OneNoteBase {
-  public userId: string;
-  public error: string | undefined;
-  public content: string | undefined;
+  public error?: string;
+  public content?: string;
   /**
    * @param page - Result from the Microsoft Graph query
    * @param userId
@@ -12,16 +11,14 @@ export class Page extends OneNoteBase {
    */
   constructor(
     page: object,
-    userId: string,
-    content: undefined,
-    error: undefined
+    userId?: string,
+    content?: string,
+    error?: undefined
   ) {
     super();
     this.error = error;
     this.content = content;
-    if (userId !== undefined) {
-      this.userId = userId;
-    }
+    this.userId = userId;
     deflateObject(this, page);
   }
 }

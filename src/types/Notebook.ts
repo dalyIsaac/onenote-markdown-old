@@ -1,7 +1,6 @@
-import { Notebook as Graph_Notebook } from "@microsoft/microsoft-graph-types/microsoft-graph";
+import { Notebook as INotebook } from "@microsoft/microsoft-graph-types";
 import { deflateObject } from "src/types";
 import { OneNoteBase } from "./OneNoteBase";
-import { Section } from "./Section";
 import { SectionGroup } from "./SectionGroup";
 
 /**
@@ -10,14 +9,14 @@ import { SectionGroup } from "./SectionGroup";
  */
 export class Notebook extends OneNoteBase {
   public sectionGroups: SectionGroup[];
-  public sections: Section[];
-  public userId: string | undefined;
+  public sections: string[];
+  public userId?: string;
 
   /**
    * @param {Object} notebook JSON response from the Microsoft Graph for a notebook
    * @param {string} userId
    */
-  constructor(notebook: Graph_Notebook, userId: undefined) {
+  constructor(notebook: INotebook, userId?: string) {
     super();
     this.userId = userId;
     deflateObject(this, notebook);

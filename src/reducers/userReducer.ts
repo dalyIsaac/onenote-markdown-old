@@ -1,16 +1,12 @@
+import { IStateUsers } from ".";
 import { IActionUser } from "../actions";
 import { INewUserObject } from "../actions/authentication";
-import { UserData } from "../types/UserData";
 import { NEW_USER_OBJECT, UPDATE_USER } from "./../actionTypes";
 
 type actionType = INewUserObject & IActionUser;
 
-interface IStateObject {
-  [key: string]: UserData;
-}
-
 export default function userReducer(
-  state: IStateObject = {},
+  state: IStateUsers = {},
   action: actionType
 ) {
   switch (action.type) {

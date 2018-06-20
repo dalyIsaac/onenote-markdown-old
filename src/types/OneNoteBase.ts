@@ -1,4 +1,5 @@
 export class OneNoteBase {
-  public userId: string | undefined;
+  public userId?: string;
   public id: string;
+  public self: string;
 }
