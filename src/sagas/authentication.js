@@ -1,5 +1,5 @@
 import { call, put, select } from "redux-saga/effects";
-import { push } from "react-router-redux";
+import { push } from "connected-react-router";
 
 import { UserData } from "./../types";
 import { authentication, onenote } from "../actions";
@@ -7,7 +7,7 @@ import { graphScopes } from "../constants";
 import { betaUrl } from "../constants";
 
 import * as fetch from "./fetch";
-import localforage from 'localforage';
+import localforage from "localforage";
 import * as Msal from "msal";
 import { appId, cacheLocation } from "../constants";
 
@@ -34,7 +34,7 @@ export function* authenticate(action) {
       redirectUri,
       postLogoutRedirectUri: redirectUri
     }
-  )
+  );
   const userList = yield call([app, app.getAllUsers]);
   if (userList.length > 0) {
     let userDataObject = {};
@@ -83,7 +83,12 @@ export function* getPhoto(action) {
   const { userId } = action;
   const user = yield select(state => state.users[userId]);
   // the beta URL is used because the v1.0 URl doesn't seem to return the pictures
-  const result = yield call(fetch.get, betaUrl + "me/photo/$value", userId, fetch.responseTypes.BLOB);
+  const result = yield call(
+    fetch.get,
+    betaUrl + "me/photo/$value",
+    userId,
+    fetch.responseTypes.BLOB
+  );
   if (result.error === undefined) {
     const photo = result && blobUrl(result);
     const newUser = new UserData(user, photo);
@@ -106,7 +111,6 @@ const blobUrl = blob => {
   }
 };
 
-
 /**
  * Gets the users's token with a silent call
  * @export
@@ -121,11 +125,11 @@ export function* getToken(userId) {
       null,
       user
     );
-    return currentToken
+    return currentToken;
   } catch (error) {
     console.error(
       `Could not acquire a valid token ${
-      user.displayableId
+        user.displayableId
       } by silently querying MSAL.`
     );
     console.error(error);
@@ -151,9 +155,7 @@ export function* getTokenRedirect(userId) {
     return currentToken;
   } catch (error) {
     console.error(
-      `Could not acquire a valid token ${
-      userId
-      } by redirecting to MSAL authentication.`
+      `Could not acquire a valid token ${userId} by redirecting to MSAL authentication.`
     );
     console.error(error);
     const user = yield select(state => state.users[userId]);
@@ -162,4 +164,3 @@ export function* getTokenRedirect(userId) {
     return "";
   }
 }
-
