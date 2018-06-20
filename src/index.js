@@ -11,11 +11,15 @@ import rootReducer from "./reducers";
 import registerServiceWorker from "./registerServiceWorker";
 import rootSaga from "./sagas";
 
-// react-router, react-router-redux
+// react-router, connected-react-router
 import { Route, Switch } from "react-router";
-import { ConnectedRouter, routerMiddleware } from "react-router-redux";
 import PrivateRoute from "./routing";
-import createHistory from "history/createBrowserHistory";
+import { createBrowserHistory } from "history";
+import {
+  routerMiddleware,
+  connectRouter,
+  ConnectedRouter
+} from "connected-react-router";
 
 // office-ui-fabric
 import { Fabric } from "office-ui-fabric-react/lib/Fabric";
@@ -30,16 +34,14 @@ import "./index.css";
 
 initializeIcons();
 
-const history = createHistory();
-const historyMiddleware = routerMiddleware(history);
+const history = createBrowserHistory();
 
 const sagaMiddleware = createSagaMiddleware();
-let store = createStore(
-  rootReducer,
+const store = createStore(
+  connectRouter(history)(rootReducer),
   composeWithDevTools(
-    compose(
-      applyMiddleware(sagaMiddleware, historyMiddleware)
-    ))
+    compose(applyMiddleware(sagaMiddleware, routerMiddleware(history)))
+  )
 );
 sagaMiddleware.run(rootSaga);
 
