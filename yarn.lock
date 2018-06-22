@@ -16,11 +16,15 @@
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
+"@microsoft/load-themed-styles@^1.7.13":
+  version "1.7.62"
+  resolved "https://registry.yarnpkg.com/@microsoft/load-themed-styles/-/load-themed-styles-1.7.62.tgz#fd23b4bae86f57d133faba4368ef4f6d3f906d00"
+
 "@microsoft/microsoft-graph-types@^1.3.0":
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/@microsoft/microsoft-graph-types/-/microsoft-graph-types-1.3.0.tgz#b87198cc88b82df8a1c04491c3d0f4385c681ca2"
 
-"@types/history@*":
+"@types/history@*", "@types/history@^4.6.2":
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/@types/history/-/history-4.6.2.tgz#12cfaba693ba20f114ed5765467ff25fdf67ddb0"
 
@@ -64,6 +68,36 @@
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.4.1.tgz#c53bbfb4a78933db587da085ac60dbf5fcf73f8f"
   dependencies:
     csstype "^2.2.0"
+
+"@uifabric/icons@>=6.0.1 <7.0.0":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/@uifabric/icons/-/icons-6.0.1.tgz#6870a661216b6858db7e179cac62fb16b91aa361"
+  dependencies:
+    "@uifabric/styling" ">=6.0.3 <7.0.0"
+    tslib "^1.7.1"
+
+"@uifabric/merge-styles@>=6.2.1 <7.0.0":
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/@uifabric/merge-styles/-/merge-styles-6.2.1.tgz#b7f7eff2ff7c7a92da62249104376411c63e3136"
+  dependencies:
+    tslib "^1.7.1"
+
+"@uifabric/styling@>=6.0.3 <7.0.0", "@uifabric/styling@>=6.3.0 <7.0.0":
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/@uifabric/styling/-/styling-6.3.0.tgz#d57540073d793a4186a01f853e82b2eb04559dc8"
+  dependencies:
+    "@microsoft/load-themed-styles" "^1.7.13"
+    "@uifabric/merge-styles" ">=6.2.1 <7.0.0"
+    "@uifabric/utilities" ">=6.7.1 <7.0.0"
+    tslib "^1.7.1"
+
+"@uifabric/utilities@>=6.7.1 <7.0.0":
+  version "6.7.1"
+  resolved "https://registry.yarnpkg.com/@uifabric/utilities/-/utilities-6.7.1.tgz#9d3d086079af5fbcf39751c338f0223d3615f3aa"
+  dependencies:
+    "@uifabric/merge-styles" ">=6.2.1 <7.0.0"
+    prop-types "^15.5.10"
+    tslib "^1.7.1"
 
 abab@^1.0.4:
   version "1.0.4"
@@ -2115,6 +2149,10 @@ dom-urls@^1.1.0:
   dependencies:
     urijs "^1.16.1"
 
+dom-walk@^0.1.0:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/dom-walk/-/dom-walk-0.1.1.tgz#672226dc74c8f799ad35307df936aba11acd6018"
+
 domain-browser@^1.1.1:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/domain-browser/-/domain-browser-1.2.0.tgz#3d31f50191a6749dd1375a7f522e823d42e54eda"
@@ -2935,6 +2973,13 @@ global-prefix@^1.0.1:
     ini "^1.3.4"
     is-windows "^1.0.1"
     which "^1.2.14"
+
+global@^4.3.2:
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/global/-/global-4.3.2.tgz#e76989268a6c74c38908b1305b10fc0e394e9d0f"
+  dependencies:
+    min-document "^2.19.0"
+    process "~0.5.1"
 
 globals@^9.18.0:
   version "9.18.0"
@@ -4530,6 +4575,12 @@ mimic-fn@^1.0.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/mimic-fn/-/mimic-fn-1.2.0.tgz#820c86a39334640e99516928bd03fca88057d022"
 
+min-document@^2.19.0:
+  version "2.19.0"
+  resolved "https://registry.yarnpkg.com/min-document/-/min-document-2.19.0.tgz#7bd282e3f5842ed295bb748cdd9f1ffa2c824685"
+  dependencies:
+    dom-walk "^0.1.0"
+
 minimalistic-assert@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/minimalistic-assert/-/minimalistic-assert-1.0.1.tgz#2e194de044626d4a10e7f7fbc00ce73e83e4d5c7"
@@ -4885,6 +4936,18 @@ object.pick@^1.3.0:
 obuf@^1.0.0, obuf@^1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/obuf/-/obuf-1.1.2.tgz#09bea3343d41859ebd446292d11c9d4db619084e"
+
+office-ui-fabric-react@^6.17.0:
+  version "6.17.0"
+  resolved "https://registry.yarnpkg.com/office-ui-fabric-react/-/office-ui-fabric-react-6.17.0.tgz#44be639023eedc0e0338ffe0d18b7c1a22992933"
+  dependencies:
+    "@microsoft/load-themed-styles" "^1.7.13"
+    "@uifabric/icons" ">=6.0.1 <7.0.0"
+    "@uifabric/merge-styles" ">=6.2.1 <7.0.0"
+    "@uifabric/styling" ">=6.3.0 <7.0.0"
+    "@uifabric/utilities" ">=6.7.1 <7.0.0"
+    prop-types "^15.5.10"
+    tslib "^1.7.1"
 
 on-finished@~2.3.0:
   version "2.3.0"
@@ -5506,6 +5569,10 @@ process@^0.11.10:
   version "0.11.10"
   resolved "https://registry.yarnpkg.com/process/-/process-0.11.10.tgz#7332300e840161bda3e69a1d1d91a7d4bc16f182"
 
+process@~0.5.1:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/process/-/process-0.5.2.tgz#1638d8a8e34c2f440a91db95ab9aeb677fc185cf"
+
 promise-inflight@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/promise-inflight/-/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
@@ -5522,18 +5589,18 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
+prop-types@^15.5.10, prop-types@^15.6.1:
+  version "15.6.2"
+  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
+  dependencies:
+    loose-envify "^1.3.1"
+    object-assign "^4.1.1"
+
 prop-types@^15.6.0:
   version "15.6.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
   dependencies:
     fbjs "^0.8.16"
-    loose-envify "^1.3.1"
-    object-assign "^4.1.1"
-
-prop-types@^15.6.1:
-  version "15.6.2"
-  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
-  dependencies:
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
 

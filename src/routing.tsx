@@ -15,12 +15,12 @@ interface IRest {
 }
 
 interface IEverything extends IRest {
-  component: React.Component<RouteComponentProps<{}>>;
+  component: React.ComponentClass;
 }
 
 function redirect(
   props: RouteComponentProps<{}>,
-  Component: React.Component<{}>,
+  Component: React.ComponentClass,
   rest: IRest
 ) {
   return rest.users !== {} ? (

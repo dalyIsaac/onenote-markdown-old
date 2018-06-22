@@ -11,6 +11,7 @@ export class UserData {
   public photo: string;
   public acquireTokenError = null;
   public userIdentifier: string;
+  public name: string;
 
   constructor(msal: User, photo = "", acquireTokenError = null) {
     this.displayableId = undefined;

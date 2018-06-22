@@ -1,0 +1,24 @@
+.notebookPickerParent {
+  height: 75vh;
+  width: 75vw;
+  position: relative;
+}
+
+.notebookPickerSpinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.navbarParent {
+  height: calc(100vh - 49px);
+  display: grid;
+  grid-template-columns: 300px 300px 300px auto;
+}
+
+/* overflow is handled by this nav tag as all of the navs are contained within a nav tag */
+nav {
+  overflow-y: auto;
+  overflow-x: hidden;
+}

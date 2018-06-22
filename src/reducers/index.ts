@@ -1,4 +1,5 @@
-import { routerReducer, RouterState } from "react-router-redux";
+import { Notebook as Graph_Notebook } from "@microsoft/microsoft-graph-types";
+import { RouterState } from "connected-react-router";
 import { combineReducers } from "redux";
 import { Notebook } from "src/types/Notebook";
 import { Page } from "src/types/Page";
@@ -16,7 +17,6 @@ export default combineReducers({
   allNotebooks: allNotebooksReducer, // used for opening notebooks
   notebookOrder: notebookOrderReducer,
   onenote: onenoteReducer,
-  router: routerReducer,
   selectedNav: selectedNavReducer,
   totalNotebookLength: totalNotebookLengthReducer,
   users: userReducer
@@ -25,7 +25,7 @@ export default combineReducers({
 export interface IState {
   allNotebooks: IStateUserNotebooks[];
   notebookOrder: string[];
-  onenote: IStateOneNote;
+  onenote: IStateOneNote[];
   router: RouterState;
   selectedNav: string[];
   totalNotebookLength: number;
@@ -35,7 +35,7 @@ export interface IState {
 export interface IStateUserNotebooks {
   userId: string;
   displayableId: string;
-  notebooks: Notebook;
+  notebooks: Graph_Notebook[];
 }
 
 export interface IStateOneNote {

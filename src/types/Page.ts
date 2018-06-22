@@ -4,6 +4,11 @@ import { OneNoteBase } from "./OneNoteBase";
 export class Page extends OneNoteBase {
   public error?: string;
   public content?: string;
+  public level: number;
+  public title: string;
+  public order: number;
+  public isExpanded?: boolean;
+
   /**
    * @param page - Result from the Microsoft Graph query
    * @param userId
@@ -13,12 +18,14 @@ export class Page extends OneNoteBase {
     page: object,
     userId?: string,
     content?: string,
-    error?: undefined
+    error?: undefined,
+    isExpanded?: boolean
   ) {
     super();
     this.error = error;
     this.content = content;
     this.userId = userId;
+    this.isExpanded = isExpanded;
     deflateObject(this, page);
   }
 }

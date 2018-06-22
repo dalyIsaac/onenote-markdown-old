@@ -1,0 +1,18 @@
+.notebookPickerWrapper {
+  display: grid;
+  grid-template-rows: 32px calc(75vh - 64px) 32px;
+}
+
+.filterDiv {
+  grid-row: 1;
+}
+
+.detailsListDiv {
+  grid-row: 2;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.footerDiv {
+  grid-row: 3;
+}

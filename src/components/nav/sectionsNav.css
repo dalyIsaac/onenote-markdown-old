@@ -1,0 +1,8 @@
+.rotatedIcon {
+  transform: rotate(270dg);
+  -webkit-transform: rotate(270deg);
+}
+
+.sectionsNav {
+  grid-column: 2;
+}
