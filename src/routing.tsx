@@ -6,39 +6,42 @@ import { RouteComponentProps } from "react-router";
 import { IState } from "./reducers";
 import { IUserDataObject } from "./types/UserData";
 
-interface IRest {
-  computedMatch: object;
-  exact: boolean;
-  location: Location;
+interface IPropsPrivateRoute {
+  computedMatch?: object;
+  exact?: boolean;
+  location?: Location;
   path: string;
   users: IUserDataObject;
-}
-
-interface IEverything extends IRest {
   component: React.ComponentClass;
 }
 
-function redirect(
-  props: RouteComponentProps<{}>,
-  Component: React.ComponentClass,
-  rest: IRest
-) {
-  return rest.users !== {} ? (
-    <Component {...props} />
-  ) : (
-    <Redirect
-      to={{
-        pathname: "/about",
-        state: { from: props.location }
-      }}
-    />
-  );
-}
+class PrivateRoute extends React.Component<IPropsPrivateRoute> {
+  public defaultProps: Partial<IPropsPrivateRoute> = {
+    exact: false
+  };
 
-const PrivateRoute = ({ component: Component, ...rest }: IEverything) => (
-  /* tslint:disable-next-line */
-  <Route {...rest} render={props => redirect(props, Component, rest)} />
-);
+  public render() {
+    const { component: Component, ...rest } = this.props;
+    return (
+      /* tslint:disable-next-line */
+      <Route {...rest} render={props => this.redirect(props)} />
+    );
+  }
+
+  private redirect(props: RouteComponentProps<{}>) {
+    const { component: Component, ...rest } = this.props;
+    return rest.users !== {} ? (
+      <Component {...props} />
+    ) : (
+      <Redirect
+        to={{
+          pathname: "/about",
+          state: { from: props.location }
+        }}
+      />
+    );
+  }
+}
 
 const mapStateToProps = (state: IState) => ({
   users: state.users
