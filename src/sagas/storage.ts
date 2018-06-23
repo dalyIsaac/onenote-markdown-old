@@ -2,13 +2,14 @@ import * as localforage from "localforage";
 import { call } from "redux-saga/effects";
 
 enum StorageType {
-  sessionStorage = "sessionStorage",
   localStorage = "localStorage"
 }
 
 const storage = {
-  localStorage: localforage.createInstance({ name: "localStorage" }),
-  sessionStorage: localforage.createInstance({ name: "sessionStorage" })
+  localStorage: localforage.createInstance({
+    driver: localforage.LOCALSTORAGE,
+    name: "localStorage"
+  })
 };
 
 export function* localStorageSetItem(index: string, data: any) {
@@ -25,22 +26,6 @@ export function* localStorageGetItems() {
 
 export function* localStorageRemoveItem(index: string) {
   return yield call(storageRemoveItem, index, StorageType.localStorage);
-}
-
-export function* sessionStorageSetItem(index: string, data: any) {
-  yield call(storageSetItem, index, data, StorageType.sessionStorage);
-}
-
-export function* sessionStorageGetItem(index: string) {
-  return yield call(storageGetItem, index, StorageType.sessionStorage);
-}
-
-export function* sessionStorageGetItems() {
-  return yield call(storageGetItems, StorageType.sessionStorage);
-}
-
-export function* sessionStorageRemoveItem(index: string) {
-  return yield call(storageRemoveItem, index, StorageType.sessionStorage);
 }
 
 function* storageSetItem(index: string, data: any, storageType: StorageType) {
