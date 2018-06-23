@@ -12,7 +12,7 @@ import { Page } from "./Page";
  * @class Section
  */
 export class Section extends OneNoteBase {
-  public pages: string[];
+  public pages: string[] = [];
 
   /**
    * @param section - Result from the Microsoft Graph query

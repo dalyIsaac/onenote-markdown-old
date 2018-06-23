@@ -7,8 +7,8 @@ import { OneNoteBase } from "./OneNoteBase";
  * @class Notebook
  */
 export class Notebook extends OneNoteBase {
-  public sectionGroups: string[];
-  public sections: string[];
+  public sectionGroups: string[] = [];
+  public sections: string[] = [];
 
   /**
    * @param {Object} notebook JSON response from the Microsoft Graph for a notebook

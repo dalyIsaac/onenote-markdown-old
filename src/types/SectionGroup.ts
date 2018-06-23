@@ -8,8 +8,8 @@ import { OneNoteBase } from "./OneNoteBase";
  * @class SectionGroup
  */
 export class SectionGroup extends OneNoteBase {
-  public sectionGroups: string[];
-  public sections: string[];
+  public sectionGroups: string[] = [];
+  public sections: string[] = [];
   public isExpanded = false;
 
   constructor(sectionGroup: ISectionGroup, userId?: string) {
