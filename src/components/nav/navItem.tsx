@@ -135,7 +135,7 @@ export default class NavItem extends React.Component<
   }
 
   private propsIsExpandable(): boolean {
-    return this.props.updateIsExpanded === undefined;
+    return this.props.updateIsExpanded !== undefined;
   }
 
   private updateIsExpanded(id: string, isExpanded: boolean) {

@@ -160,7 +160,7 @@ export default class NotebookPicker extends React.Component<
         <DefaultButton
           className="footerDiv"
           primary={true}
-          description="Starts opening the selected notebooks"
+          secondaryText="Starts opening the selected notebooks"
           onClick={this.openNotebooks}
           text="Open notebooks"
         />

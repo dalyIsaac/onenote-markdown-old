@@ -16,7 +16,7 @@ interface IPropsPrivateRoute {
 }
 
 class PrivateRoute extends React.Component<IPropsPrivateRoute> {
-  public defaultProps: Partial<IPropsPrivateRoute> = {
+  public static defaultProps: Partial<IPropsPrivateRoute> = {
     exact: false
   };
 
