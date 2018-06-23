@@ -1,9 +1,9 @@
 import { OnenotePage, OnenoteSection } from "@microsoft/microsoft-graph-types";
 import { call, put, select } from "redux-saga/effects";
 import {
-  localStorageGetItem,
-  localStorageGetItems,
-  localStorageSetItem
+  indexeddbStorageGetItem,
+  indexeddbStorageGetItems,
+  indexeddbStorageSetItem
 } from "src/sagas/storage";
 import { Notebook } from "src/types/Notebook";
 import { Section } from "src/types/Section";
@@ -165,35 +165,35 @@ export function* getPageContent(action: IGetPageContent) {
 
 export function* savePageContent(action: ISavePageContent) {
   const { pageId, content } = action;
-  const page: Page = yield call(localStorageGetItem, pageId);
+  const page: Page = yield call(indexeddbStorageGetItem, pageId);
   page.content = content;
-  yield call(localStorageSetItem, pageId, page);
+  yield call(indexeddbStorageSetItem, pageId, page);
 }
 
 export function* saveNotebook(action: ISaveNotebook) {
   const { notebook } = action;
-  yield call(localStorageSetItem, notebook.id, notebook);
+  yield call(indexeddbStorageSetItem, notebook.id, notebook);
 }
 
 export function* saveSectionGroup(action: ISaveSectionGroup) {
   const { sectionGroup } = action;
-  yield call(localStorageSetItem, sectionGroup.id, sectionGroup);
+  yield call(indexeddbStorageSetItem, sectionGroup.id, sectionGroup);
 }
 
 export function* saveSection(action: ISaveSection) {
   const { section } = action;
-  yield call(localStorageSetItem, section.id, section);
+  yield call(indexeddbStorageSetItem, section.id, section);
 }
 
 export function* savePage(action: ISavePage) {
   const { page } = action;
-  yield call(localStorageSetItem, page.id, page);
+  yield call(indexeddbStorageSetItem, page.id, page);
 }
 
 export function* getOneNote(action: IAction) {
-  const order = (yield call(localStorageGetItem, "notebookOrder")) || [];
+  const order = (yield call(indexeddbStorageGetItem, "notebookOrder")) || [];
   yield put(notebookOrder.loadNotebookOrder(order));
   yield put(totalNotebookLength.updateLength(order.length));
-  const everythingElse = (yield call(localStorageGetItems)) || {};
+  const everythingElse = (yield call(indexeddbStorageGetItems)) || {};
   yield put(onenote.loadOneNote(everythingElse));
 }

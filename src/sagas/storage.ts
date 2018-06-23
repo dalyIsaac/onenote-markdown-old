@@ -2,30 +2,30 @@ import * as localforage from "localforage";
 import { call } from "redux-saga/effects";
 
 enum StorageType {
-  localStorage = "localStorage"
+  indexeddbStorage = "indexeddbStorage"
 }
 
 const storage = {
-  localStorage: localforage.createInstance({
-    driver: localforage.LOCALSTORAGE,
-    name: "localStorage"
+  indexeddbStorage: localforage.createInstance({
+    driver: localforage.INDEXEDDB,
+    name: "msgraphDataStorage"
   })
 };
 
-export function* localStorageSetItem(index: string, data: any) {
-  yield call(storageSetItem, index, data, StorageType.localStorage);
+export function* indexeddbStorageSetItem(index: string, data: any) {
+  yield call(storageSetItem, index, data, StorageType.indexeddbStorage);
 }
 
-export function* localStorageGetItem(index: string) {
-  return yield call(storageGetItem, index, StorageType.localStorage);
+export function* indexeddbStorageGetItem(index: string) {
+  return yield call(storageGetItem, index, StorageType.indexeddbStorage);
 }
 
-export function* localStorageGetItems() {
-  return yield call(storageGetItems, StorageType.localStorage);
+export function* indexeddbStorageGetItems() {
+  return yield call(storageGetItems, StorageType.indexeddbStorage);
 }
 
-export function* localStorageRemoveItem(index: string) {
-  return yield call(storageRemoveItem, index, StorageType.localStorage);
+export function* indexeddbStorageRemoveItem(index: string) {
+  return yield call(storageRemoveItem, index, StorageType.indexeddbStorage);
 }
 
 function* storageSetItem(index: string, data: any, storageType: StorageType) {
