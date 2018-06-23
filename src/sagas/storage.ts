@@ -1,32 +1,69 @@
 import * as localforage from "localforage";
 import { call } from "redux-saga/effects";
 
-/**
- * Sets an object using localforage
- * @param index Index of the data to set
- * @param data Data to set
- */
-export function* storageSetItem(index: string, data: any) {
+enum StorageType {
+  sessionStorage = "sessionStorage",
+  localStorage = "localStorage"
+}
+
+const storage = {
+  localStorage: localforage.createInstance({ name: "localStorage" }),
+  sessionStorage: localforage.createInstance({ name: "sessionStorage" })
+};
+
+export function* localStorageSetItem(index: string, data: any) {
+  yield call(storageSetItem, index, data, StorageType.localStorage);
+}
+
+export function* localStorageGetItem(index: string) {
+  return yield call(storageGetItem, index, StorageType.localStorage);
+}
+
+export function* localStorageGetItems() {
+  return yield call(storageGetItems, StorageType.localStorage);
+}
+
+export function* localStorageRemoveItem(index: string) {
+  return yield call(storageRemoveItem, index, StorageType.localStorage);
+}
+
+export function* sessionStorageSetItem(index: string, data: any) {
+  yield call(storageSetItem, index, data, StorageType.sessionStorage);
+}
+
+export function* sessionStorageGetItem(index: string) {
+  return yield call(storageGetItem, index, StorageType.sessionStorage);
+}
+
+export function* sessionStorageGetItems() {
+  return yield call(storageGetItems, StorageType.sessionStorage);
+}
+
+export function* sessionStorageRemoveItem(index: string) {
+  return yield call(storageRemoveItem, index, StorageType.sessionStorage);
+}
+
+function* storageSetItem(index: string, data: any, storageType: StorageType) {
+  const box: LocalForage = storage[storageType];
   try {
-    yield call([localforage, localforage.setItem], index, data);
+    yield call([box, box.setItem], index, data);
   } catch (error) {
-    console.error(`localforage could not write ${data} to ${index}`);
+    console.error(
+      `localForage could not write ${data} to ${index}, in ${storageType}`
+    );
     console.error(error);
   }
 }
 
-/**
- * Returns a promise of the desired item in localforage
- * @param index
- * @returns
- */
-export function storageGetItem(index: string) {
-  return localforage.getItem(index);
+function* storageGetItem(index: string, storageType: StorageType) {
+  const box: LocalForage = storage[storageType];
+  return yield call([box, box.getItem], index);
 }
 
-export function* storageGetItems() {
+function* storageGetItems(storageType: StorageType) {
+  const box: LocalForage = storage[storageType];
   const output = {};
-  yield call([localforage, localforage.iterate], (value: any, key: string) => {
+  yield call([box, box.iterate], (value: any, key: string) => {
     if (!Array.isArray(value)) {
       output[key] = value;
     }
@@ -34,6 +71,7 @@ export function* storageGetItems() {
   return output;
 }
 
-export function storageRemoveItem(index: string) {
-  return localforage.removeItem(index);
+function* storageRemoveItem(index: string, storageType: StorageType) {
+  const box: LocalForage = storage[storageType];
+  return yield call([box, box.removeItem], index);
 }

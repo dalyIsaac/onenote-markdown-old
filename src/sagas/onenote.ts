@@ -1,8 +1,9 @@
+import { OnenotePage, OnenoteSection } from "@microsoft/microsoft-graph-types";
 import { call, put, select } from "redux-saga/effects";
 import {
-  storageGetItem,
-  storageGetItems,
-  storageSetItem
+  localStorageGetItem,
+  localStorageGetItems,
+  localStorageSetItem
 } from "src/sagas/storage";
 import { Notebook } from "src/types/Notebook";
 import { Section } from "src/types/Section";
@@ -108,9 +109,13 @@ export function* getSection(action: IGetSection) {
 
   const { userId, sectionId, parentSelfUser } = action;
   let url = `${stableUrl}users/${parentSelfUser}/onenote/sections/${sectionId}?$expand=parentNotebook,parentSectionGroup`;
-  const sectionResult = yield call(fetch.get, url, userId);
+  const sectionResult: OnenoteSection & { error?: any } = yield call(
+    fetch.get,
+    url,
+    userId
+  );
   if (sectionResult.error === undefined) {
-    const pagesResult = [];
+    const pagesResult: OnenotePage[][] = [];
     url = `${stableUrl}users/${parentSelfUser}/onenote/sections/${sectionId}/pages?pagelevel=true&$top=100`;
     pagesResult.push((yield call(fetch.get, url, userId)).value);
     while (pagesResult[pagesResult.length - 1].length > 0) {
@@ -128,7 +133,11 @@ export function* getSection(action: IGetSection) {
 export function* getPage(action: IGetPage) {
   const { userId, pageId, parentSelfUser } = action;
   const url = `${stableUrl}users/${parentSelfUser}/onenote/pages/${pageId}?pagelevel=true`;
-  const result = yield call(fetch.get, url, userId);
+  const result: OnenotePage & { error?: any } = yield call(
+    fetch.get,
+    url,
+    userId
+  );
   if (result.error === undefined) {
     const page = new Page(result, userId);
     yield put(onenote.savePage(page));
@@ -156,35 +165,35 @@ export function* getPageContent(action: IGetPageContent) {
 
 export function* savePageContent(action: ISavePageContent) {
   const { pageId, content } = action;
-  const page: Page = yield call(storageGetItem, pageId);
+  const page: Page = yield call(localStorageGetItem, pageId);
   page.content = content;
-  yield call(storageSetItem, pageId, page);
+  yield call(localStorageSetItem, pageId, page);
 }
 
 export function* saveNotebook(action: ISaveNotebook) {
   const { notebook } = action;
-  yield call(storageSetItem, notebook.id, notebook);
+  yield call(localStorageSetItem, notebook.id, notebook);
 }
 
 export function* saveSectionGroup(action: ISaveSectionGroup) {
   const { sectionGroup } = action;
-  yield call(storageSetItem, sectionGroup.id, sectionGroup);
+  yield call(localStorageSetItem, sectionGroup.id, sectionGroup);
 }
 
 export function* saveSection(action: ISaveSection) {
   const { section } = action;
-  yield call(storageSetItem, section.id, section);
+  yield call(localStorageSetItem, section.id, section);
 }
 
 export function* savePage(action: ISavePage) {
   const { page } = action;
-  yield call(storageSetItem, page.id, page);
+  yield call(localStorageSetItem, page.id, page);
 }
 
 export function* getOneNote(action: IAction) {
-  const order = (yield call(storageGetItem, "notebookOrder")) || [];
+  const order = (yield call(localStorageGetItem, "notebookOrder")) || [];
   yield put(notebookOrder.loadNotebookOrder(order));
   yield put(totalNotebookLength.updateLength(order.length));
-  const everythingElse = (yield call(storageGetItems)) || {};
+  const everythingElse = (yield call(localStorageGetItems)) || {};
   yield put(onenote.loadOneNote(everythingElse));
 }
