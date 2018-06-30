@@ -45,7 +45,7 @@ export interface INewUserObject {
 }
 
 /**
- * Creates an action to replace the user list with a new user list
+ * Creates an action to replace the user list with a new user object
  */
 export const newUserObject = (users: IUserDataObject): INewUserObject => ({
   type: NEW_USER_OBJECT,
