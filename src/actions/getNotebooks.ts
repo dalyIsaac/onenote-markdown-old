@@ -34,6 +34,9 @@ export const putAllNotebooks = (
   userId
 });
 
+/**
+ * Creates an action which clears all the notebook data from the localForage stores
+ */
 export const clearAllNotebooks = (): IAction => ({
   type: CLEAR_ALL_NOTEBOOKS
 });
