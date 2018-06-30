@@ -6,6 +6,9 @@ import {
 } from "../actionTypes";
 import { Notebook } from "../types/Notebook";
 
+/**
+ * Creates an action which starts the process of getting all of the notebooks of all the logged in users
+ */
 export const getAllNotebooks = (): IAction => ({
   type: GET_ALL_NOTEBOOKS
 });
@@ -18,7 +21,7 @@ export interface IPutAllNotebooks {
 }
 
 /**
- * Puts freshly fetched notebooks into the store
+ * Creates an action which puts freshly fetched notebooks into the store
  */
 export const putAllNotebooks = (
   userId: string,

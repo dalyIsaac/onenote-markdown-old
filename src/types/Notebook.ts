@@ -1,5 +1,5 @@
 import { Notebook as INotebook } from "@microsoft/microsoft-graph-types";
-import { deflateObject } from "src/types";
+import { deflateObject } from "./index";
 import { OneNoteBase } from "./OneNoteBase";
 
 /**
