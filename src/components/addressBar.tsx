@@ -1,7 +1,7 @@
 import {
   Breadcrumb,
   IBreadcrumbItem
-} from "office-ui-fabric-react/lib/Breadcrumb";
+} from "office-ui-fabric-react/lib-commonjs/Breadcrumb";
 import * as React from "react";
 import { IPropsAddressBar } from "../containers/addressBar";
 import { Page } from "../types/Page";

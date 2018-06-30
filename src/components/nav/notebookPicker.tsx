@@ -1,4 +1,4 @@
-import { DefaultButton } from "office-ui-fabric-react/lib/Button";
+import { DefaultButton } from "office-ui-fabric-react/lib-commonjs/Button";
 import {
   DetailsList,
   DetailsListLayoutMode,
@@ -6,13 +6,13 @@ import {
   IObjectWithKey,
   Selection,
   SelectionMode
-} from "office-ui-fabric-react/lib/DetailsList";
-import { MarqueeSelection } from "office-ui-fabric-react/lib/MarqueeSelection";
-import { SearchBox } from "office-ui-fabric-react/lib/SearchBox";
+} from "office-ui-fabric-react/lib-commonjs/DetailsList";
+import { MarqueeSelection } from "office-ui-fabric-react/lib-commonjs/MarqueeSelection";
+import { SearchBox } from "office-ui-fabric-react/lib-commonjs/SearchBox";
 import * as React from "react";
-import { IOpenNotebooks } from "src/actions/onenote";
-import { IStateOneNote, IStateUserNotebooks } from "src/reducers";
-import { NotebookRow } from "src/types/NotebookRow";
+import { IOpenNotebooks } from "../../actions/onenote";
+import { IStateOneNote, IStateUserNotebooks } from "../../reducers";
+import { NotebookRow } from "../../types/NotebookRow";
 import "./notebookPicker.css";
 
 interface IStateNotebookPicker {
