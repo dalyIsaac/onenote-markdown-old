@@ -2,7 +2,7 @@ import {
   OnenotePage as IPage,
   OnenoteSection as ISection
 } from "@microsoft/microsoft-graph-types";
-import { deflateObject } from "src/types";
+import { deflateObject } from "./index";
 import { OneNoteBase } from "./OneNoteBase";
 import { Page } from "./Page";
 

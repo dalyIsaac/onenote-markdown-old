@@ -14,7 +14,10 @@ export const updateLength = (amount: number): INotebookLength => ({
   type: UPDATE_TOTAL_NOTEBOOK_LENGTH
 });
 
-// Was formerly updateLength
+/**
+ * Creates an action which increases the total notebook length
+ * @param amount The amount of new notebooks opened
+ */
 export const addToLength = (amount: number): INotebookLength => ({
   amount,
   type: TOTAL_NOTEBOOK_LENGTH_ADD

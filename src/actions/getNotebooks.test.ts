@@ -26,6 +26,16 @@ describe("Actions: getNotebooks", () => {
           userRole: "Owner"
         },
         "jane.doe@email.com"
+      ),
+      new Notebook(
+        {
+          isDefault: false,
+          isShared: true,
+          sectionGroupsUrl: "https://www.example.com/sectionGroupsUrl1",
+          sectionsUrl: "https://www.example.com/sections1",
+          userRole: "Owner"
+        },
+        "john.smith@email.com"
       )
     ];
     const expectedAction = { displayableId, notebooks, type, userId };
