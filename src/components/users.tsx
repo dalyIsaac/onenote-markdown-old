@@ -1,4 +1,4 @@
-import { PersonaInitialsColor } from "office-ui-fabric-react/lib/Persona";
+import { PersonaInitialsColor } from "office-ui-fabric-react/lib-commonjs/Persona";
 import * as React from "react";
 import { IPropsUsers } from "../containers/users";
 import UsersComponent from "./usersComponent";

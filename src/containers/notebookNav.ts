@@ -1,8 +1,8 @@
 import { connect, Dispatch } from "react-redux";
-import { selectedNav } from "src/actions";
-import { IUpdateSelected } from "src/actions/selectedNav";
-import NotebookNav from "src/components/nav/notebookNav";
-import { IState, IStateOneNote } from "src/reducers";
+import { selectedNav } from "../actions";
+import { IUpdateSelected } from "../actions/selectedNav";
+import NotebookNav from "../components/nav/notebookNav";
+import { IState, IStateOneNote } from "../reducers";
 
 export interface IPropsNotebookNav {
   notebookOrder: string[];

@@ -1,4 +1,4 @@
-import { DefaultButton } from "office-ui-fabric-react/lib/Button";
+import { DefaultButton } from "office-ui-fabric-react/lib-commonjs/Button";
 import {
   DetailsList,
   DetailsListLayoutMode,
@@ -6,18 +6,18 @@ import {
   IObjectWithKey,
   Selection,
   SelectionMode
-} from "office-ui-fabric-react/lib/DetailsList";
-import { MarqueeSelection } from "office-ui-fabric-react/lib/MarqueeSelection";
-import { SearchBox } from "office-ui-fabric-react/lib/SearchBox";
+} from "office-ui-fabric-react/lib-commonjs/DetailsList";
+import { MarqueeSelection } from "office-ui-fabric-react/lib-commonjs/MarqueeSelection";
+import { SearchBox } from "office-ui-fabric-react/lib-commonjs/SearchBox";
 import * as React from "react";
-import { IOpenNotebooks } from "src/actions/onenote";
-import { IStateOneNote, IStateUserNotebooks } from "src/reducers";
-import { NotebookRow } from "src/types/NotebookRow";
+import { IOpenNotebooks } from "../../actions/onenote";
+import { IStateOneNote, IStateUserNotebooks } from "../../reducers";
+import { Notebook } from "../../types/Notebook";
 import "./notebookPicker.css";
 
 interface IStateNotebookPicker {
   columns: IColumn[];
-  notebooks: NotebookRow[];
+  notebooks: Notebook[];
   isModalSelection: boolean;
 }
 
@@ -25,7 +25,7 @@ interface IPropsNotebookPicker {
   allNotebooks: IStateUserNotebooks[];
   openedNotebooks: IStateOneNote[];
   closeModal(): void;
-  openNotebooks(notebookList: NotebookRow[]): IOpenNotebooks;
+  openNotebooks(notebookList: Notebook[]): IOpenNotebooks;
 }
 
 export default class NotebookPicker extends React.Component<
@@ -33,7 +33,7 @@ export default class NotebookPicker extends React.Component<
   IStateNotebookPicker
 > {
   public selection: Selection;
-  private constNotebooks: NotebookRow[];
+  private constNotebooks: Notebook[];
   constructor(props: IPropsNotebookPicker) {
     super(props);
 
@@ -45,16 +45,11 @@ export default class NotebookPicker extends React.Component<
     let notebooks = [];
     for (const account of this.props.allNotebooks) {
       for (const notebook of account.notebooks) {
-        const notebookRow = new NotebookRow(
-          notebook,
-          account.userId,
-          account.displayableId
-        );
+        const newNotebook = new Notebook(notebook, account.userId, account.displayableId);
         if (
-          this.props.openedNotebooks[notebookRow.notebook.id as string] ===
-          undefined
+          this.props.openedNotebooks[newNotebook.id as string] === undefined
         ) {
-          notebooks.push(notebookRow);
+          notebooks.push(newNotebook);
         }
       }
     }
@@ -82,7 +77,7 @@ export default class NotebookPicker extends React.Component<
       },
       {
         data: "string",
-        fieldName: "fileName",
+        fieldName: "displayName",
         isPadded: true,
         isResizable: true,
         isRowHeader: true,
@@ -116,8 +111,12 @@ export default class NotebookPicker extends React.Component<
         minWidth: 210,
         name: "Last Modified Date Time",
         onColumnClick: this.onColumnClick,
-        onRender: (notebook: NotebookRow) => {
-          return <div>{notebook.lastModifiedDateTime.toLocaleString()}</div>;
+        onRender: (notebook: Notebook) => {
+          if (notebook.lastModifiedDateTime) {
+            return <div>{notebook.lastModifiedDateTime.toLocaleString()}</div>;
+          } else {
+            return <div>N/A</div>;
+          }
         }
       }
     ];
@@ -177,8 +176,8 @@ export default class NotebookPicker extends React.Component<
     this.setState({
       notebooks: text
         ? this.constNotebooks.filter(
-            (i: NotebookRow) =>
-              (i.fileName as string).toLowerCase().indexOf(text) > -1
+            (i: Notebook) =>
+              (i.displayName as string).toLowerCase().indexOf(text) > -1
           )
         : this.constNotebooks
     });
@@ -190,7 +189,7 @@ export default class NotebookPicker extends React.Component<
       this.props.openNotebooks(
         this.selection
           .getSelection()
-          .map((val: IObjectWithKey) => val as NotebookRow)
+          .map((val: IObjectWithKey) => val as Notebook)
       );
     }
     this.props.closeModal();
@@ -230,7 +229,7 @@ export default class NotebookPicker extends React.Component<
    * @param descending
    */
   public sortItems(
-    items: NotebookRow[],
+    items: Notebook[],
     sortBy: string,
     descending: boolean = false
   ) {

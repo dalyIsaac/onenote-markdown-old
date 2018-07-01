@@ -35,10 +35,10 @@ import { Page } from "../types/Page";
 import * as fetch from "./fetch";
 
 export function* openNotebooks(action: IOpenNotebooks) {
-  const { notebookList } = action; // notebookList is a list of NotebookRows
+  const { notebookList } = action;
   yield put(totalNotebookLength.addToLength(notebookList.length));
   for (const element of notebookList) {
-    yield put(onenote.getNotebook(element.userId, element.notebook.self));
+    yield put(onenote.getNotebook(element.userId as string, element.self));
   }
 }
 

@@ -2,7 +2,7 @@ import { Dialog, DialogFooter, DialogType } from "office-ui-fabric-react";
 import {
   DefaultButton,
   PrimaryButton
-} from "office-ui-fabric-react/lib/Button";
+} from "office-ui-fabric-react/lib-commonjs/Button";
 import * as React from "react";
 import { UserData } from "src/types/UserData";
 import AddressBar from "../containers/addressBar";

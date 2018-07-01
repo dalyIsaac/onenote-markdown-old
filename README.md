@@ -1,5 +1,7 @@
 # OneNoteMarkdown
 
+![https://projkiwi.visualstudio.com/_apis/public/build/definitions/f360f67a-ad24-4bef-8761-31411c531bd4/2/badge](https://projkiwi.visualstudio.com/_apis/public/build/definitions/f360f67a-ad24-4bef-8761-31411c531bd4/2/badge)
+
 The aim of this project is to build a web app which can be used to read and write OneNote notebooks as Markdown. The user interface is built using [React](https://reactjs.org/) and [Office UI Fabric React](https://developer.microsoft.com/en-us/fabric#/components). The state is managed using [Redux](https://redux.js.org/), with [Redux-Saga](https://redux-saga.js.org/) for handling application side effects. [localForage](https://localforage.github.io/localForage/) is used to store OneNote data such as notebooks, section groups, sections, notes, and contents in [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API).
 
 Currently, the source code is hosted on [GitHub](https://github.com/dalyIsaac/onenote-markdown). The master branch is built in Visual Studio Team Services using their GitHub integration, and deployed to Azure App Service via continuous integration.
@@ -9,7 +11,7 @@ Currently, the source code is hosted on [GitHub](https://github.com/dalyIsaac/on
 - [x] Signing in with multiple accounts
 - [x] Opening and downloading notebooks, section groups, sections, and pages.
 - [x] Persisting content across browser sessions
-- [ ] Editing pages in Markdown (this is on hold while I learn how to write a parser during 2018Q2)
+- [ ] Editing pages in Markdown
 
 ## Prerequisites
 

@@ -1,4 +1,4 @@
-import { Callout, DirectionalHint } from "office-ui-fabric-react/lib/Callout";
+import { Callout, DirectionalHint } from "office-ui-fabric-react/lib-commonjs/Callout";
 import * as React from "react";
 import { IUpdateIsExpanded } from "../../actions/onenote";
 import { IUpdateSelected } from "../../actions/selectedNav";

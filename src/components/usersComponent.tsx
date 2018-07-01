@@ -1,7 +1,10 @@
-import { ActionButton } from "office-ui-fabric-react/lib/Button";
-import { Facepile } from "office-ui-fabric-react/lib/Facepile";
-import { Panel, PanelType } from "office-ui-fabric-react/lib/Panel";
-import { Persona, PersonaSize } from "office-ui-fabric-react/lib/Persona";
+import { ActionButton } from "office-ui-fabric-react/lib-commonjs/Button";
+import { Facepile } from "office-ui-fabric-react/lib-commonjs/Facepile";
+import { Panel, PanelType } from "office-ui-fabric-react/lib-commonjs/Panel";
+import {
+  Persona,
+  PersonaSize
+} from "office-ui-fabric-react/lib-commonjs/Persona";
 import * as React from "react";
 import { IPersona } from "src/components/users";
 import { IAction } from "../actions";
@@ -41,7 +44,7 @@ export default class UsersComponent extends React.Component<
             imageInitials={user.imageInitials}
             initialsColor={user.initialsColor}
             imageUrl={user.imageUrl}
-            primaryText={user.userName}
+            text={user.userName}
             secondaryText={user.personaName}
             size={PersonaSize.size40}
             key={user.personaName + "Panel"}

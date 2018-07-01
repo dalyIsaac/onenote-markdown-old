@@ -1,4 +1,4 @@
-import { deflateObject } from "src/types";
+import { deflateObject } from "./index";
 import { OneNoteBase } from "./OneNoteBase";
 
 export class Page extends OneNoteBase {

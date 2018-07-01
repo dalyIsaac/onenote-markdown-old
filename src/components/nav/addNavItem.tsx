@@ -1,4 +1,4 @@
-import { Icon } from "office-ui-fabric-react/lib/Icon";
+import { Icon } from "office-ui-fabric-react/lib-commonjs/Icon";
 import * as React from "react";
 import "./addNavItem.css";
 
