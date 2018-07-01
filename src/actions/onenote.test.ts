@@ -5,7 +5,6 @@ import {
   SectionGroup as ISectionGroup
 } from "@microsoft/microsoft-graph-types";
 import { Notebook } from "../types/Notebook";
-import { NotebookRow } from "../types/NotebookRow";
 import { OneNoteBase } from "../types/OneNoteBase";
 import { Page } from "../types/Page";
 import { Section } from "../types/Section";
@@ -122,9 +121,9 @@ describe("Actions: onenote", () => {
 
   test("Should create an action to open the notebooks in the notebookList", () => {
     const type = "OPEN_NOTEBOOKS";
-    const notebookList: NotebookRow[] = [
-      new NotebookRow(graphNotebookInstance, userId, "genericstring1"),
-      new NotebookRow(graphNotebookInstance1, userId1, "genericstring2")
+    const notebookList: Notebook[] = [
+      new Notebook(graphNotebookInstance, userId),
+      new Notebook(graphNotebookInstance1, userId1)
     ];
     const expectedAction = { notebookList, type };
     expect(openNotebooks(notebookList)).toEqual(expectedAction);

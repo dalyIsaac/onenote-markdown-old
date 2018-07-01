@@ -9,14 +9,28 @@ import { OneNoteBase } from "./OneNoteBase";
 export class Notebook extends OneNoteBase {
   public sectionGroups: string[] = [];
   public sections: string[] = [];
+  public lastModifiedDateTime?: string;
 
   /**
-   * @param {Object} notebook JSON response from the Microsoft Graph for a notebook
-   * @param {string} userId
+   * Email address of the user. This is used to show in the NotebookPicker to
+   * indicate which account has access to the notebook. The account which has access
+   * is not the account which created the notebook or last modified the notebook.
    */
-  constructor(notebook: INotebook, userId?: string) {
+  public userDisplayableId?: string;
+
+  /**
+   * @param notebook JSON response from the MSGraph for a notebook
+   * @param userId unique random string from MSGraph which represents a user
+   * @param userDisplayableId email address of the user
+   */
+  constructor(
+    notebook: INotebook,
+    userId?: string,
+    userDisplayableId?: string
+  ) {
     super();
     this.userId = userId;
+    this.userDisplayableId = userDisplayableId;
     deflateObject(this, notebook);
   }
 }
