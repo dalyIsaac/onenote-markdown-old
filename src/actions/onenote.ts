@@ -17,14 +17,14 @@ import {
   UPDATE_IS_EXPANDED
 } from "../actionTypes";
 import { Notebook } from "../types/Notebook";
-import { NotebookRow } from "../types/NotebookRow";
+
 import { OneNoteBase } from "../types/OneNoteBase";
 import { Page } from "../types/Page";
 import { Section } from "../types/Section";
 import { SectionGroup } from "../types/SectionGroup";
 
 export interface IOpenNotebooks {
-  notebookList: NotebookRow[];
+  notebookList: Notebook[];
   type: string;
 }
 
@@ -32,7 +32,7 @@ export interface IOpenNotebooks {
  * Creates an action to open the notebooks in the `notebookList`
  * @param notebookList Notebooks to open
  */
-export const openNotebooks = (notebookList: NotebookRow[]): IOpenNotebooks => ({
+export const openNotebooks = (notebookList: Notebook[]): IOpenNotebooks => ({
   notebookList,
   type: OPEN_NOTEBOOKS
 });

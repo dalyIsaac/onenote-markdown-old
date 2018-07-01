@@ -2,7 +2,7 @@ import { connect, Dispatch } from "react-redux";
 import { IState, IStateOneNote, IStateUserNotebooks } from "src/reducers";
 import { getNotebooks, IAction, onenote } from "../actions";
 import { IOpenNotebooks } from "../actions/onenote";
-import { NotebookRow } from "../types/NotebookRow";
+import { Notebook } from "../types/Notebook";
 import Navbar from "./../components/nav/navbar";
 
 export interface IPropsNavbar {
@@ -11,7 +11,7 @@ export interface IPropsNavbar {
   openedNotebooks: IStateOneNote[];
   userLength: number;
   getAllNotebooks(): IAction;
-  openNotebooks(notebookList: NotebookRow[]): IOpenNotebooks;
+  openNotebooks(notebookList: Notebook[]): IOpenNotebooks;
 }
 
 const mapStateToProps = (state: IState): Partial<IPropsNavbar> => ({
@@ -23,7 +23,7 @@ const mapStateToProps = (state: IState): Partial<IPropsNavbar> => ({
 
 const mapDispatchToProps = (dispatch: Dispatch): Partial<IPropsNavbar> => ({
   getAllNotebooks: () => dispatch(getNotebooks.getAllNotebooks()),
-  openNotebooks: (notebookList: NotebookRow[]) =>
+  openNotebooks: (notebookList: Notebook[]) =>
     dispatch(onenote.openNotebooks(notebookList))
 });
 
