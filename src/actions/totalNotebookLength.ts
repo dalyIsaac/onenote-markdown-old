@@ -2,10 +2,10 @@ import {
   TOTAL_NOTEBOOK_LENGTH_ADD,
   UPDATE_TOTAL_NOTEBOOK_LENGTH
 } from "../actionTypes";
+import { IAction } from "./index";
 
-export interface INotebookLength {
+export interface INotebookLength extends IAction {
   amount: number;
-  type: string;
 }
 
 /**

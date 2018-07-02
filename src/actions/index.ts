@@ -10,8 +10,7 @@ export interface IAction {
   type: string;
 }
 
-export interface IActionUser {
-  type: string;
+export interface IActionUser extends IAction {
   user: UserData;
 }
 

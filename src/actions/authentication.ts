@@ -12,9 +12,8 @@ import {
   UPDATE_USER
 } from "../actionTypes";
 
-export interface IAuthenticate {
+export interface IAuthenticate extends IAction {
   dispatch: Dispatch;
-  type: string;
 }
 
 /**
@@ -39,8 +38,7 @@ export const signOut = (): IAction => ({
   type: SIGN_OUT
 });
 
-export interface INewUserObject {
-  type: string;
+export interface INewUserObject extends IAction {
   users: IUserDataObject;
 }
 
@@ -60,8 +58,7 @@ export const updateUser = (user: UserData): IActionUser => ({
   user
 });
 
-export interface IGetPhoto {
-  type: string;
+export interface IGetPhoto extends IAction {
   userId: string;
 }
 

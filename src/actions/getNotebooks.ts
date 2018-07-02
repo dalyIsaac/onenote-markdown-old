@@ -13,11 +13,10 @@ export const getAllNotebooks = (): IAction => ({
   type: GET_ALL_NOTEBOOKS
 });
 
-export interface IPutAllNotebooks {
+export interface IPutAllNotebooks extends IAction {
   userId: string;
   displayableId: string;
   notebooks: Notebook[];
-  type: string;
 }
 
 /**
