@@ -33,7 +33,7 @@ export const graphNotebookInstance1: INotebook = {
 };
 
 export const notebook = new Notebook(graphNotebookInstance, userId);
-// export const notebook1 = new Notebook(graphNotebookInstance1, userId1);
+export const notebook1 = new Notebook(graphNotebookInstance1, userId1);
 
 export const graphSectionGroupInstance: ISectionGroup = {
   parentNotebook: graphNotebookInstance,
