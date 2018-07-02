@@ -11,7 +11,7 @@ describe("Reducers: notebookOrderReducer", () => {
     expect(notebookOrderReducer(initialState, action)).toEqual(expectedState);
   });
 
-  test("Should handle ADD_NOTEBOOK_TO_ORDER with empty initial state", () => {
+  test("Should handle ADD_NOTEBOOK_TO_ORDER with an empty initial state", () => {
     const initialState: string[] = [];
     const action = {
       notebookId: notebookId1,
@@ -31,7 +31,7 @@ describe("Reducers: notebookOrderReducer", () => {
     expect(notebookOrderReducer(initialState, action)).toEqual(expectedState);
   });
 
-  test("Should handle LOAD_NOTEBOOK_ORDER with empty initial state", () => {
+  test("Should handle LOAD_NOTEBOOK_ORDER with an empty initial state", () => {
     const notebookOrder = [notebookId2, notebookId1];
     const initialState: string[] = [];
     const action = {

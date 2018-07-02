@@ -10,7 +10,7 @@ describe("Reducers: allNotebooksReducer", () => {
     expect(notebooksReducer(initialState, action)).toEqual(expectedState);
   });
 
-  test("Should handle PUT_ALL_NOTEBOOKS with empty initial state", () => {
+  test("Should handle PUT_ALL_NOTEBOOKS with an empty initial state", () => {
     const initialState: IStateUserNotebooks[] = [];
     const newState = [
       {
