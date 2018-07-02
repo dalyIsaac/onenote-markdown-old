@@ -3,9 +3,8 @@ import { OneNoteBase } from "../types/OneNoteBase";
 
 import {
   content,
-  graphNotebookInstance,
-  graphNotebookInstance1,
   notebook,
+  notebook1,
   page,
   page1,
   pageId,
@@ -13,8 +12,7 @@ import {
   section,
   sectionGroup,
   sectionGroup1,
-  userId,
-  userId1
+  userId
 } from "../testObjects";
 import {
   getNotebook,
@@ -37,10 +35,7 @@ import {
 describe("Actions: onenote", () => {
   test("Should create an action to open the notebooks in the notebookList", () => {
     const type = "OPEN_NOTEBOOKS";
-    const notebookList: Notebook[] = [
-      new Notebook(graphNotebookInstance, userId),
-      new Notebook(graphNotebookInstance1, userId1)
-    ];
+    const notebookList: Notebook[] = [notebook, notebook1];
     const expectedAction = { notebookList, type };
     expect(openNotebooks(notebookList)).toEqual(expectedAction);
   });
