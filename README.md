@@ -7,7 +7,7 @@
 
 The aim of this project is to build a web app which can be used to read and write OneNote notebooks as Markdown. The user interface is built using [React](https://reactjs.org/) and [Office UI Fabric React](https://developer.microsoft.com/en-us/fabric#/components). The state is managed using [Redux](https://redux.js.org/), with [Redux-Saga](https://redux-saga.js.org/) for handling application side effects. [localForage](https://localforage.github.io/localForage/) is used to store OneNote data such as notebooks, section groups, sections, notes, and contents in [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API).
 
-Currently, the source code is hosted on [GitHub](https://github.com/dalyIsaac/onenote-markdown). The master branch is built in Visual Studio Team Services using their GitHub integration, and deployed to Azure App Service via continuous integration.
+Currently, the source code is hosted on [GitHub](https://github.com/dalyIsaac/onenote-markdown). The master branch is built in Visual Studio Team Services using their GitHub integration, and deployed to Azure App Service via continuous integration. Testing occurs using [Travis CI](https://travis-ci.com/dalyIsaac/onenote-markdown/), running [Jest](http://jestjs.io/).
 
 ## Features
 
@@ -47,6 +47,12 @@ yarn start
 
 ``` shell
 yarn build
+```
+
+## Jest testing
+
+``` Shell
+yarn test
 ```
 
 ## Debugging in VSCode
@@ -100,28 +106,27 @@ google-chrome --remote-debugging-port=9222
 
 ## Redux state
 
-``` Javascript
+``` Typescript
 {
-  onenote,
-  users,
   allNotebooks,
   notebookOrder,
+  onenote,
+  router,
   selectedNav,
   totalNotebookLength,
-  router
-
+  users
 }
 ```
 
 | State slice           | Type     | Purpose                                                                                                                               |
 | --------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `onenote`             | `Object` | Stores `OneNote`, `SectionGroup`, `Section`, and `Page`s objects, by their `id`.                                                      |
-| `users`               | `Object` | Stores `UserData` by their `userId`                                                                                                   |
-| `allNotebook`         | `Array`  | Stores an array of all the notebooks which all the signed in users have access to.                                                    |
-| `notebookOrder`       | `Array`  | Stores an array of the `id`s of the notebooks in order.                                                                               |
-| `selectedNav`         | `Array`  | Stores an array of the `id`s of the `onenote` objects which are currently selected.                                                   |
+| `allNotebook`         | `IStateUserNotebooks[]`  | Stores an array of all the notebooks which all the signed in users have access to.                                                    |
+| `notebookOrder`       | `string[]`  | Stores an array of the `id`s of the notebooks in order.                                                                               |
+| `onenote`             | `IStateOneNote[]` | Stores `OneNote`, `SectionGroup`, `Section`, and `Page`s objects, by their `id`.                                                      |
+| `router`              | `RouterState` | Controlled by [`connected-react-router`](https://github.com/supasate/connected-react-router).              |
+| `selectedNav`         | `string[]`  | Stores an array of the `id`s of the `onenote` objects which are currently selected.                                                   |
 | `totalNotebookLength` | `number` | Stores the total number of notebooks which are open. This is used for notifying the user of the number of notebooks yet to be loaded. |
-| `router`              | `Object` | [`react-router-redux`](https://github.com/ReactTraining/react-router/tree/master/packages/react-router-redux) uses this.              |
+| `users`               | `IStateUsers` | Stores `UserData` by their `userId`,                                                                                                   |
 
 Objects which occupy `onenote` have their Microsoft Graph structure flattened, or deflated.
 For example:
