@@ -1,9 +1,5 @@
-import { Notebook } from "../types/Notebook";
-import {
-  clearAllNotebooks,
-  getAllNotebooks,
-  putAllNotebooks
-} from "./allNotebooks";
+import { graphNotebookInstance, graphNotebookInstance1 } from "../testObjects";
+import { getAllNotebooks, putAllNotebooks } from "./allNotebooks";
 
 describe("Actions: allNotebooks", () => {
   test("Should create an action which starts the process of getting all of the notebooks of all the logged in users", () => {
@@ -16,37 +12,15 @@ describe("Actions: allNotebooks", () => {
     const type = "PUT_ALL_NOTEBOOKS";
     const userId = "genericstring1";
     const displayableId = "jane.doe@email.com";
-    const notebooks = [
-      new Notebook(
-        {
-          isDefault: true,
-          isShared: false,
-          sectionGroupsUrl: "https://www.example.com/sectionGroupsUrl",
-          sectionsUrl: "https://www.example.com/sections",
-          userRole: "Owner"
-        },
-        "jane.doe@email.com"
-      ),
-      new Notebook(
-        {
-          isDefault: false,
-          isShared: true,
-          sectionGroupsUrl: "https://www.example.com/sectionGroupsUrl1",
-          sectionsUrl: "https://www.example.com/sections1",
-          userRole: "Owner"
-        },
-        "john.smith@email.com"
-      )
+    const notebooks = [graphNotebookInstance, graphNotebookInstance1];
+    const newState = [
+      {
+        displayableId,
+        notebooks,
+        userId
+      }
     ];
-    const expectedAction = { displayableId, notebooks, type, userId };
-    expect(putAllNotebooks(userId, displayableId, notebooks)).toEqual(
-      expectedAction
-    );
-  });
-
-  test("Should create an action which clears all the notebook data from the localForage stores", () => {
-    const type = "CLEAR_ALL_NOTEBOOKS";
-    const expectedAction = { type };
-    expect(clearAllNotebooks()).toEqual(expectedAction);
+    const expectedAction = { newState, type };
+    expect(putAllNotebooks(newState)).toEqual(expectedAction);
   });
 });

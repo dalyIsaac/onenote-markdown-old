@@ -16,14 +16,7 @@ export default function notebooksReducer(
       return [];
     case PUT_ALL_NOTEBOOKS:
       const castedAction = action as IPutAllNotebooks;
-      return [
-        ...state,
-        {
-          displayableId: castedAction.displayableId,
-          notebooks: castedAction.notebooks,
-          userId: castedAction.userId
-        }
-      ];
+      return castedAction.newState;
     default:
       return state;
   }
