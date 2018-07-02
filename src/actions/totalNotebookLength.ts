@@ -9,7 +9,7 @@ export interface INotebookLength extends IAction {
 }
 
 /**
- * Updates the length of the total notebook length
+ * Updates the length of the total notebook length (reassigns the length with `amount`)
  * @param amount the amount of open notebooks
  */
 export const updateLength = (amount: number): INotebookLength => ({
