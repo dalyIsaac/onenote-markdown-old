@@ -8,10 +8,12 @@ import {
   OnenoteSection as ISection,
   SectionGroup as ISectionGroup
 } from "@microsoft/microsoft-graph-types";
+import { User } from "msal";
 import { Notebook } from "./types/Notebook";
 import { Page } from "./types/Page";
 import { Section } from "./types/Section";
 import { SectionGroup } from "./types/SectionGroup";
+import { UserData } from "./types/UserData";
 
 export const userId = "jane.doe@email.com";
 export const userId1 = "john.smith@email.com";
@@ -120,3 +122,24 @@ export const page1 = new Page(graphPageInstance1, userId);
 export const pageId = "genericstring1";
 
 export const parentSelfUser = "jane.doe@email.com";
+
+export const user = new UserData(
+  new User(
+    "john.smith@email.com",
+    "John Smith",
+    "identityProvider1",
+    "genericstring1",
+    {}
+  ),
+  "photoString1"
+);
+export const user1 = new UserData(
+  new User(
+    "jane.doe@email.com",
+    "Jane Doe",
+    "identityProvider2",
+    "genericstring2",
+    {}
+  ),
+  "photoString2"
+);
