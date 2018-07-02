@@ -1,6 +1,6 @@
 import { IStateOneNote } from "src/reducers";
+import { IAction } from "../actions";
 import {
-  IGetPageContent,
   IGetPageContentError,
   ILoadOneNote,
   ISaveNotebook,
@@ -22,31 +22,20 @@ import {
 } from "../actionTypes";
 import { SectionGroup } from "../types/SectionGroup";
 
-type actionType = ISaveNotebook &
-  ISaveSectionGroup &
-  ISaveSection &
-  ISavePage &
-  ISavePageContent &
-  ILoadOneNote &
-  IGetPageContentError &
-  IGetPageContent &
-  IUpdateIsExpanded;
-
-export default function onenote(state: IStateOneNote = {}, action: actionType) {
+export default function onenoteReducer(state: IStateOneNote = {}, action: IAction) {
   const data: IStateOneNote = { ...state };
   let sectionGroup: SectionGroup;
-  let page: any;
   switch (action.type) {
     case SAVE_NOTEBOOK:
-      const notebook = { ...action.notebook };
-      notebook.sections = [...action.notebook.sections];
-      notebook.sectionGroups = [...action.notebook.sectionGroups];
+      const notebook = { ...(action as ISaveNotebook).notebook };
+      notebook.sections = [...(action as ISaveNotebook).notebook.sections];
+      notebook.sectionGroups = [...(action as ISaveNotebook).notebook.sectionGroups];
       data[notebook.id] = notebook;
       return data;
     case SAVE_SECTION_GROUP:
-      sectionGroup = { ...action.sectionGroup };
-      sectionGroup.sections = [...action.sectionGroup.sections];
-      sectionGroup.sectionGroups = [...action.sectionGroup.sectionGroups];
+    sectionGroup = { ...(action as ISaveSectionGroup).sectionGroup };
+      sectionGroup.sections = [...(action as ISaveSectionGroup).sectionGroup.sections];
+      sectionGroup.sectionGroups = [...(action as ISaveSectionGroup).sectionGroup.sectionGroups];
       if (state[sectionGroup.id] !== undefined) {
         sectionGroup.isExpanded = (state[
           sectionGroup.id
@@ -55,32 +44,31 @@ export default function onenote(state: IStateOneNote = {}, action: actionType) {
       data[sectionGroup.id] = sectionGroup;
       return data;
     case SAVE_SECTION:
-      const section = { ...action.section };
-      section.pages = [...action.section.pages];
+      const section = { ...(action as ISaveSection).section };
+      section.pages = [...(action as ISaveSection).section.pages];
       data[section.id] = section;
       return data;
     case SAVE_PAGE:
-      page = { ...action.page };
+      const page = { ...(action as ISavePage).page };
       data[page.id] = page;
       return data;
     case LOAD_ONENOTE:
-      return action.onenote;
+      return (action as ILoadOneNote).onenote;
     case UPDATE_IS_EXPANDED:
-      const { id, isExpanded } = action;
+      const { id, isExpanded } = (action as IUpdateIsExpanded);
       sectionGroup = { ...state[id] } as SectionGroup;
       sectionGroup.isExpanded = isExpanded;
       data[id] = sectionGroup;
       return data;
     case SAVE_PAGE_CONTENT: {
-      const { pageId, content } = action;
+      const { pageId, content } = (action as ISavePageContent);
       const newPage = { ...state[pageId], content };
       data[pageId] = newPage;
       return { ...data };
     }
     case GET_PAGE_CONTENT_ERROR: {
-      const { pageId, error } = action;
-      page = { ...state[pageId], error };
-      data[pageId] = page;
+      const { pageId, error } = (action as IGetPageContentError);
+      data[pageId] = { ...state[pageId], error };
       return { ...data };
     }
     default:
