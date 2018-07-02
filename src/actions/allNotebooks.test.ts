@@ -3,9 +3,9 @@ import {
   clearAllNotebooks,
   getAllNotebooks,
   putAllNotebooks
-} from "./getNotebooks";
+} from "./allNotebooks";
 
-describe("Actions: getNotebooks", () => {
+describe("Actions: allNotebooks", () => {
   test("Should create an action which starts the process of getting all of the notebooks of all the logged in users", () => {
     const type = "GET_ALL_NOTEBOOKS";
     const expectedAction = { type };

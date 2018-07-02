@@ -1,3 +1,7 @@
+/**
+ * allNotebooks is used for retrieving all of the notebooks which the logged in users have access to, and to open notebooks
+ */
+
 import { IAction } from "src/actions";
 import {
   CLEAR_ALL_NOTEBOOKS,

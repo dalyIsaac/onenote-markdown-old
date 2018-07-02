@@ -1,24 +1,27 @@
+/**
+ * allNotebooksReducer is used for retrieving all of the notebooks which the logged in users have access to, and to open notebooks
+ */
+
 import { IStateUserNotebooks } from "src/reducers";
 import { IAction } from "../actions";
-import { IPutAllNotebooks } from "../actions/getNotebooks";
+import { IPutAllNotebooks } from "../actions/allNotebooks";
 import { CLEAR_ALL_NOTEBOOKS, PUT_ALL_NOTEBOOKS } from "./../actionTypes";
-
-type actionType = IPutAllNotebooks & IAction;
 
 export default function notebooksReducer(
   state: IStateUserNotebooks[] = [],
-  action: actionType
+  action: IAction
 ) {
   switch (action.type) {
     case CLEAR_ALL_NOTEBOOKS:
       return [];
     case PUT_ALL_NOTEBOOKS:
+      const castedAction = action as IPutAllNotebooks;
       return [
         ...state,
         {
-          displayableId: action.displayableId,
-          notebooks: action.notebooks,
-          userId: action.userId
+          displayableId: castedAction.displayableId,
+          notebooks: castedAction.notebooks,
+          userId: castedAction.userId
         }
       ];
     default:
