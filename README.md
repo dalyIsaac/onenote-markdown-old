@@ -1,9 +1,10 @@
 # OneNoteMarkdown
 
-|              |                                                                                                                                                                                                                                 |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Build status | ![https://projkiwi.visualstudio.com/_apis/public/build/definitions/f360f67a-ad24-4bef-8761-31411c531bd4/2/badge](https://projkiwi.visualstudio.com/_apis/public/build/definitions/f360f67a-ad24-4bef-8761-31411c531bd4/2/badge) |
-| Test status  | [![Build Status](https://travis-ci.com/dalyIsaac/onenote-markdown.svg?branch=master)](https://travis-ci.com/dalyIsaac/onenote-markdown)                                                                                         |
+|               |                                                                                                                                                                                                                                 |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Build status  | ![https://projkiwi.visualstudio.com/_apis/public/build/definitions/f360f67a-ad24-4bef-8761-31411c531bd4/2/badge](https://projkiwi.visualstudio.com/_apis/public/build/definitions/f360f67a-ad24-4bef-8761-31411c531bd4/2/badge) |
+| Test status   | [![Build Status](https://travis-ci.com/dalyIsaac/onenote-markdown.svg?branch=master)](https://travis-ci.com/dalyIsaac/onenote-markdown)                                                                                         |
+| Code coverage | [![Coverage Status](https://coveralls.io/repos/github/dalyIsaac/onenote-markdown/badge.svg?branch=master)](https://coveralls.io/github/dalyIsaac/onenote-markdown?branch=master)                                                |
 
 The aim of this project is to build a web app which can be used to read and write OneNote notebooks as Markdown. The user interface is built using [React](https://reactjs.org/) and [Office UI Fabric React](https://developer.microsoft.com/en-us/fabric#/components). The state is managed using [Redux](https://redux.js.org/), with [Redux-Saga](https://redux-saga.js.org/) for handling application side effects. [localForage](https://localforage.github.io/localForage/) is used to store OneNote data such as notebooks, section groups, sections, notes, and contents in [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API).
 
@@ -118,15 +119,15 @@ google-chrome --remote-debugging-port=9222
 }
 ```
 
-| State slice           | Type     | Purpose                                                                                                                               |
-| --------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `allNotebook`         | `IStateUserNotebooks[]`  | Stores an array of all the notebooks which all the signed in users have access to.                                                    |
-| `notebookOrder`       | `string[]`  | Stores an array of the `id`s of the notebooks in order.                                                                               |
-| `onenote`             | `IStateOneNote[]` | Stores `OneNote`, `SectionGroup`, `Section`, and `Page`s objects, by their `id`.                                                      |
-| `router`              | `RouterState` | Controlled by [`connected-react-router`](https://github.com/supasate/connected-react-router).              |
-| `selectedNav`         | `string[]`  | Stores an array of the `id`s of the `onenote` objects which are currently selected.                                                   |
-| `totalNotebookLength` | `number` | Stores the total number of notebooks which are open. This is used for notifying the user of the number of notebooks yet to be loaded. |
-| `users`               | `IStateUsers` | Stores `UserData` by their `userId`,                                                                                                   |
+| State slice           | Type                    | Purpose                                                                                                                               |
+| --------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `allNotebook`         | `IStateUserNotebooks[]` | Stores an array of all the notebooks which all the signed in users have access to.                                                    |
+| `notebookOrder`       | `string[]`              | Stores an array of the `id`s of the notebooks in order.                                                                               |
+| `onenote`             | `IStateOneNote[]`       | Stores `OneNote`, `SectionGroup`, `Section`, and `Page`s objects, by their `id`.                                                      |
+| `router`              | `RouterState`           | Controlled by [`connected-react-router`](https://github.com/supasate/connected-react-router).                                         |
+| `selectedNav`         | `string[]`              | Stores an array of the `id`s of the `onenote` objects which are currently selected.                                                   |
+| `totalNotebookLength` | `number`                | Stores the total number of notebooks which are open. This is used for notifying the user of the number of notebooks yet to be loaded. |
+| `users`               | `IStateUsers`           | Stores `UserData` by their `userId`,                                                                                                  |
 
 Objects which occupy `onenote` have their Microsoft Graph structure flattened, or deflated.
 For example:
