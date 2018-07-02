@@ -1,5 +1,5 @@
+import { IStateUsers } from "../reducers";
 import { user, user1 } from "../testObjects";
-import { IUserDataObject } from "../types/UserData";
 import {
   getAllUsers,
   getPhoto,
@@ -31,7 +31,7 @@ describe("Actions: authentication", () => {
 
   test("Should create an action to replace the user list with a new user object", () => {
     const type = "NEW_USER_OBJECT";
-    const users: IUserDataObject = {};
+    const users: IStateUsers = {};
     users[user.userIdentifier] = user;
     users[user1.userIdentifier] = user1;
     const expectedAction: INewUserObject = { type, users };
