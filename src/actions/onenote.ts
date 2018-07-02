@@ -18,6 +18,7 @@ import {
 } from "../actionTypes";
 import { Notebook } from "../types/Notebook";
 
+import { IStateOneNote } from "../reducers";
 import { OneNoteBase } from "../types/OneNoteBase";
 import { Page } from "../types/Page";
 import { Section } from "../types/Section";
@@ -37,7 +38,7 @@ export const openNotebooks = (notebookList: Notebook[]): IOpenNotebooks => ({
 });
 
 export interface ILoadOneNote extends IAction {
-  onenote: OneNoteBase[];
+  onenote: IStateOneNote[];
 }
 
 /**

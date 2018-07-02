@@ -2,7 +2,7 @@ import { deflateObject } from "./index";
 import { OneNoteBase } from "./OneNoteBase";
 
 export class Page extends OneNoteBase {
-  public error?: string;
+  public error?: any;
   public content?: string;
   public level: number;
   public title: string;

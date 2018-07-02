@@ -94,10 +94,24 @@ export const graphPageInstance1: IPage = {
   userTags: ["tag1", "tag2"]
 };
 
+export const graphSectionInstance1: ISection = {
+  isDefault: false,
+  pages: [graphPageInstance1],
+  pagesUrl: "https://www.example.com/pages1",
+  parentNotebook: graphNotebookInstance1,
+  parentSectionGroup: graphSectionGroupInstance1
+};
+
 export const section = new Section(
   graphSectionInstance,
   [[graphPageInstance, graphPageInstance1]],
   userId
+);
+
+export const section1 = new Section(
+  graphSectionInstance1,
+  [[graphPageInstance1]],
+  userId1
 );
 
 export const page = new Page(graphPageInstance, userId);
