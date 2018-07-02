@@ -1,14 +1,19 @@
-import {
-  Notebook as INotebook,
-  OnenotePage as IPage,
-  OnenoteSection as ISection,
-  SectionGroup as ISectionGroup
-} from "@microsoft/microsoft-graph-types";
 import { Notebook } from "../types/Notebook";
 import { OneNoteBase } from "../types/OneNoteBase";
-import { Page } from "../types/Page";
-import { Section } from "../types/Section";
-import { SectionGroup } from "../types/SectionGroup";
+
+import {
+  content,
+  notebook,
+  notebook1,
+  page,
+  page1,
+  pageId,
+  parentSelfUser,
+  section,
+  sectionGroup,
+  sectionGroup1,
+  userId
+} from "../testObjects";
 import {
   getNotebook,
   getOneNote,
@@ -28,103 +33,9 @@ import {
 } from "./onenote";
 
 describe("Actions: onenote", () => {
-  const userId = "jane.doe@email.com";
-  const userId1 = "john.smith@email.com";
-
-  const graphNotebookInstance: INotebook = {
-    isDefault: true,
-    isShared: false,
-    sectionGroupsUrl: "https://www.example.com/sectionGroupsUrl",
-    sectionsUrl: "https://www.example.com/sections",
-    userRole: "Owner"
-  };
-
-  const graphNotebookInstance1: INotebook = {
-    isDefault: false,
-    isShared: true,
-    sectionGroupsUrl: "https://www.example.com/sectionGroupsUrl1",
-    sectionsUrl: "https://www.example.com/sections1",
-    userRole: "Owner"
-  };
-
-  const notebook = new Notebook(graphNotebookInstance, userId);
-  // const notebook1 = new Notebook(graphNotebookInstance1, userId1);
-
-  const graphSectionGroupInstance: ISectionGroup = {
-    parentNotebook: graphNotebookInstance,
-    sectionGroups: [],
-    sectionGroupsUrl: "https://www.example.com/sectionGroupsUrl",
-    sections: [],
-    sectionsUrl: "https://www.example.com/sections"
-  };
-
-  const graphSectionGroupInstance1: ISectionGroup = {
-    parentNotebook: graphNotebookInstance,
-    parentSectionGroup: graphSectionGroupInstance,
-    sectionGroups: [],
-    sectionGroupsUrl: "https://www.example.com/sectionGroupsUrl1",
-    sections: [],
-    sectionsUrl: "https://www.example.com/sections"
-  };
-
-  const sectionGroup = new SectionGroup(graphSectionGroupInstance, userId);
-  const sectionGroup1 = new SectionGroup(graphSectionGroupInstance1, userId1);
-
-  const content = "<h1>Hello Page 1</h1>";
-  const content1 = "<h1>Hello Page 2</h1>";
-
-  const graphPageInstance: IPage = {
-    content,
-    contentUrl: "https://www.example.com/Hello%20Page%201/content",
-    createdByAppId: "genericstring1",
-    lastModifiedDateTime: "2014-01-01T00:00:00Z",
-    level: 0,
-    order: 0,
-    parentNotebook: graphNotebookInstance,
-    title: "Hello Page 1",
-    userTags: ["tag1", "tag2"]
-  };
-
-  const graphSectionInstance: ISection = {
-    isDefault: true,
-    pages: [graphPageInstance],
-    pagesUrl: "https://www.example.com/pages",
-    parentNotebook: graphNotebookInstance,
-    parentSectionGroup: graphSectionGroupInstance
-  };
-
-  const graphPageInstance1: IPage = {
-    content: content1,
-    contentUrl: "https://www.example.com/Hello%20Page%202/content",
-    createdByAppId: "genericstring2",
-    lastModifiedDateTime: "2014-01-01T00:00:00Z",
-    level: 0,
-    order: 0,
-    parentNotebook: graphNotebookInstance,
-    parentSection: graphSectionInstance,
-    title: "Hello Page 2",
-    userTags: ["tag1", "tag2"]
-  };
-
-  const section = new Section(
-    graphSectionInstance,
-    [[graphPageInstance, graphPageInstance1]],
-    userId
-  );
-
-  const page = new Page(graphPageInstance, userId);
-  const page1 = new Page(graphPageInstance1, userId);
-
-  const pageId = "genericstring1";
-
-  const parentSelfUser = "jane.doe@email.com";
-
   test("Should create an action to open the notebooks in the notebookList", () => {
     const type = "OPEN_NOTEBOOKS";
-    const notebookList: Notebook[] = [
-      new Notebook(graphNotebookInstance, userId),
-      new Notebook(graphNotebookInstance1, userId1)
-    ];
+    const notebookList: Notebook[] = [notebook, notebook1];
     const expectedAction = { notebookList, type };
     expect(openNotebooks(notebookList)).toEqual(expectedAction);
   });

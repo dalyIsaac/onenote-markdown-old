@@ -18,14 +18,14 @@ import {
 } from "../actionTypes";
 import { Notebook } from "../types/Notebook";
 
+import { IStateOneNote } from "../reducers";
 import { OneNoteBase } from "../types/OneNoteBase";
 import { Page } from "../types/Page";
 import { Section } from "../types/Section";
 import { SectionGroup } from "../types/SectionGroup";
 
-export interface IOpenNotebooks {
+export interface IOpenNotebooks extends IAction {
   notebookList: Notebook[];
-  type: string;
 }
 
 /**
@@ -37,9 +37,8 @@ export const openNotebooks = (notebookList: Notebook[]): IOpenNotebooks => ({
   type: OPEN_NOTEBOOKS
 });
 
-export interface ILoadOneNote {
-  onenote: OneNoteBase[];
-  type: string;
+export interface ILoadOneNote extends IAction {
+  onenote: IStateOneNote[];
 }
 
 /**
@@ -58,9 +57,8 @@ export const getOneNote = (): IAction => ({
   type: GET_ONENOTE
 });
 
-export interface IGetNotebook {
+export interface IGetNotebook extends IAction {
   notebookUrl?: string;
-  type: string;
   userId: string;
 }
 
@@ -78,9 +76,8 @@ export const getNotebook = (
   userId
 });
 
-export interface ISaveNotebook {
+export interface ISaveNotebook extends IAction {
   notebook: Notebook;
-  type: string;
 }
 
 /**
@@ -92,11 +89,10 @@ export const saveNotebook = (notebook: Notebook): ISaveNotebook => ({
   type: SAVE_NOTEBOOK
 });
 
-export interface IGetSectionGroup {
+export interface IGetSectionGroup extends IAction {
   parentSelfUser: string;
   sectionGroupId: string;
   userId?: string;
-  type: string;
 }
 
 /**
@@ -116,9 +112,8 @@ export const getSectionGroup = (
   userId
 });
 
-export interface ISaveSectionGroup {
+export interface ISaveSectionGroup extends IAction {
   sectionGroup: SectionGroup;
-  type: string;
 }
 
 /**
@@ -132,11 +127,10 @@ export const saveSectionGroup = (
   type: SAVE_SECTION_GROUP
 });
 
-export interface IGetSection {
+export interface IGetSection extends IAction {
   userId?: string;
   sectionId: string;
   parentSelfUser: string;
-  type: string;
 }
 
 /**
@@ -156,9 +150,8 @@ export const getSection = (
   userId
 });
 
-export interface ISaveSection {
+export interface ISaveSection extends IAction {
   section: Section;
-  type: string;
 }
 
 /**
@@ -170,10 +163,10 @@ export const saveSection = (section: Section): ISaveSection => ({
   type: SAVE_SECTION
 });
 
-export interface IGetPage {
+export interface IGetPage extends IAction {
   pageId?: string;
   parentSelfUser: string;
-  type: string;
+
   userId?: string;
 }
 
@@ -194,9 +187,8 @@ export const getPage = (
   userId
 });
 
-export interface IGetPageContent {
+export interface IGetPageContent extends IAction {
   pageId: string;
-  type: string;
 }
 
 /**
@@ -208,10 +200,9 @@ export const getPageContent = (pageId: string): IGetPageContent => ({
   type: GET_PAGE_CONTENT
 });
 
-export interface ISavePageContent {
+export interface ISavePageContent extends IAction {
   content: string;
   pageId: string;
-  type: string;
 }
 
 /**
@@ -228,10 +219,9 @@ export const savePageContent = (
   type: SAVE_PAGE_CONTENT
 });
 
-export interface IGetPageContentError {
+export interface IGetPageContentError extends IAction {
   error: any;
   pageId: string;
-  type: string;
 }
 
 /**
@@ -248,9 +238,8 @@ export const getPageContentError = (
   type: GET_PAGE_CONTENT_ERROR
 });
 
-export interface ISavePage {
+export interface ISavePage extends IAction {
   page: Page;
-  type: string;
 }
 
 /**
@@ -262,10 +251,9 @@ export const savePage = (page: Page): ISavePage => ({
   type: SAVE_PAGE
 });
 
-export interface IUpdateIsExpanded {
+export interface IUpdateIsExpanded extends IAction {
   id: string;
   isExpanded: boolean;
-  type: string;
 }
 
 /**

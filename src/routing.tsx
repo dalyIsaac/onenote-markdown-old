@@ -3,15 +3,14 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Redirect, Route } from "react-router";
 import { RouteComponentProps } from "react-router";
-import { IState } from "./reducers";
-import { IUserDataObject } from "./types/UserData";
+import { IState, IStateUsers } from "./reducers";
 
 interface IPropsPrivateRoute {
   computedMatch?: object;
   exact?: boolean;
   location?: Location;
   path: string;
-  users: IUserDataObject;
+  users: IStateUsers;
   component: React.ComponentClass;
 }
 

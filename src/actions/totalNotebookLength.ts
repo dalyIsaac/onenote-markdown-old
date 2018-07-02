@@ -2,14 +2,14 @@ import {
   TOTAL_NOTEBOOK_LENGTH_ADD,
   UPDATE_TOTAL_NOTEBOOK_LENGTH
 } from "../actionTypes";
+import { IAction } from "./index";
 
-export interface INotebookLength {
+export interface INotebookLength extends IAction {
   amount: number;
-  type: string;
 }
 
 /**
- * Updates the length of the total notebook length
+ * Updates the length of the total notebook length (reassigns the length with `amount`)
  * @param amount the amount of open notebooks
  */
 export const updateLength = (amount: number): INotebookLength => ({

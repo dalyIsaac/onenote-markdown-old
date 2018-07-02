@@ -1,8 +1,8 @@
 import { PUT_SELECTED, UPDATE_SELECTED } from "./../actionTypes";
+import { IAction } from "./index";
 
-export interface IUpdateSelected {
+export interface IUpdateSelected extends IAction {
   id: string;
-  type: string;
 }
 
 /**
@@ -14,9 +14,8 @@ export const updateSelected = (id: string): IUpdateSelected => ({
   type: UPDATE_SELECTED
 });
 
-export interface IPutSelected {
+export interface IPutSelected extends IAction {
   order: string[];
-  type: string;
 }
 
 /**

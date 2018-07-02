@@ -1,6 +1,6 @@
 import { UserData } from "src/types/UserData";
+import * as allNotebooks from "./allNotebooks";
 import * as authentication from "./authentication";
-import * as getNotebooks from "./getNotebooks";
 import * as notebookOrder from "./notebookOrder";
 import * as onenote from "./onenote";
 import * as selectedNav from "./selectedNav";
@@ -10,14 +10,13 @@ export interface IAction {
   type: string;
 }
 
-export interface IActionUser {
-  type: string;
+export interface IActionUser extends IAction {
   user: UserData;
 }
 
 export { onenote };
 export { authentication };
-export { getNotebooks };
+export { allNotebooks };
 export { selectedNav };
 export { totalNotebookLength };
 export { notebookOrder };

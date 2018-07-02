@@ -35,6 +35,10 @@ export interface IState {
 export interface IStateUserNotebooks {
   userId: string;
   displayableId: string;
+  /**
+   * This is not `Notebook` as defined in this project, but `Graph_Notebook` as an alias for `Notebook` from `@microsoft/microsoft-graph-types`.
+   * This is because the `allNotebooks` slice of the state only stores the raw notebooks from Microsoft Graph.
+   */
   notebooks: Graph_Notebook[];
 }
 

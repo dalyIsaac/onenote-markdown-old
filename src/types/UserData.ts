@@ -20,7 +20,3 @@ export class UserData {
     this.acquireTokenError = acquireTokenError;
   }
 }
-
-export interface IUserDataObject {
-  [key: string]: UserData;
-}

@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { IAction, IActionUser } from "src/actions";
-import { IUserDataObject, UserData } from "src/types/UserData";
+import { UserData } from "src/types/UserData";
 import {
   AUTHENTICATE,
   GET_ALL_USERS,
@@ -11,10 +11,10 @@ import {
   SIGN_OUT,
   UPDATE_USER
 } from "../actionTypes";
+import { IStateUsers } from "../reducers";
 
-export interface IAuthenticate {
+export interface IAuthenticate extends IAction {
   dispatch: Dispatch;
-  type: string;
 }
 
 /**
@@ -39,15 +39,14 @@ export const signOut = (): IAction => ({
   type: SIGN_OUT
 });
 
-export interface INewUserObject {
-  type: string;
-  users: IUserDataObject;
+export interface INewUserObject extends IAction {
+  users: IStateUsers;
 }
 
 /**
  * Creates an action to replace the user list with a new user object
  */
-export const newUserObject = (users: IUserDataObject): INewUserObject => ({
+export const newUserObject = (users: IStateUsers): INewUserObject => ({
   type: NEW_USER_OBJECT,
   users
 });
@@ -60,8 +59,7 @@ export const updateUser = (user: UserData): IActionUser => ({
   user
 });
 
-export interface IGetPhoto {
-  type: string;
+export interface IGetPhoto extends IAction {
   userId: string;
 }
 

@@ -1,15 +1,14 @@
+import { IAction } from "../actions";
 import { IPutSelected } from "../actions/selectedNav";
 import { PUT_SELECTED } from "./../actionTypes";
 
-type actionType = IPutSelected;
-
-export default function SelectedNavReducer(
+export default function selectedNavReducer(
   state: string[] = [],
-  action: actionType
+  action: IAction
 ) {
   switch (action.type) {
     case PUT_SELECTED:
-      const { order } = action;
+      const { order } = (action as IPutSelected);
       return order;
     default:
       return state;

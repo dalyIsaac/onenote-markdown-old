@@ -1,5 +1,5 @@
-import { User } from "msal";
-import { IUserDataObject, UserData } from "../types/UserData";
+import { IStateUsers } from "../reducers";
+import { user, user1 } from "../testObjects";
 import {
   getAllUsers,
   getPhoto,
@@ -31,45 +31,16 @@ describe("Actions: authentication", () => {
 
   test("Should create an action to replace the user list with a new user object", () => {
     const type = "NEW_USER_OBJECT";
-    const user1 = new UserData(
-      new User(
-        "john.smith@email.com",
-        "John Smith",
-        "identityProvider1",
-        "genericstring1",
-        {}
-      ),
-      "photoString1"
-    );
-    const user2 = new UserData(
-      new User(
-        "jane.doe@email.com",
-        "Jane Doe",
-        "identityProvider2",
-        "genericstring2",
-        {}
-      ),
-      "photoString2"
-    );
-    const users: IUserDataObject = {};
+    const users: IStateUsers = {};
+    users[user.userIdentifier] = user;
     users[user1.userIdentifier] = user1;
-    users[user2.userIdentifier] = user2;
     const expectedAction: INewUserObject = { type, users };
     expect(newUserObject(users)).toEqual(expectedAction);
   });
 
   test("Should create an action to update a user", () => {
     const type = "UPDATE_USER";
-    const user = new UserData(
-      new User(
-        "john.smith@email.com",
-        "John Smith",
-        "identityProvider1",
-        "genericstring1",
-        {}
-      ),
-      "photoString1"
-    );
+
     const expectedAction: IActionUser = { type, user };
     expect(updateUser(user)).toEqual(expectedAction);
   });
@@ -89,16 +60,6 @@ describe("Actions: authentication", () => {
 
   test("Should create an action to acquire a token for a user by redirecting the user", () => {
     const type = "REAUTHORIZE_USER";
-    const user = new UserData(
-      new User(
-        "john.smith@email.com",
-        "John Smith",
-        "identityProvider1",
-        "genericstring1",
-        {}
-      ),
-      "photoString1"
-    );
     const expectedAction = { type, user };
     expect(reauthorizeUser(user)).toEqual(expectedAction);
   });
