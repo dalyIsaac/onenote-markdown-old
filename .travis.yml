@@ -9,3 +9,8 @@ cache:
 before_install:
   - yarn
 install: true
+jobs:
+  include:
+    - stage: Produce Coverage
+      node_js: node_js
+      script: jest --coverage --coverageReporters=text-lcov | coveralls
