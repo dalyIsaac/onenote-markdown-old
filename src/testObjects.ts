@@ -19,6 +19,7 @@ export const userId = "jane.doe@email.com";
 export const userId1 = "john.smith@email.com";
 
 export const graphNotebookInstance: INotebook = {
+  id: "notebookid",
   isDefault: true,
   isShared: false,
   sectionGroupsUrl: "https://www.example.com/sectionGroupsUrl",
@@ -27,6 +28,7 @@ export const graphNotebookInstance: INotebook = {
 };
 
 export const graphNotebookInstance1: INotebook = {
+  id: "notebookid1",
   isDefault: false,
   isShared: true,
   sectionGroupsUrl: "https://www.example.com/sectionGroupsUrl1",
@@ -38,6 +40,7 @@ export const notebook = new Notebook(graphNotebookInstance, userId);
 export const notebook1 = new Notebook(graphNotebookInstance1, userId1);
 
 export const graphSectionGroupInstance: ISectionGroup = {
+  id: "sectionGroup",
   parentNotebook: graphNotebookInstance,
   sectionGroups: [],
   sectionGroupsUrl: "https://www.example.com/sectionGroupsUrl",
@@ -46,6 +49,7 @@ export const graphSectionGroupInstance: ISectionGroup = {
 };
 
 export const graphSectionGroupInstance1: ISectionGroup = {
+  id: "sectionGroup1",
   parentNotebook: graphNotebookInstance,
   parentSectionGroup: graphSectionGroupInstance,
   sectionGroups: [],
@@ -67,6 +71,7 @@ export const graphPageInstance: IPage = {
   content,
   contentUrl: "https://www.example.com/Hello%20Page%201/content",
   createdByAppId: "genericstring1",
+  id: "page",
   lastModifiedDateTime: "2014-01-01T00:00:00Z",
   level: 0,
   order: 0,
@@ -76,6 +81,7 @@ export const graphPageInstance: IPage = {
 };
 
 export const graphSectionInstance: ISection = {
+  id: "section",
   isDefault: true,
   pages: [graphPageInstance],
   pagesUrl: "https://www.example.com/pages",
@@ -87,6 +93,7 @@ export const graphPageInstance1: IPage = {
   content: content1,
   contentUrl: "https://www.example.com/Hello%20Page%202/content",
   createdByAppId: "genericstring2",
+  id: "page1",
   lastModifiedDateTime: "2014-01-01T00:00:00Z",
   level: 0,
   order: 0,
@@ -97,6 +104,7 @@ export const graphPageInstance1: IPage = {
 };
 
 export const graphSectionInstance1: ISection = {
+  id: "graphSection",
   isDefault: false,
   pages: [graphPageInstance1],
   pagesUrl: "https://www.example.com/pages1",
