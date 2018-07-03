@@ -123,7 +123,7 @@ google-chrome --remote-debugging-port=9222
 | --------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | `allNotebook`         | `IStateUserNotebooks[]` | Stores an array of all the notebooks which all the signed in users have access to.                                                    |
 | `notebookOrder`       | `string[]`              | Stores an array of the `id`s of the notebooks in order.                                                                               |
-| `onenote`             | `IStateOneNote[]`       | Stores `OneNote`, `SectionGroup`, `Section`, and `Page`s objects, by their `id`.                                                      |
+| `onenote`             | `IStateOneNote`         | Stores `OneNote`, `SectionGroup`, `Section`, and `Page`s objects, by their `id`.                                                      |
 | `router`              | `RouterState`           | Controlled by [`connected-react-router`](https://github.com/supasate/connected-react-router).                                         |
 | `selectedNav`         | `string[]`              | Stores an array of the `id`s of the `onenote` objects which are currently selected.                                                   |
 | `totalNotebookLength` | `number`                | Stores the total number of notebooks which are open. This is used for notifying the user of the number of notebooks yet to be loaded. |

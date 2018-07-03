@@ -6,7 +6,7 @@ import { IUpdateSelected } from "../actions/selectedNav";
 import SectionsNav from "./../components/nav/sectionsNav";
 
 export interface IPropsSectionNav extends React.HTMLAttributes<HTMLDivElement> {
-  onenote: IStateOneNote[];
+  onenote: IStateOneNote;
   selectedNav: string[];
   updateSelected(id: string): IUpdateSelected;
   updateIsExpanded(id: string, isExpanded: boolean): IUpdateIsExpanded;

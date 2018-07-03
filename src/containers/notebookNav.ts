@@ -6,7 +6,7 @@ import { IState, IStateOneNote } from "../reducers";
 
 export interface IPropsNotebookNav {
   notebookOrder: string[];
-  onenote: IStateOneNote[];
+  onenote: IStateOneNote;
   selectedNav: string[];
   totalNotebookLength: number;
   updateSelected(newNotebook: string): IUpdateSelected;

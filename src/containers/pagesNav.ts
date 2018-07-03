@@ -6,7 +6,7 @@ import { onenote, selectedNav } from "../actions";
 import PagesNav from "../components/nav/pagesNav";
 
 export interface IPropsPagesNav {
-  onenote: IStateOneNote[];
+  onenote: IStateOneNote;
   selectedNav: string[];
   updateIsExpanded(id: string, isExpanded: boolean): IUpdateIsExpanded;
   updateSelected(id: string): IUpdateSelected;

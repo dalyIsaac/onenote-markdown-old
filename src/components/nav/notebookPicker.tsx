@@ -23,7 +23,7 @@ interface IStateNotebookPicker {
 
 interface IPropsNotebookPicker {
   allNotebooks: IStateUserNotebooks[];
-  openedNotebooks: IStateOneNote[];
+  openedNotebooks: IStateOneNote;
   closeModal(): void;
   openNotebooks(notebookList: Notebook[]): IOpenNotebooks;
 }
@@ -45,7 +45,11 @@ export default class NotebookPicker extends React.Component<
     let notebooks = [];
     for (const account of this.props.allNotebooks) {
       for (const notebook of account.notebooks) {
-        const newNotebook = new Notebook(notebook, account.userId, account.displayableId);
+        const newNotebook = new Notebook(
+          notebook,
+          account.userId,
+          account.displayableId
+        );
         if (
           this.props.openedNotebooks[newNotebook.id as string] === undefined
         ) {

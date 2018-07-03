@@ -102,7 +102,7 @@ export default class PagesNav extends React.Component<
    */
   private static countingSort(
     elements: string[],
-    onenote: IStateOneNote[]
+    onenote: IStateOneNote
   ): Page[] {
     const arr: Page[] = elements
       .filter(key => onenote[key] !== undefined)

@@ -25,7 +25,7 @@ export default combineReducers({
 export interface IState {
   allNotebooks: IStateUserNotebooks[];
   notebookOrder: string[];
-  onenote: IStateOneNote[];
+  onenote: IStateOneNote;
   router: RouterState;
   selectedNav: string[];
   totalNotebookLength: number;

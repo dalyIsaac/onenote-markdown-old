@@ -38,7 +38,7 @@ export const openNotebooks = (notebookList: Notebook[]): IOpenNotebooks => ({
 });
 
 export interface ILoadOneNote extends IAction {
-  onenote: IStateOneNote[];
+  onenote: IStateOneNote;
 }
 
 /**

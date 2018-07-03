@@ -5,7 +5,7 @@ import { IUpdateSelected } from "../actions/selectedNav";
 import AddressBar from "../components/addressBar";
 
 export interface IPropsAddressBar {
-  onenote: IStateOneNote[];
+  onenote: IStateOneNote;
   selectedNav: string[];
   updateSelected(id: string): IUpdateSelected;
 }
