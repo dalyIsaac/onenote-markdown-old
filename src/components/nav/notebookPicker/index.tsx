@@ -10,9 +10,9 @@ import {
 import { MarqueeSelection } from "office-ui-fabric-react/lib-commonjs/MarqueeSelection";
 import { SearchBox } from "office-ui-fabric-react/lib-commonjs/SearchBox";
 import * as React from "react";
-import { IOpenNotebooks } from "../../actions/onenote";
-import { IStateOneNote, IStateUserNotebooks } from "../../reducers";
-import { Notebook } from "../../types/Notebook";
+import { IOpenNotebooks } from "../../../actions/onenote";
+import { IStateOneNote, IStateUserNotebooks } from "../../../reducers";
+import { Notebook } from "../../../types/Notebook";
 import "./notebookPicker.css";
 
 interface IStateNotebookPicker {

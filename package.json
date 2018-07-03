@@ -26,6 +26,8 @@
   },
   "devDependencies": {
     "@microsoft/microsoft-graph-types": "^1.3.0",
+    "@types/enzyme": "^3.1.11",
+    "@types/enzyme-adapter-react-16": "^1.0.2",
     "@types/history": "^4.6.2",
     "@types/jest": "^23.1.3",
     "@types/node": "^10.3.4",
@@ -35,6 +37,8 @@
     "@types/react-redux": "^6.0.2",
     "@types/react-router": "^4.0.26",
     "coveralls": "^3.0.2",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "jest": "^23.2.0",
     "ts-jest": "^22.4.6",
     "typescript": "^2.9.2"

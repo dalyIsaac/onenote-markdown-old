@@ -22,6 +22,7 @@ export const graphNotebookInstance: INotebook = {
   id: "notebookid",
   isDefault: true,
   isShared: false,
+  lastModifiedDateTime: "datetime",
   sectionGroupsUrl: "https://www.example.com/sectionGroupsUrl",
   sectionsUrl: "https://www.example.com/sections",
   userRole: "Owner"
@@ -31,13 +32,37 @@ export const graphNotebookInstance1: INotebook = {
   id: "notebookid1",
   isDefault: false,
   isShared: true,
+  lastModifiedDateTime: "datetime1",
   sectionGroupsUrl: "https://www.example.com/sectionGroupsUrl1",
   sectionsUrl: "https://www.example.com/sections1",
   userRole: "Owner"
 };
 
-export const notebook = new Notebook(graphNotebookInstance, userId);
-export const notebook1 = new Notebook(graphNotebookInstance1, userId1);
+export const graphNotebookInstance2: INotebook = {
+  id: "notebookid2",
+  isDefault: false,
+  isShared: false,
+  lastModifiedDateTime: "datetime2",
+  sectionGroupsUrl: "https://www.example.com/sectionGroupsUrl2",
+  sectionsUrl: "https://www.example.com/sections2",
+  userRole: "Reader"
+};
+
+export const notebook = new Notebook(
+  graphNotebookInstance,
+  userId,
+  "genericstring"
+);
+export const notebook1 = new Notebook(
+  graphNotebookInstance1,
+  userId1,
+  "genericstring1"
+);
+export const notebook2 = new Notebook(
+  graphNotebookInstance2,
+  userId,
+  "genericstring"
+);
 
 export const graphSectionGroupInstance: ISectionGroup = {
   id: "sectionGroup",
