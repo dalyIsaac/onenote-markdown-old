@@ -9,4 +9,4 @@ cache:
 before_install:
   - yarn
 install: true
-script: jest --coverage --coverageReporters=text-lcov | coveralls
+script: react-scripts-ts test --env=jsdom --coverage --coverageReporters=text-lcov | coveralls
