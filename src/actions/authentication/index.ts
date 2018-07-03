@@ -10,8 +10,8 @@ import {
   SIGN_IN,
   SIGN_OUT,
   UPDATE_USER
-} from "../actionTypes";
-import { IStateUsers } from "../reducers";
+} from "../../actionTypes";
+import { IStateUsers } from "../../reducers";
 
 export interface IAuthenticate extends IAction {
   dispatch: Dispatch;

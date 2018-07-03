@@ -1,9 +1,9 @@
-import { IAction } from "../actions";
-import { INotebookLength } from "../actions/totalNotebookLength";
+import { IAction } from "../../actions";
+import { INotebookLength } from "../../actions/totalNotebookLength";
 import {
   TOTAL_NOTEBOOK_LENGTH_ADD,
   UPDATE_TOTAL_NOTEBOOK_LENGTH
-} from "../actionTypes";
+} from "../../actionTypes";
 
 export default function updateTotalNotebookLengthReducer(
   state: number = 0,

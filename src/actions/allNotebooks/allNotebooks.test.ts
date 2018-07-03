@@ -1,5 +1,8 @@
-import { graphNotebookInstance, graphNotebookInstance1 } from "../testObjects";
-import { getAllNotebooks, putAllNotebooks } from "./allNotebooks";
+import {
+  graphNotebookInstance,
+  graphNotebookInstance1
+} from "../../testObjects";
+import { getAllNotebooks, putAllNotebooks } from "./index";
 
 describe("Actions: allNotebooks", () => {
   test("Should create an action which starts the process of getting all of the notebooks of all the logged in users", () => {

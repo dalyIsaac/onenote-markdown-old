@@ -1,5 +1,5 @@
-import { Notebook } from "../types/Notebook";
-import { OneNoteBase } from "../types/OneNoteBase";
+import { Notebook } from "../../types/Notebook";
+import { OneNoteBase } from "../../types/OneNoteBase";
 
 import {
   content,
@@ -13,7 +13,7 @@ import {
   sectionGroup,
   sectionGroup1,
   userId
-} from "../testObjects";
+} from "../../testObjects";
 import {
   getNotebook,
   getOneNote,
@@ -30,7 +30,7 @@ import {
   saveSection,
   saveSectionGroup,
   updateIsExpanded
-} from "./onenote";
+} from "./index";
 
 describe("Actions: onenote", () => {
   test("Should create an action to open the notebooks in the notebookList", () => {

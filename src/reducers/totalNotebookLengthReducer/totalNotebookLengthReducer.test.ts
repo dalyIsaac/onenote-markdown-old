@@ -1,4 +1,4 @@
-import updateTotalNotebookLengthReducer from "./totalNotebookLengthReducer";
+import updateTotalNotebookLengthReducer from "./index";
 
 describe("Reducers: totalNotebookLengthReducer", () => {
   test("Should return the intial state", () => {

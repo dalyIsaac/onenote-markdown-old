@@ -1,4 +1,4 @@
-import selectedNavReducer from "./selectedNavReducer";
+import selectedNavReducer from "./index";
 
 describe("Reducers: selectedNavReducer", () => {
   test("Should return the initial state", () => {

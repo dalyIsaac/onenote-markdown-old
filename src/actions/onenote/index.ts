@@ -1,4 +1,4 @@
-import { IAction } from "src/actions";
+import { IAction } from "../../actions";
 import {
   GET_NOTEBOOK,
   GET_ONENOTE,
@@ -15,14 +15,14 @@ import {
   SAVE_SECTION,
   SAVE_SECTION_GROUP,
   UPDATE_IS_EXPANDED
-} from "../actionTypes";
-import { Notebook } from "../types/Notebook";
+} from "../../actionTypes";
+import { Notebook } from "../../types/Notebook";
 
-import { IStateOneNote } from "../reducers";
-import { OneNoteBase } from "../types/OneNoteBase";
-import { Page } from "../types/Page";
-import { Section } from "../types/Section";
-import { SectionGroup } from "../types/SectionGroup";
+import { IStateOneNote } from "../../reducers";
+import { OneNoteBase } from "../../types/OneNoteBase";
+import { Page } from "../../types/Page";
+import { Section } from "../../types/Section";
+import { SectionGroup } from "../../types/SectionGroup";
 
 export interface IOpenNotebooks extends IAction {
   notebookList: Notebook[];

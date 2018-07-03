@@ -1,5 +1,6 @@
-import { IStateUsers } from "../reducers";
-import { user, user1 } from "../testObjects";
+import { IStateUsers } from "../../reducers";
+import { user, user1 } from "../../testObjects";
+import { IActionUser } from "../index";
 import {
   getAllUsers,
   getPhoto,
@@ -9,8 +10,7 @@ import {
   signIn,
   signOut,
   updateUser
-} from "./authentication";
-import { IActionUser } from "./index";
+} from "./index";
 
 describe("Actions: authentication", () => {
   //   test("Should create an action to start the authentication process with MSAL", () => {

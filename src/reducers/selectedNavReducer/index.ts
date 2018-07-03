@@ -1,6 +1,6 @@
-import { IAction } from "../actions";
-import { IPutSelected } from "../actions/selectedNav";
-import { PUT_SELECTED } from "./../actionTypes";
+import { IAction } from "../../actions";
+import { IPutSelected } from "../../actions/selectedNav";
+import { PUT_SELECTED } from "../../actionTypes";
 
 export default function selectedNavReducer(
   state: string[] = [],
@@ -8,7 +8,7 @@ export default function selectedNavReducer(
 ) {
   switch (action.type) {
     case PUT_SELECTED:
-      const { order } = (action as IPutSelected);
+      const { order } = action as IPutSelected;
       return order;
     default:
       return state;

@@ -1,5 +1,5 @@
-import { PUT_SELECTED, UPDATE_SELECTED } from "./../actionTypes";
-import { IAction } from "./index";
+import { PUT_SELECTED, UPDATE_SELECTED } from "../../actionTypes";
+import { IAction } from "../index";
 
 export interface IUpdateSelected extends IAction {
   id: string;
