@@ -19,6 +19,7 @@ export const userId = "jane.doe@email.com";
 export const userId1 = "john.smith@email.com";
 
 export const graphNotebookInstance: INotebook = {
+  displayName: "notebook",
   id: "notebookid",
   isDefault: true,
   isShared: false,
@@ -29,6 +30,7 @@ export const graphNotebookInstance: INotebook = {
 };
 
 export const graphNotebookInstance1: INotebook = {
+  displayName: "notebookid1",
   id: "notebookid1",
   isDefault: false,
   isShared: true,
@@ -39,6 +41,7 @@ export const graphNotebookInstance1: INotebook = {
 };
 
 export const graphNotebookInstance2: INotebook = {
+  displayName: "notebookid2",
   id: "notebookid2",
   isDefault: false,
   isShared: false,

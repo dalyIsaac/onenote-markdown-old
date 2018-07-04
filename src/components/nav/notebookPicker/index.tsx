@@ -32,6 +32,62 @@ export default class NotebookPicker extends React.Component<
   IPropsNotebookPicker,
   IStateNotebookPicker
 > {
+
+  /**
+   * Sorts the array by the specified property
+   * @param items
+   * @param sortBy Property by which the array is to be sorted by
+   * @param descending Ascending by default
+   */
+  public static sortItems(
+    items: Notebook[],
+    sortBy: string,
+    descending: boolean = false
+  ) {
+    if (descending) {
+      return items.sort((a, b) => {
+        const { x, y } = this.getSortValues(a, b, sortBy);
+        if (x < y) {
+          return 1;
+        }
+        if (x > y) {
+          return -1;
+        }
+        return 0;
+      });
+    } else {
+      return items.sort((a, b) => {
+        const { x, y } = this.getSortValues(a, b, sortBy);
+        if (x < y) {
+          return -1;
+        }
+        if (x > y) {
+          return 1;
+        }
+        return 0;
+      });
+    }
+  }
+
+  /**
+   * Returns the key (in lowercase if it's a string)
+   * @param {Object} a
+   * @param {Object} b
+   * @param {string} sortBy
+   */
+  public static getSortValues(a: object, b: object, sortBy: string) {
+    let x;
+    let y;
+    try {
+      x = a[sortBy].toLocaleLowerCase();
+      y = b[sortBy].toLocaleLowerCase();
+    } catch (error) {
+      x = a[sortBy];
+      y = b[sortBy];
+    }
+    return { x, y };
+  }
+
   public selection: Selection;
   private constNotebooks: Notebook[];
   constructor(props: IPropsNotebookPicker) {
@@ -40,7 +96,6 @@ export default class NotebookPicker extends React.Component<
     this.onColumnClick = this.onColumnClick.bind(this);
     this.updateFilter = this.updateFilter.bind(this);
     this.openNotebooks = this.openNotebooks.bind(this);
-    this.sortItems = this.sortItems.bind(this);
 
     let notebooks = [];
     for (const account of this.props.allNotebooks) {
@@ -58,13 +113,13 @@ export default class NotebookPicker extends React.Component<
       }
     }
 
-    notebooks = this.sortItems(notebooks, "lastModifiedDateTime", true);
+    notebooks = NotebookPicker.sortItems(notebooks, "lastModifiedDateTime", true);
     const columns: IColumn[] = [
       {
         fieldName: "icon",
         iconName: "Page",
         isIconOnly: true,
-        key: "column1",
+        key: "iconColumn",
         maxWidth: 16,
         minWidth: 16,
         name: "Icons",
@@ -85,7 +140,7 @@ export default class NotebookPicker extends React.Component<
         isPadded: true,
         isResizable: true,
         isRowHeader: true,
-        key: "column2",
+        key: "displayNameColumn",
         maxWidth: 350,
         minWidth: 210,
         name: "Name",
@@ -97,7 +152,7 @@ export default class NotebookPicker extends React.Component<
         isPadded: true,
         isResizable: true,
         isRowHeader: true,
-        key: "column3",
+        key: "userDisplayableIdColumn",
         maxWidth: 350,
         minWidth: 210,
         name: "Account",
@@ -110,7 +165,7 @@ export default class NotebookPicker extends React.Component<
         isRowHeader: true,
         isSorted: true,
         isSortedDescending: true,
-        key: "column4",
+        key: "lastModifiedDateTimeColumn",
         maxWidth: 350,
         minWidth: 210,
         name: "Last Modified Date Time",
@@ -199,85 +254,25 @@ export default class NotebookPicker extends React.Component<
     this.props.closeModal();
   }
 
+  public onColumnClick(ev: {}, column: IColumn): void; // purely for testing
   public onColumnClick(ev: React.MouseEvent<HTMLElement>, column: IColumn) {
     const { columns, notebooks } = this.state;
     let newItems = notebooks.slice();
-    const newColumns = columns.slice();
-    const currColumn = newColumns.filter((currCol, idx) => {
-      return column.key === currCol.key;
-    })[0];
-    newColumns.forEach(newCol => {
-      if (newCol === currColumn) {
-        currColumn.isSortedDescending = !currColumn.isSortedDescending;
-        currColumn.isSorted = true;
-      } else {
-        newCol.isSorted = false;
-        newCol.isSortedDescending = true;
+    const newColumns = columns.map(currColumn => {
+      if (currColumn.key === column.key) {
+        column = {...column, isSorted: true, isSortedDescending: !column.isSortedDescending};
+        return column;
       }
-    });
-    newItems = this.sortItems(
+      return {...currColumn, isSorted: false, isSortedDescending: true};
+    })
+    newItems = NotebookPicker.sortItems(
       newItems,
-      currColumn.fieldName as string,
-      currColumn.isSortedDescending
+      column.fieldName as string,
+      column.isSortedDescending
     );
     this.setState({
       columns: newColumns,
       notebooks: newItems
     });
-  }
-
-  /**
-   * Sorts the array by the specified property
-   * @param items
-   * @param sortBy Property by which the array is to be sorted by
-   * @param descending
-   */
-  public sortItems(
-    items: Notebook[],
-    sortBy: string,
-    descending: boolean = false
-  ) {
-    if (descending) {
-      return items.sort((a, b) => {
-        const { x, y } = this.getSortValues(a, b, sortBy);
-        if (x < y) {
-          return 1;
-        }
-        if (x > y) {
-          return -1;
-        }
-        return 0;
-      });
-    } else {
-      return items.sort((a, b) => {
-        const { x, y } = this.getSortValues(a, b, sortBy);
-        if (x < y) {
-          return -1;
-        }
-        if (x > y) {
-          return 1;
-        }
-        return 0;
-      });
-    }
-  }
-
-  /**
-   * Returns the key (in lowercase if it's a string)
-   * @param {Object} a
-   * @param {Object} b
-   * @param {string} sortBy
-   */
-  public getSortValues(a: object, b: object, sortBy: string) {
-    let x;
-    let y;
-    try {
-      x = a[sortBy].toLocaleLowerCase();
-      y = b[sortBy].toLocaleLowerCase();
-    } catch (error) {
-      x = a[sortBy];
-      y = b[sortBy];
-    }
-    return { x, y };
   }
 }
