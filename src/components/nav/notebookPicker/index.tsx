@@ -89,7 +89,12 @@ export default class NotebookPicker extends React.Component<
   }
 
   public selection: Selection;
-  private constNotebooks: Notebook[];
+
+  /**
+   * Stores all the notebooks, unfiltered
+   */
+  private readonly constNotebooks: Notebook[];
+
   constructor(props: IPropsNotebookPicker) {
     super(props);
 

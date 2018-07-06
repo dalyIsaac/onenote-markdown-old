@@ -112,53 +112,8 @@ describe("Component: notebookPicker", () => {
     expect(defaultButton.props().text).toBe("Open notebooks");
   });
 
-  test("It should sort the notebooks by the column clicked", () => {
-    const displayNameColumn: IColumn = {
-      data: "string",
-      fieldName: "displayName",
-      isPadded: true,
-      isResizable: true,
-      isRowHeader: true,
-      isSortedDescending: true,
-      key: "displayNameColumn",
-      maxWidth: 350,
-      minWidth: 210,
-      name: "Name"
-    };
-
-    testColumn(displayNameColumn);
-
-    const lastModifiedDateTimeColumn: IColumn = {
-      fieldName: "lastModifiedDateTime",
-      isPadded: true,
-      isResizable: true,
-      isRowHeader: true,
-      isSorted: true,
-      isSortedDescending: true,
-      key: "lastModifiedDateTimeColumn",
-      maxWidth: 350,
-      minWidth: 210,
-      name: "Last Modified Date Time"
-    };
-
-    testColumn(lastModifiedDateTimeColumn);
-
-    const userDisplayableIdColumn: IColumn = {
-      data: "string",
-      fieldName: "userDisplayableId",
-      isPadded: true,
-      isResizable: true,
-      isRowHeader: true,
-      isSortedDescending: false,
-      key: "userDisplayableIdColumn",
-      maxWidth: 350,
-      minWidth: 210,
-      name: "Account"
-    };
-
-    testColumn(userDisplayableIdColumn);
-
-    function testColumn(column: IColumn) {
+  describe("It should sort the notebooks by the column clicked", () => {
+    const testColumn = (column: IColumn) => {
       const { wrapper } = setUp();
       const notebookPicker = wrapper.instance() as NotebookPicker;
       const detailsList = wrapper.find(DetailsList).instance() as DetailsList;
@@ -173,6 +128,88 @@ describe("Component: notebookPicker", () => {
       );
       expect(notebookPicker.state.notebooks).toEqual([notebook2, notebook1]);
       expect(detailsList.props.items).toEqual([notebook2, notebook1]);
+    };
+
+    const displayNameColumn: IColumn = {
+      data: "string",
+      fieldName: "displayName",
+      isPadded: true,
+      isResizable: true,
+      isRowHeader: true,
+      isSortedDescending: true,
+      key: "displayNameColumn",
+      maxWidth: 350,
+      minWidth: 210,
+      name: "Name"
+    };
+
+    test("It should sort the notebooks by the displayName column", () => {
+      testColumn(displayNameColumn);
+    });
+
+    const lastModifiedDateTimeColumn: IColumn = {
+      fieldName: "lastModifiedDateTime",
+      isPadded: true,
+      isResizable: true,
+      isRowHeader: true,
+      isSorted: true,
+      isSortedDescending: true,
+      key: "lastModifiedDateTimeColumn",
+      maxWidth: 350,
+      minWidth: 210,
+      name: "Last Modified Date Time"
+    };
+
+    test("It should sort the notebooks by the lastModifiedDateTime column", () => {
+      testColumn(lastModifiedDateTimeColumn);
+    });
+
+    const userDisplayableIdColumn: IColumn = {
+      data: "string",
+      fieldName: "userDisplayableId",
+      isPadded: true,
+      isResizable: true,
+      isRowHeader: true,
+      isSortedDescending: false,
+      key: "userDisplayableIdColumn",
+      maxWidth: 350,
+      minWidth: 210,
+      name: "Account"
+    };
+
+    test("It should sort the notebooks by the userDisplayableId column", () => {
+      testColumn(userDisplayableIdColumn);
+    });
+  });
+
+  test("Each column should have this.onColumnClick bound to onColumnClick", () => {
+    const { wrapper } = setUp();
+    const notebookPicker = wrapper.instance() as NotebookPicker;
+    const columns = notebookPicker.state.columns;
+    for (let i = 1; i < columns.length; i++) {
+      const column = columns[i];
+      expect(column.onColumnClick).toBe(notebookPicker.onColumnClick);
     }
   });
+
+  test("It should filter based on the search box input", () => {
+    const { wrapper } = setUp();
+    const notebookPicker = wrapper.instance() as NotebookPicker;
+    notebookPicker.updateFilter("id1");
+    expect(notebookPicker.state.notebooks).toEqual([notebook1]);
+    notebookPicker.updateFilter("");
+    expect(notebookPicker.state.notebooks).toEqual([notebook2, notebook1]);
+    notebookPicker.updateFilter("id2");
+    expect(notebookPicker.state.notebooks).toEqual([notebook2]);
+    notebookPicker.updateFilter("notebook");
+    expect(notebookPicker.state.notebooks).toEqual([notebook2, notebook1]);
+  });
+
+  // selection test
+
+  // open notebooks onClick
+
+  // onChangeModalSelection
+
+  // check coveralls.io
 });
