@@ -205,11 +205,13 @@ describe("Component: notebookPicker", () => {
     expect(notebookPicker.state.notebooks).toEqual([notebook2, notebook1]);
   });
 
-  // selection test
+  test("Checks detailsList can select multiple objects", () => {
+    const { wrapper } = setUp();
+    const detailsList = wrapper.find(DetailsList).instance() as DetailsList;
+    expect(detailsList.props.selectionMode).toBe(SelectionMode.multiple);
+  });
 
   // open notebooks onClick
-
-  // onChangeModalSelection
 
   // check coveralls.io
 });

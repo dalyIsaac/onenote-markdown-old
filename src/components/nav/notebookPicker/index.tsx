@@ -32,7 +32,6 @@ export default class NotebookPicker extends React.Component<
   IPropsNotebookPicker,
   IStateNotebookPicker
 > {
-
   /**
    * Sorts the array by the specified property
    * @param items
@@ -118,7 +117,11 @@ export default class NotebookPicker extends React.Component<
       }
     }
 
-    notebooks = NotebookPicker.sortItems(notebooks, "lastModifiedDateTime", true);
+    notebooks = NotebookPicker.sortItems(
+      notebooks,
+      "lastModifiedDateTime",
+      true
+    );
     const columns: IColumn[] = [
       {
         fieldName: "icon",
@@ -231,10 +234,6 @@ export default class NotebookPicker extends React.Component<
     );
   }
 
-  public onChangeModalSelection(checked: boolean) {
-    this.setState({ isModalSelection: checked });
-  }
-
   public updateFilter(text: string) {
     text = text.toLowerCase();
     this.setState({
@@ -265,11 +264,15 @@ export default class NotebookPicker extends React.Component<
     let newItems = notebooks.slice();
     const newColumns = columns.map(currColumn => {
       if (currColumn.key === column.key) {
-        column = {...column, isSorted: true, isSortedDescending: !column.isSortedDescending};
+        column = {
+          ...column,
+          isSorted: true,
+          isSortedDescending: !column.isSortedDescending
+        };
         return column;
       }
-      return {...currColumn, isSorted: false, isSortedDescending: true};
-    })
+      return { ...currColumn, isSorted: false, isSortedDescending: true };
+    });
     newItems = NotebookPicker.sortItems(
       newItems,
       column.fieldName as string,
