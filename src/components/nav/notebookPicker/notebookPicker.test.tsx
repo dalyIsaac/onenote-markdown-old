@@ -71,7 +71,7 @@ function columnTestSetUp(): IColumn[] {
   return (wrapper.instance() as NotebookPicker).state.columns;
 }
 
-describe("Component: notebookPicker", () => {
+describe("Component: NotebookPicker", () => {
   test("It should render self and subcomponents", () => {
     const { wrapper } = setUp();
 
