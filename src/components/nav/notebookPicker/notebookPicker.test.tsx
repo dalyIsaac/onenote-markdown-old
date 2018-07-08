@@ -27,7 +27,7 @@ import {
   userId1
 } from "../../../testObjects";
 import { Notebook } from "../../../types/Notebook";
-import NotebookPicker from "./index";
+import NotebookPicker from "./notebookPicker";
 
 // Suppress icon warnings.
 setIconOptions({
