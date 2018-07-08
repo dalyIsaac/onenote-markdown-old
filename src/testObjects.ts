@@ -9,7 +9,7 @@ import {
   SectionGroup as ISectionGroup
 } from "@microsoft/microsoft-graph-types";
 import { User } from "msal";
-import { IStateUserNotebooks } from "./reducers";
+import { IStateUserNotebooks, IStateOneNote } from "./reducers";
 import { Notebook } from "./types/Notebook";
 import { Page } from "./types/Page";
 import { Section } from "./types/Section";
@@ -194,3 +194,6 @@ export const allNotebooks: IStateUserNotebooks[] = [
     userId: userId1
   }
 ];
+
+export const openedNotebooks: IStateOneNote = {};
+openedNotebooks[notebook.id] = notebook;

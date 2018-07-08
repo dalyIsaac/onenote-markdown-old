@@ -15,12 +15,12 @@ import {
 } from "office-ui-fabric-react";
 import * as React from "react";
 import * as renderer from "react-test-renderer";
-import { IStateOneNote } from "../../../reducers";
 import {
   allNotebooks,
   notebook,
   notebook1,
-  notebook2
+  notebook2,
+  openedNotebooks
 } from "../../../testObjects";
 import { Notebook } from "../../../types/Notebook";
 import NotebookPicker, { IPropsNotebookPicker } from "./notebookPicker";
@@ -33,8 +33,7 @@ setIconOptions({
 enzyme.configure({ adapter: new Adapter() });
 
 function setUp() {
-  const openedNotebooks: IStateOneNote = {};
-  openedNotebooks[notebook.id] = notebook;
+
   const props: IPropsNotebookPicker = {
     allNotebooks,
     closeModal: jest.fn(),
