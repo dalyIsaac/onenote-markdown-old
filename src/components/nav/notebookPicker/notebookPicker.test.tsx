@@ -196,7 +196,20 @@ describe("Component: notebookPicker", () => {
     };
 
     test("It should attempt to sort the notebooks by the icon column (in reality, no sorting actually happens)", () => {
-      testColumn(iconColumn);
+      const { wrapper } = setUp();
+      const notebookPicker = wrapper.instance() as NotebookPicker;
+      const detailsList = wrapper.find(DetailsList).instance() as DetailsList;
+
+      notebookPicker.onColumnClick({}, iconColumn);
+      expect(notebookPicker.state.notebooks).toEqual([notebook2, notebook1]);
+      expect(detailsList.props.items).toEqual([notebook2, notebook1]);
+
+      notebookPicker.onColumnClick(
+        {},
+        { ...iconColumn, isSortedDescending: !iconColumn.isSortedDescending }
+      );
+      expect(notebookPicker.state.notebooks).toEqual([notebook2, notebook1]);
+      expect(detailsList.props.items).toEqual([notebook2, notebook1]);
     });
   });
 
