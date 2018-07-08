@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Components: NavItemContext It should render self and subcomponents 1`] = `
+<button
+  className="navItemContextWrapper"
+  onClick={[Function]}
+>
+  <div>
+    <i
+      aria-hidden={true}
+      className="icon root-42"
+      data-icon-name="ChromeClose"
+      role="presentation"
+    />
+    <label>
+      Hello world
+    </label>
+  </div>
+</button>
+`;
