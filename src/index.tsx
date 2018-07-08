@@ -22,8 +22,8 @@ import { Route, Switch } from "react-router";
 import PrivateRoute from "./routing";
 
 // office-ui-fabric
-import { Fabric } from "office-ui-fabric-react/lib-commonjs/Fabric";
-import { initializeIcons } from "office-ui-fabric-react/lib-commonjs/Icons";
+import { Fabric } from "office-ui-fabric-react";
+import { initializeIcons } from "office-ui-fabric-react/lib/Icons";
 
 // App components
 import App from "./App";

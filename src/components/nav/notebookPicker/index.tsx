@@ -1,13 +1,13 @@
-import { DefaultButton } from "office-ui-fabric-react/lib-commonjs/Button";
+import { DefaultButton } from "office-ui-fabric-react";
 import {
   DetailsList,
   DetailsListLayoutMode,
   IColumn,
+  MarqueeSelection,
+  SearchBox,
   Selection,
   SelectionMode
-} from "office-ui-fabric-react/lib-commonjs/DetailsList";
-import { MarqueeSelection } from "office-ui-fabric-react/lib-commonjs/MarqueeSelection";
-import { SearchBox } from "office-ui-fabric-react/lib-commonjs/SearchBox";
+} from "office-ui-fabric-react";
 import * as React from "react";
 import { IOpenNotebooks } from "../../../actions/onenote";
 import { IStateOneNote, IStateUserNotebooks } from "../../../reducers";

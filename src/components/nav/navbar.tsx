@@ -1,5 +1,5 @@
+import { Spinner, SpinnerSize } from "office-ui-fabric-react";
 import { Modal } from "office-ui-fabric-react/lib-commonjs/Modal";
-import { Spinner, SpinnerSize } from "office-ui-fabric-react/lib-commonjs/Spinner";
 import * as React from "react";
 import { IPropsNavbar } from "../../containers/navbar";
 import NotebookNav from "../../containers/notebookNav";
