@@ -19,25 +19,56 @@ export const userId = "jane.doe@email.com";
 export const userId1 = "john.smith@email.com";
 
 export const graphNotebookInstance: INotebook = {
+  displayName: "notebook",
+  id: "notebookid",
   isDefault: true,
   isShared: false,
+  lastModifiedDateTime: "datetime",
   sectionGroupsUrl: "https://www.example.com/sectionGroupsUrl",
   sectionsUrl: "https://www.example.com/sections",
   userRole: "Owner"
 };
 
 export const graphNotebookInstance1: INotebook = {
+  displayName: "notebookid1",
+  id: "notebookid1",
   isDefault: false,
   isShared: true,
+  lastModifiedDateTime: "datetime1",
   sectionGroupsUrl: "https://www.example.com/sectionGroupsUrl1",
   sectionsUrl: "https://www.example.com/sections1",
   userRole: "Owner"
 };
 
-export const notebook = new Notebook(graphNotebookInstance, userId);
-export const notebook1 = new Notebook(graphNotebookInstance1, userId1);
+export const graphNotebookInstance2: INotebook = {
+  displayName: "notebookid2",
+  id: "notebookid2",
+  isDefault: false,
+  isShared: false,
+  lastModifiedDateTime: "datetime2",
+  sectionGroupsUrl: "https://www.example.com/sectionGroupsUrl2",
+  sectionsUrl: "https://www.example.com/sections2",
+  userRole: "Reader"
+};
+
+export const notebook = new Notebook(
+  graphNotebookInstance,
+  userId,
+  "genericstring"
+);
+export const notebook1 = new Notebook(
+  graphNotebookInstance1,
+  userId1,
+  "genericstring1"
+);
+export const notebook2 = new Notebook(
+  graphNotebookInstance2,
+  userId,
+  "genericstring"
+);
 
 export const graphSectionGroupInstance: ISectionGroup = {
+  id: "sectionGroup",
   parentNotebook: graphNotebookInstance,
   sectionGroups: [],
   sectionGroupsUrl: "https://www.example.com/sectionGroupsUrl",
@@ -46,6 +77,7 @@ export const graphSectionGroupInstance: ISectionGroup = {
 };
 
 export const graphSectionGroupInstance1: ISectionGroup = {
+  id: "sectionGroup1",
   parentNotebook: graphNotebookInstance,
   parentSectionGroup: graphSectionGroupInstance,
   sectionGroups: [],
@@ -67,6 +99,7 @@ export const graphPageInstance: IPage = {
   content,
   contentUrl: "https://www.example.com/Hello%20Page%201/content",
   createdByAppId: "genericstring1",
+  id: "page",
   lastModifiedDateTime: "2014-01-01T00:00:00Z",
   level: 0,
   order: 0,
@@ -76,6 +109,7 @@ export const graphPageInstance: IPage = {
 };
 
 export const graphSectionInstance: ISection = {
+  id: "section",
   isDefault: true,
   pages: [graphPageInstance],
   pagesUrl: "https://www.example.com/pages",
@@ -87,6 +121,7 @@ export const graphPageInstance1: IPage = {
   content: content1,
   contentUrl: "https://www.example.com/Hello%20Page%202/content",
   createdByAppId: "genericstring2",
+  id: "page1",
   lastModifiedDateTime: "2014-01-01T00:00:00Z",
   level: 0,
   order: 0,
@@ -97,6 +132,7 @@ export const graphPageInstance1: IPage = {
 };
 
 export const graphSectionInstance1: ISection = {
+  id: "graphSection",
   isDefault: false,
   pages: [graphPageInstance1],
   pagesUrl: "https://www.example.com/pages1",

@@ -1,4 +1,4 @@
-import { putSelected, updateSelected } from "./selectedNav";
+import { putSelected, updateSelected } from "./index";
 
 describe("Actions: selectedNav", () => {
   test("Should create an action which updates the selected `onenote` object", () => {

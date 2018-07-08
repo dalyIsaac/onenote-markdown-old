@@ -8,7 +8,7 @@ import Navbar from "./../components/nav/navbar";
 export interface IPropsNavbar {
   allNotebooks: IStateUserNotebooks[];
   notebookOrder: string[];
-  openedNotebooks: IStateOneNote[];
+  openedNotebooks: IStateOneNote;
   userLength: number;
   getAllNotebooks(): IAction;
   openNotebooks(notebookList: Notebook[]): IOpenNotebooks;

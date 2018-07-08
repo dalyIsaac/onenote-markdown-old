@@ -1,4 +1,4 @@
-import notebookOrderReducer from "./notebookOrderReducer";
+import notebookOrderReducer from "./index";
 
 describe("Reducers: notebookOrderReducer", () => {
   const notebookId1 = "genericstring1";

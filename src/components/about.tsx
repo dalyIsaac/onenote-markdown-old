@@ -1,4 +1,4 @@
-import { ActionButton } from "office-ui-fabric-react/lib-commonjs/Button";
+import { ActionButton } from "office-ui-fabric-react";
 import * as React from "react";
 import { IPropsAbout } from "src/containers/about";
 import "./about.css";

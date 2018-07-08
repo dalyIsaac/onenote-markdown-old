@@ -1,10 +1,11 @@
-import { ActionButton } from "office-ui-fabric-react/lib-commonjs/Button";
-import { Facepile } from "office-ui-fabric-react/lib-commonjs/Facepile";
-import { Panel, PanelType } from "office-ui-fabric-react/lib-commonjs/Panel";
+import { ActionButton } from "office-ui-fabric-react";
 import {
+  Facepile,
+  Panel,
+  PanelType,
   Persona,
   PersonaSize
-} from "office-ui-fabric-react/lib-commonjs/Persona";
+} from "office-ui-fabric-react";
 import * as React from "react";
 import { IPersona } from "src/components/users";
 import { IAction } from "../actions";

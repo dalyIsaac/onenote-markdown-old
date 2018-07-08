@@ -1,7 +1,7 @@
-import { user, user1 } from "../testObjects";
-import { UserData } from "../types/UserData";
-import { IStateUsers } from "./index";
-import userReducer from "./userReducer";
+import { user, user1 } from "../../testObjects";
+import { UserData } from "../../types/UserData";
+import { IStateUsers } from "../index";
+import userReducer from "./index";
 
 describe("Reducers: userReducer", () => {
   test("Should return the intial state", () => {

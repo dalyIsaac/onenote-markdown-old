@@ -1,4 +1,4 @@
-import { addToLength, updateLength } from "./totalNotebookLength";
+import { addToLength, updateLength } from "./index";
 
 describe("Actions: totalNotebookLength", () => {
   test("Should create an action to update the length of the total notebook length", () => {

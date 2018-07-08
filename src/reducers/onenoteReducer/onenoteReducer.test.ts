@@ -8,9 +8,9 @@ import {
   section1,
   sectionGroup,
   sectionGroup1
-} from "../testObjects";
-import { IStateOneNote } from "./index";
-import onenoteReducer from "./onenoteReducer";
+} from "../../testObjects";
+import { IStateOneNote } from "../index";
+import onenoteReducer from "./index";
 
 describe("Reducers: onenoteReducer", () => {
   test("Should return the initial state", () => {

@@ -1,4 +1,4 @@
-import { addNotebookToOrder, loadNotebookOrder } from "./notebookOrder";
+import { addNotebookToOrder, loadNotebookOrder } from "./index";
 
 describe("Actions: notebookOrder", () => {
   test("Should create an action which adds the notebook to the notebookOrder array", () => {

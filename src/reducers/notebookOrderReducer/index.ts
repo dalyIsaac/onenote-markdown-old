@@ -1,9 +1,9 @@
-import { IAction } from "../actions";
+import { IAction } from "../../actions";
 import {
   IAddNotebookToOrder,
   ILoadNotebookOrder
-} from "../actions/notebookOrder";
-import { ADD_NOTEBOOK_TO_ORDER, LOAD_NOTEBOOK_ORDER } from "../actionTypes";
+} from "../../actions/notebookOrder";
+import { ADD_NOTEBOOK_TO_ORDER, LOAD_NOTEBOOK_ORDER } from "../../actionTypes";
 
 export default function notebookOrderReducer(
   state: string[] = [],

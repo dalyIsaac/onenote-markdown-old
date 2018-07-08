@@ -3,9 +3,9 @@
  */
 
 import { IStateUserNotebooks } from "src/reducers";
-import { IAction } from "../actions";
-import { IPutAllNotebooks } from "../actions/allNotebooks";
-import { PUT_ALL_NOTEBOOKS } from "./../actionTypes";
+import { IAction } from "../../actions";
+import { IPutAllNotebooks } from "../../actions/allNotebooks";
+import { PUT_ALL_NOTEBOOKS } from "../../actionTypes";
 
 export default function notebooksReducer(
   state: IStateUserNotebooks[] = [],

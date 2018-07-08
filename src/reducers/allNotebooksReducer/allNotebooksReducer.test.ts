@@ -1,6 +1,9 @@
-import { graphNotebookInstance, graphNotebookInstance1 } from "../testObjects";
-import notebooksReducer from "./allNotebooksReducer";
-import { IStateUserNotebooks } from "./index";
+import {
+  graphNotebookInstance,
+  graphNotebookInstance1
+} from "../../testObjects";
+import { IStateUserNotebooks } from "../index";
+import notebooksReducer from "./index";
 
 describe("Reducers: allNotebooksReducer", () => {
   test("Should return the initial state", () => {

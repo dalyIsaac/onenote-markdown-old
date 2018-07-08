@@ -9,3 +9,4 @@ cache:
 before_install:
   - yarn
 install: true
+script: react-scripts-ts test --env=jsdom --coverage --coverageReporters=text-lcov | coveralls

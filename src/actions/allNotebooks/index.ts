@@ -3,8 +3,8 @@
  */
 
 import { IAction } from "src/actions";
-import { GET_ALL_NOTEBOOKS, PUT_ALL_NOTEBOOKS } from "../actionTypes";
-import { IStateUserNotebooks } from "../reducers";
+import { GET_ALL_NOTEBOOKS, PUT_ALL_NOTEBOOKS } from "../../actionTypes";
+import { IStateUserNotebooks } from "../../reducers";
 
 /**
  * Creates an action which starts the process of getting all of the notebooks of all the logged in users

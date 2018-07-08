@@ -1,5 +1,5 @@
-import { ADD_NOTEBOOK_TO_ORDER, LOAD_NOTEBOOK_ORDER } from "../actionTypes";
-import { IAction } from "./index";
+import { ADD_NOTEBOOK_TO_ORDER, LOAD_NOTEBOOK_ORDER } from "../../actionTypes";
+import { IAction } from "../index";
 
 export interface IAddNotebookToOrder extends IAction {
   notebookId: string;
