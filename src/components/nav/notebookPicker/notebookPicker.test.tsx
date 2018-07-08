@@ -236,6 +236,12 @@ describe("Component: notebookPicker", () => {
       const component = renderer.create(column.onRender(notebook));
       const tree = component.toJSON();
       expect(tree).toMatchSnapshot();
+
+      const notebookWithNoDate = notebook1;
+      notebookWithNoDate.lastModifiedDateTime = undefined;
+      const component1 = renderer.create(column.onRender(notebookWithNoDate))
+      const tree1 = component1.toJSON();
+      expect(tree1).toMatchSnapshot();
     }
   });
 });
