@@ -180,7 +180,7 @@ export default class NotebookPicker extends React.Component<
         onColumnClick: this.onColumnClick,
         onRender: (notebook: Notebook) => {
           if (notebook.lastModifiedDateTime) {
-            return <div>{notebook.lastModifiedDateTime.toLocaleString()}</div>;
+            return <div>{new Date(notebook.lastModifiedDateTime).toLocaleString()}</div>
           } else {
             return <div>N/A</div>;
           }

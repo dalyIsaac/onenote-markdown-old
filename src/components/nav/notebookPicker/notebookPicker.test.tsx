@@ -56,6 +56,11 @@ function setUp() {
   };
 }
 
+function columnTestSetUp(): IColumn[] {
+  const { wrapper } = setUp();
+  return (wrapper.instance() as NotebookPicker).state.columns;
+}
+
 describe("Component: notebookPicker", () => {
   test("It should render self and subcomponents", () => {
     const { wrapper } = setUp();
@@ -214,13 +219,21 @@ describe("Component: notebookPicker", () => {
   // });
 
   test("Checks that the images column renders an image", () => {
-    const { wrapper } = setUp();
-    const column = (wrapper.instance() as NotebookPicker).state.columns[0];
+    const column = columnTestSetUp()[0];
     if (column.onRender !== undefined) {
       const renderedColumn = enzyme.shallow(column.onRender());
       expect(renderedColumn.find("img").exists()).toBe(true);
 
       const component = renderer.create(column.onRender());
+      const tree = component.toJSON();
+      expect(tree).toMatchSnapshot();
+    }
+  });
+
+  test("Checks that the last date modified is correct", () => {
+    const column = columnTestSetUp()[3];
+    if (column.onRender !== undefined) {
+      const component = renderer.create(column.onRender(notebook));
       const tree = component.toJSON();
       expect(tree).toMatchSnapshot();
     }
