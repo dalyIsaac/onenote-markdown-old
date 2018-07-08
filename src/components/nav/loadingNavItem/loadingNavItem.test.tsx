@@ -2,6 +2,7 @@ import * as enzyme from "enzyme";
 import * as Adapter from "enzyme-adapter-react-16";
 import { Spinner, SpinnerSize } from "office-ui-fabric-react";
 import * as React from "react";
+import * as renderer from "react-test-renderer";
 import LoadingNavItem, { IPropsLoadingNavItem } from "./loadingNavItem";
 
 enzyme.configure({ adapter: new Adapter() });
@@ -31,6 +32,10 @@ describe("Components: LoadingNavItem", () => {
     expect(label.hasClass("loadingNavItemSpinnerLabel")).toBe(true);
     expect(label.parent().is("div.loadingItemWrapper")).toBe(true);
     expect(label.text()).toBe(`Loading 0 ${props.type}s`);
+
+    expect(
+      renderer.create(<LoadingNavItem {...props} />).toJSON()
+    ).toMatchSnapshot();
   });
 
   test("Ensures that the grammar of the label changes as the value updates", () => {

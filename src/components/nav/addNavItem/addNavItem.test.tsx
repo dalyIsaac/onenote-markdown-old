@@ -2,6 +2,7 @@ import * as enzyme from "enzyme";
 import * as Adapter from "enzyme-adapter-react-16";
 import { Icon, setIconOptions } from "office-ui-fabric-react";
 import * as React from "react";
+import * as renderer from "react-test-renderer";
 import AddNavItem, { IPropsAddNavItem } from "./addNavItem";
 
 // Suppress icon warnings.
@@ -42,5 +43,9 @@ describe("Components: AddNavItem", () => {
     expect(label.hasClass("addNavItemLabel")).toBe(true);
     expect(label.text()).toBe(props.text);
     expect(label.parent().is("div.addNavItemWrapper")).toBe(true);
+
+    expect(
+      renderer.create(<AddNavItem {...props} />).toJSON()
+    ).toMatchSnapshot();
   });
 });
