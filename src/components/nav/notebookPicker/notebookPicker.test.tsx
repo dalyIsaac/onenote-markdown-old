@@ -184,6 +184,20 @@ describe("Component: notebookPicker", () => {
     test("It should sort the notebooks by the userDisplayableId column", () => {
       testColumn(userDisplayableIdColumn);
     });
+
+    const iconColumn: IColumn = {
+      fieldName: "icon",
+      iconName: "Page",
+      isIconOnly: true,
+      key: "iconColumn",
+      maxWidth: 16,
+      minWidth: 16,
+      name: "Icons"
+    };
+
+    test("It should attempt to sort the notebooks by the icon column (in reality, no sorting actually happens)", () => {
+      testColumn(iconColumn);
+    });
   });
 
   test("Each column should have this.onColumnClick bound to onColumnClick", () => {

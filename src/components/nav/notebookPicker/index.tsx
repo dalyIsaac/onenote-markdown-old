@@ -44,7 +44,7 @@ export default class NotebookPicker extends React.Component<
   ) {
     if (descending) {
       return items.sort((a, b) => {
-        const { x, y } = this.getSortValues(a, b, sortBy);
+        const { x, y } = NotebookPicker.getSortValues(a, b, sortBy);
         if (x < y) {
           return 1;
         }
@@ -55,7 +55,7 @@ export default class NotebookPicker extends React.Component<
       });
     } else {
       return items.sort((a, b) => {
-        const { x, y } = this.getSortValues(a, b, sortBy);
+        const { x, y } = NotebookPicker.getSortValues(a, b, sortBy);
         if (x < y) {
           return -1;
         }
@@ -69,11 +69,11 @@ export default class NotebookPicker extends React.Component<
 
   /**
    * Returns the key (in lowercase if it's a string)
-   * @param {Object} a
-   * @param {Object} b
-   * @param {string} sortBy
+   * @param a
+   * @param b
+   * @param sortBy
    */
-  public static getSortValues(a: object, b: object, sortBy: string) {
+  public static getSortValues(a: Notebook, b: Notebook, sortBy: string) {
     let x;
     let y;
     try {
