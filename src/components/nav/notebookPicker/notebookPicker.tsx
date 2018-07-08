@@ -20,7 +20,7 @@ interface IStateNotebookPicker {
   isModalSelection: boolean;
 }
 
-interface IPropsNotebookPicker {
+export interface IPropsNotebookPicker {
   allNotebooks: IStateUserNotebooks[];
   openedNotebooks: IStateOneNote;
   closeModal(): void;

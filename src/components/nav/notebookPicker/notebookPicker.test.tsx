@@ -27,7 +27,7 @@ import {
   userId1
 } from "../../../testObjects";
 import { Notebook } from "../../../types/Notebook";
-import NotebookPicker from "./notebookPicker";
+import NotebookPicker, { IPropsNotebookPicker } from "./notebookPicker";
 
 // Suppress icon warnings.
 setIconOptions({
@@ -51,7 +51,7 @@ function setUp() {
   ];
   const openedNotebooks: IStateOneNote = {};
   openedNotebooks[notebook.id] = notebook;
-  const props = {
+  const props: IPropsNotebookPicker = {
     allNotebooks,
     closeModal: jest.fn(),
     openNotebooks: jest.fn((notebookList: Notebook[]) => undefined),
