@@ -9,6 +9,7 @@ import {
   SectionGroup as ISectionGroup
 } from "@microsoft/microsoft-graph-types";
 import { User } from "msal";
+import { IStateUserNotebooks } from "./reducers";
 import { Notebook } from "./types/Notebook";
 import { Page } from "./types/Page";
 import { Section } from "./types/Section";
@@ -169,6 +170,7 @@ export const user = new UserData(
   ),
   "photoString1"
 );
+
 export const user1 = new UserData(
   new User(
     "jane.doe@email.com",
@@ -179,3 +181,16 @@ export const user1 = new UserData(
   ),
   "photoString2"
 );
+
+export const allNotebooks: IStateUserNotebooks[] = [
+  {
+    displayableId: "genericstring",
+    notebooks: [graphNotebookInstance, graphNotebookInstance2],
+    userId
+  },
+  {
+    displayableId: "genericstring1",
+    notebooks: [graphNotebookInstance1],
+    userId: userId1
+  }
+];
