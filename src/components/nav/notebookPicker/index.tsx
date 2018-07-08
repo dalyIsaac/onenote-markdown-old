@@ -3,7 +3,6 @@ import {
   DetailsList,
   DetailsListLayoutMode,
   IColumn,
-  IObjectWithKey,
   Selection,
   SelectionMode
 } from "office-ui-fabric-react/lib-commonjs/DetailsList";
@@ -180,7 +179,11 @@ export default class NotebookPicker extends React.Component<
         onColumnClick: this.onColumnClick,
         onRender: (notebook: Notebook) => {
           if (notebook.lastModifiedDateTime) {
-            return <div>{new Date(notebook.lastModifiedDateTime).toLocaleString()}</div>
+            return (
+              <div>
+                {new Date(notebook.lastModifiedDateTime).toLocaleString()}
+              </div>
+            );
           } else {
             return <div>N/A</div>;
           }
@@ -250,9 +253,7 @@ export default class NotebookPicker extends React.Component<
     const selectionCount = this.selection.getSelectedCount();
     if (selectionCount > 0) {
       this.props.openNotebooks(
-        this.selection
-          .getSelection()
-          .map((val: IObjectWithKey) => val as Notebook)
+        this.selection.getSelection().map((val: any) => val as Notebook)
       );
     }
     this.props.closeModal();

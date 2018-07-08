@@ -4,6 +4,7 @@ import {
   DefaultButton,
   DetailsList,
   IColumn,
+  IObjectWithKey,
   SelectionMode
 } from "office-ui-fabric-react";
 import { ISearchBoxProps, SearchBox } from "office-ui-fabric-react";
@@ -214,9 +215,26 @@ describe("Component: notebookPicker", () => {
     expect(detailsList.props.selectionMode).toBe(SelectionMode.multiple);
   });
 
-  // test("Checks that openNotebooks calls the action creator to open the selected notebooks", () => {
+  test("Checks that openNotebooks calls the action creator to open the selected notebooks", () => {
+    const { wrapper } = setUp();
+    const notebookPicker = wrapper.instance() as NotebookPicker;
+    notebookPicker.openNotebooks();
+    expect(
+      (notebookPicker.props.openNotebooks as jest.Mock).mock.calls.length
+    ).toBe(0);
 
-  // });
+    notebookPicker.selection.getSelectedCount = jest.fn().mockReturnValue(1);
+    notebookPicker.selection.getSelection = jest
+      .fn()
+      .mockReturnValue([notebook1] as IObjectWithKey[]);
+    notebookPicker.openNotebooks();
+    expect(
+      (notebookPicker.props.openNotebooks as jest.Mock).mock.calls.length
+    ).toBe(1);
+    expect(
+      (notebookPicker.props.openNotebooks as jest.Mock).mock.calls[0]
+    ).toEqual([[notebook1]]);
+  });
 
   test("Checks that the images column renders an image", () => {
     const column = columnTestSetUp()[0];
@@ -239,7 +257,7 @@ describe("Component: notebookPicker", () => {
 
       const notebookWithNoDate = notebook1;
       notebookWithNoDate.lastModifiedDateTime = undefined;
-      const component1 = renderer.create(column.onRender(notebookWithNoDate))
+      const component1 = renderer.create(column.onRender(notebookWithNoDate));
       const tree1 = component1.toJSON();
       expect(tree1).toMatchSnapshot();
     }
