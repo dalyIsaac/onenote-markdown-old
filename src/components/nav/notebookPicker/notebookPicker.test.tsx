@@ -7,8 +7,12 @@ import {
   IObjectWithKey,
   SelectionMode
 } from "office-ui-fabric-react";
-import { ISearchBoxProps, SearchBox } from "office-ui-fabric-react";
-import { MarqueeSelection } from "office-ui-fabric-react/lib-commonjs/MarqueeSelection";
+import {
+  ISearchBoxProps,
+  MarqueeSelection,
+  SearchBox,
+  setIconOptions
+} from "office-ui-fabric-react";
 import * as React from "react";
 import * as renderer from "react-test-renderer";
 import { IStateOneNote, IStateUserNotebooks } from "../../../reducers";
@@ -24,6 +28,11 @@ import {
 } from "../../../testObjects";
 import { Notebook } from "../../../types/Notebook";
 import NotebookPicker from "./index";
+
+// Suppress icon warnings.
+setIconOptions({
+  disableWarnings: true
+});
 
 enzyme.configure({ adapter: new Adapter() });
 
@@ -117,21 +126,31 @@ describe("Component: notebookPicker", () => {
   });
 
   describe("It should sort the notebooks by the column clicked", () => {
-    const testColumn = (column: IColumn) => {
+    const testColumn = (
+      column: IColumn,
+      test1Results: Notebook[],
+      test2Results: Notebook[],
+      test3Results: Notebook[]
+    ) => {
       const { wrapper } = setUp();
       const notebookPicker = wrapper.instance() as NotebookPicker;
       const detailsList = wrapper.find(DetailsList).instance() as DetailsList;
 
       notebookPicker.onColumnClick({}, column);
-      expect(notebookPicker.state.notebooks).toEqual([notebook1, notebook2]);
-      expect(detailsList.props.items).toEqual([notebook1, notebook2]);
+      expect(notebookPicker.state.notebooks).toEqual(test1Results);
+      expect(detailsList.props.items).toEqual(test1Results);
 
       notebookPicker.onColumnClick(
         {},
         { ...column, isSortedDescending: !column.isSortedDescending }
       );
-      expect(notebookPicker.state.notebooks).toEqual([notebook2, notebook1]);
-      expect(detailsList.props.items).toEqual([notebook2, notebook1]);
+      expect(notebookPicker.state.notebooks).toEqual(test2Results);
+      expect(detailsList.props.items).toEqual(test2Results);
+
+      notebookPicker.setState({ notebooks: [notebook1, notebook2] });
+      notebookPicker.onColumnClick({}, { ...column, isSortedDescending: true });
+      expect(notebookPicker.state.notebooks).toEqual(test3Results);
+      expect(detailsList.props.items).toEqual(test3Results);
     };
 
     const displayNameColumn: IColumn = {
@@ -148,7 +167,12 @@ describe("Component: notebookPicker", () => {
     };
 
     test("It should sort the notebooks by the displayName column", () => {
-      testColumn(displayNameColumn);
+      testColumn(
+        displayNameColumn,
+        [notebook1, notebook2],
+        [notebook2, notebook1],
+        [notebook1, notebook2]
+      );
     });
 
     const lastModifiedDateTimeColumn: IColumn = {
@@ -165,7 +189,12 @@ describe("Component: notebookPicker", () => {
     };
 
     test("It should sort the notebooks by the lastModifiedDateTime column", () => {
-      testColumn(lastModifiedDateTimeColumn);
+      testColumn(
+        lastModifiedDateTimeColumn,
+        [notebook1, notebook2],
+        [notebook2, notebook1],
+        [notebook1, notebook2]
+      );
     });
 
     const userDisplayableIdColumn: IColumn = {
@@ -182,7 +211,12 @@ describe("Component: notebookPicker", () => {
     };
 
     test("It should sort the notebooks by the userDisplayableId column", () => {
-      testColumn(userDisplayableIdColumn);
+      testColumn(
+        userDisplayableIdColumn,
+        [notebook1, notebook2],
+        [notebook2, notebook1],
+        [notebook2, notebook1]
+      );
     });
 
     const iconColumn: IColumn = {
@@ -196,20 +230,12 @@ describe("Component: notebookPicker", () => {
     };
 
     test("It should attempt to sort the notebooks by the icon column (in reality, no sorting actually happens)", () => {
-      const { wrapper } = setUp();
-      const notebookPicker = wrapper.instance() as NotebookPicker;
-      const detailsList = wrapper.find(DetailsList).instance() as DetailsList;
-
-      notebookPicker.onColumnClick({}, iconColumn);
-      expect(notebookPicker.state.notebooks).toEqual([notebook2, notebook1]);
-      expect(detailsList.props.items).toEqual([notebook2, notebook1]);
-
-      notebookPicker.onColumnClick(
-        {},
-        { ...iconColumn, isSortedDescending: !iconColumn.isSortedDescending }
+      testColumn(
+        iconColumn,
+        [notebook2, notebook1],
+        [notebook2, notebook1],
+        [notebook1, notebook2]
       );
-      expect(notebookPicker.state.notebooks).toEqual([notebook2, notebook1]);
-      expect(detailsList.props.items).toEqual([notebook2, notebook1]);
     });
   });
 
