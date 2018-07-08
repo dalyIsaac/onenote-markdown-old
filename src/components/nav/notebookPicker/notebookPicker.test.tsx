@@ -6,12 +6,10 @@ import {
   IColumn,
   SelectionMode
 } from "office-ui-fabric-react";
+import { ISearchBoxProps, SearchBox } from "office-ui-fabric-react";
 import { MarqueeSelection } from "office-ui-fabric-react/lib-commonjs/MarqueeSelection";
-import {
-  ISearchBoxProps,
-  SearchBox
-} from "office-ui-fabric-react/lib-commonjs/SearchBox";
 import * as React from "react";
+import * as renderer from "react-test-renderer";
 import { IStateOneNote, IStateUserNotebooks } from "../../../reducers";
 import {
   graphNotebookInstance,
@@ -211,7 +209,20 @@ describe("Component: notebookPicker", () => {
     expect(detailsList.props.selectionMode).toBe(SelectionMode.multiple);
   });
 
-  // open notebooks onClick
+  // test("Checks that openNotebooks calls the action creator to open the selected notebooks", () => {
 
-  // check coveralls.io
+  // });
+
+  test("Checks that the images column renders an image", () => {
+    const { wrapper } = setUp();
+    const column = (wrapper.instance() as NotebookPicker).state.columns[0];
+    if (column.onRender !== undefined) {
+      const renderedColumn = enzyme.shallow(column.onRender());
+      expect(renderedColumn.find("img").exists()).toBe(true);
+
+      const component = renderer.create(column.onRender());
+      const tree = component.toJSON();
+      expect(tree).toMatchSnapshot();
+    }
+  });
 });
