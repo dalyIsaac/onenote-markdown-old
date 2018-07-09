@@ -3,7 +3,7 @@ import * as Adapter from "enzyme-adapter-react-16";
 import { Callout, Icon, setIconOptions } from "office-ui-fabric-react";
 import * as React from "react";
 import * as renderer from "react-test-renderer";
-import { page, section, sectionGroup } from "../../../testObjects";
+import { notebook, page, section, sectionGroup } from "../../../testObjects";
 import NavItem, { IPropsNavItem } from "./navItem";
 
 setIconOptions({
@@ -12,10 +12,32 @@ setIconOptions({
 
 enzyme.configure({ adapter: new Adapter() });
 
+function setUpNotebook() {
+  const modifiedNotebook = notebook;
+  modifiedNotebook.displayName =
+    "This notebook has a very large name which is honestly a bit much to read";
+  const props: IPropsNavItem = {
+    icon: <Icon iconName="Dictionary" />,
+    indentation: 0,
+    isSelectable: true,
+    isSelected: false,
+    item: modifiedNotebook,
+    key: "NotebookKey",
+    navItemContexts: [
+      <p key="p">Hello world</p>,
+      <p key="p1">Hello world 1</p>
+    ],
+    updateSelected: jest.fn()
+  };
+  const wrapper = enzyme.mount(<NavItem {...props} />);
+  return { props, wrapper };
+}
+
 function setUpSectionGroup() {
   const props: IPropsNavItem = {
     icon: <Icon iconName="Sections" />,
     indentation: 0,
+    isSelectable: false,
     isSelected: false,
     item: sectionGroup,
     key: "SectionGroupKey",
@@ -116,8 +138,7 @@ describe("Components: NavItem", () => {
       // the section group is not expanded
       // calls updateSelected
       const updateSelected = instance.props.updateSelected as jest.Mock;
-      expect(updateSelected.mock.calls.length).toBe(1);
-      expect(updateSelected.mock.calls[0]).toEqual([props.item.id]);
+      expect(updateSelected.mock.calls.length).toBe(0);
 
       // calls updateIsExpanded
       const updateIsExpanded = instance.props.updateIsExpanded as jest.Mock;
@@ -138,8 +159,7 @@ describe("Components: NavItem", () => {
 
       // item is selected
       const updateSelected = instance.props.updateSelected as jest.Mock;
-      expect(updateSelected.mock.calls.length).toBe(1);
-      expect(updateSelected.mock.calls[0]).toEqual(["notebookid"]);
+      expect(updateSelected.mock.calls.length).toBe(0);
 
       // item is expandable
       const updateIsExpanded = instance.props.updateIsExpanded as jest.Mock;
@@ -206,7 +226,6 @@ describe("Components: NavItem", () => {
       // item is not selected
       const updateSelected = instance.props.updateSelected as jest.Mock;
       expect(updateSelected.mock.calls.length).toBe(1);
-      expect(updateSelected.mock.calls[0]).toEqual(["notebookid"]);
 
       expect(instance.state.rightClick).toBe(true);
 
@@ -214,5 +233,22 @@ describe("Components: NavItem", () => {
     });
   });
 
-  // displayName slice 40
+  test("Handles overflow for displayName", () => {
+    const { wrapper, props } = setUpNotebook();
+
+    let text = props.item.displayName;
+    text = `${text.slice(0, 40)}...`;
+    const label = wrapper.find("label");
+    expect(label.text()).toBe(text);
+  });
+
+  test("Checks calloutDismiss", () => {
+    const { wrapper } = setUpSectionGroup();
+    wrapper.setState({ rightClick: true });
+    const instance = wrapper.instance() as NavItem;
+    const callout = wrapper.find(Callout).instance() as Callout;
+    expect(callout.props.onDismiss).toBe(instance.calloutDismiss);
+    instance.calloutDismiss();
+    expect(instance.state.rightClick).toBe(false);
+  });
 });

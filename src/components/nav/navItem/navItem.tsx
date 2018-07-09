@@ -104,9 +104,7 @@ export default class NavItem extends React.Component<
       this.updateSelected(
         item["parentSectionGroup.id"] || item["parentNotebook.id"] || item.id
       );
-      if (this.propsIsExpandable()) {
-        this.updateIsExpanded(item.id, false);
-      }
+      this.updateIsExpanded(item.id, false);
     } else {
       if (this.propsIsExpandable()) {
         if ((item as SectionGroup | Page).isExpanded) {
