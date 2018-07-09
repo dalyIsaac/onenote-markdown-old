@@ -1,27 +1,27 @@
 import { Callout, DirectionalHint } from "office-ui-fabric-react";
 import * as React from "react";
-import { IUpdateIsExpanded } from "../../actions/onenote";
-import { IUpdateSelected } from "../../actions/selectedNav";
-import { Notebook } from "../../types/Notebook";
-import { Page } from "../../types/Page";
-import { Section } from "../../types/Section";
-import { SectionGroup } from "../../types/SectionGroup";
+import { IUpdateIsExpanded } from "../../../actions/onenote";
+import { IUpdateSelected } from "../../../actions/selectedNav";
+import { Notebook } from "../../../types/Notebook";
+import { Page } from "../../../types/Page";
+import { Section } from "../../../types/Section";
+import { SectionGroup } from "../../../types/SectionGroup";
 import "./navItem.css";
 
 interface IStateNavItem {
   rightClick: boolean;
 }
 
-interface IPropsNavItem {
+export interface IPropsNavItem {
   icon?: React.ReactElement<{}>;
-  item: Notebook | SectionGroup | Section | Page;
-  key: string;
   indentation?: number;
+  item: Notebook | SectionGroup | Section | Page;
   isSelectable?: boolean;
   isSelected: boolean;
+  key: string;
   navItemContexts: JSX.Element[];
-  updateSelected(id: string): IUpdateSelected;
   updateIsExpanded?(id: string, isExpanded: boolean): IUpdateIsExpanded;
+  updateSelected(id: string): IUpdateSelected;
 }
 
 export default class NavItem extends React.Component<

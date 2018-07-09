@@ -9,7 +9,7 @@ import {
   SectionGroup as ISectionGroup
 } from "@microsoft/microsoft-graph-types";
 import { User } from "msal";
-import { IStateUserNotebooks, IStateOneNote } from "./reducers";
+import { IStateOneNote, IStateUserNotebooks } from "./reducers";
 import { Notebook } from "./types/Notebook";
 import { Page } from "./types/Page";
 import { Section } from "./types/Section";
@@ -69,6 +69,7 @@ export const notebook2 = new Notebook(
 );
 
 export const graphSectionGroupInstance: ISectionGroup = {
+  displayName: "sectionGroup",
   id: "sectionGroup",
   parentNotebook: graphNotebookInstance,
   sectionGroups: [],
