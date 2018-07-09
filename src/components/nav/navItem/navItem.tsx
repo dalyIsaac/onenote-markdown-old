@@ -33,6 +33,7 @@ export default class NavItem extends React.Component<
     isSelectable: true
   };
 
+  public callout: JSX.Element;
   private targetElement: HTMLButtonElement | null;
 
   constructor(props: IPropsNavItem) {
@@ -43,6 +44,16 @@ export default class NavItem extends React.Component<
     this.calloutDismiss = this.calloutDismiss.bind(this);
     this.updateSelected = this.updateSelected.bind(this);
     this.state = { rightClick: false };
+    this.callout = (
+      <Callout
+        target={this.targetElement}
+        onDismiss={this.calloutDismiss}
+        directionalHint={DirectionalHint.rightTopEdge}
+        isBeakVisible={false}
+      >
+        <div>{this.props.navItemContexts}</div>
+      </Callout>
+    );
   }
 
   public render() {
@@ -68,16 +79,7 @@ export default class NavItem extends React.Component<
             <label>{text}</label>
           </div>
         </button>
-        {this.state.rightClick ? (
-          <Callout
-            target={this.targetElement}
-            onDismiss={this.calloutDismiss}
-            directionalHint={DirectionalHint.rightTopEdge}
-            isBeakVisible={false}
-          >
-            <div>{this.props.navItemContexts}</div>
-          </Callout>
-        ) : null}
+        {this.state.rightClick ? this.callout : null}
       </div>
     );
   }

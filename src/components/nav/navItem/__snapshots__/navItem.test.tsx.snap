@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Components: NavItem When \`this.state.rightClick\` is true, then the Callout should be rendered 1`] = `
+<span
+  className="ms-Layer"
+/>
+`;

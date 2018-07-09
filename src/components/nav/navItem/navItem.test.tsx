@@ -1,7 +1,8 @@
 import * as enzyme from "enzyme";
 import * as Adapter from "enzyme-adapter-react-16";
-import { Icon, setIconOptions } from "office-ui-fabric-react";
+import { Callout, Icon, setIconOptions } from "office-ui-fabric-react";
 import * as React from "react";
+import * as renderer from "react-test-renderer";
 import { sectionGroup } from "../../../testObjects";
 import NavItem, { IPropsNavItem } from "./navItem";
 
@@ -53,11 +54,41 @@ describe("Components: NavItem", () => {
     expect(label.parent().is("div.navItemWrapper")).toBe(true);
   });
 
+  test("When `this.state.rightClick` is true, then the Callout should be rendered", () => {
+    const { wrapper, props } = setUp();
+    const button = wrapper.find("button").first();
+    button.simulate("contextmenu");
+    const instance = wrapper.instance() as NavItem;
+
+    // item is not selected
+    // section groups are expandable
+    // the section group is not expanded
+    // calls updateSelected
+    const updateSelected = instance.props.updateSelected as jest.Mock;
+    expect(updateSelected.mock.calls.length).toBe(1);
+    expect(updateSelected.mock.calls[0]).toEqual([props.item.id]);
+
+    // calls updateIsExpanded
+    const updateIsExpanded = instance.props.updateIsExpanded as jest.Mock;
+    expect(updateIsExpanded.mock.calls.length).toBe(1);
+    expect(updateIsExpanded.mock.calls[0]).toEqual([props.item.id, true]);
+
+    expect(instance.state.rightClick).toBe(true);
+
+    // Callout should be rendered
+    const callout = wrapper.find(Callout);
+    expect(callout.parent().is("div"));
+    expect(
+      renderer.create((wrapper.instance() as NavItem).callout).toJSON()
+    ).toMatchSnapshot();
+
+    // cover more of the code paths in onClick
+  });
+  // this.state.rightClick is true means Callout should be rendered
+
   // displayName slice 40
 
   // page, because title
 
   // item which is selected
-
-  // this.state.rightClick is true means Callout should be rendered
 });
