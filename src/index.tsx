@@ -8,7 +8,6 @@ import { applyMiddleware, compose, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import createSagaMiddleware from "redux-saga";
 import rootReducer from "./reducers";
-import registerServiceWorker from "./registerServiceWorker";
 import rootSaga from "./sagas";
 
 // react-router, connected-react-router
@@ -63,4 +62,3 @@ const Container = () => {
 };
 
 ReactDOM.render(<Container />, document.getElementById("root"));
-registerServiceWorker();
