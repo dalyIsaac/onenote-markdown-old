@@ -68,6 +68,20 @@ describe("Reducers: onenoteReducer", () => {
     expect(onenoteReducer(initialState, action)).toEqual(expectedState);
   });
 
+  test("Should handle SAVE_SECTION_GROUP with a populated initial state when the section group is already present", () => {
+    const initialState: IStateOneNote = {};
+    initialState[sectionGroup.id] = sectionGroup;
+    initialState[sectionGroup1.id] = sectionGroup1;
+    const action = {
+      sectionGroup: { ...sectionGroup1, isExpanded: true },
+      type: "SAVE_SECTION_GROUP"
+    };
+    const expectedState: IStateOneNote = {};
+    expectedState[sectionGroup.id] = sectionGroup;
+    expectedState[sectionGroup1.id] = sectionGroup1;
+    expect(onenoteReducer(initialState, action)).toEqual(expectedState);
+  });
+
   test("Should handle SAVE_SECTION with an empty initial state", () => {
     const initialState: IStateOneNote = {};
     const action = {
@@ -108,6 +122,20 @@ describe("Reducers: onenoteReducer", () => {
     initialState[page.id] = page;
     const action = {
       page: page1,
+      type: "SAVE_PAGE"
+    };
+    const expectedState: IStateOneNote = {};
+    expectedState[page.id] = page;
+    expectedState[page1.id] = page1;
+    expect(onenoteReducer(initialState, action)).toEqual(expectedState);
+  });
+
+  test("Should handle SAVE_PAGE with a populated initial state when the page is already present", () => {
+    const initialState: IStateOneNote = {};
+    initialState[page.id] = page;
+    initialState[page1.id] = page1;
+    const action = {
+      page: { ...page1, isExpanded: true },
       type: "SAVE_PAGE"
     };
     const expectedState: IStateOneNote = {};

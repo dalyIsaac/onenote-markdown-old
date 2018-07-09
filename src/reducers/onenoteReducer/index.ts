@@ -20,6 +20,7 @@ import {
   SAVE_SECTION_GROUP,
   UPDATE_IS_EXPANDED
 } from "../../actionTypes";
+import { Page } from "../../types/Page";
 import { SectionGroup } from "../../types/SectionGroup";
 
 export default function onenoteReducer(
@@ -59,6 +60,9 @@ export default function onenoteReducer(
       return data;
     case SAVE_PAGE:
       const page = { ...(action as ISavePage).page };
+      if (state[page.id] !== undefined) {
+        page.isExpanded = (state[page.id] as Page).isExpanded;
+      }
       data[page.id] = page;
       return data;
     case LOAD_ONENOTE:
