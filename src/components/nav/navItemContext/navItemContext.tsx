@@ -29,8 +29,6 @@ export default class NavItemContext extends React.Component<
 
   public onClick() {
     this.props.onClick();
-    if (this.props.calloutDismiss !== undefined) {
-      this.props.calloutDismiss();
-    }
+    this.props.calloutDismiss();
   }
 }
