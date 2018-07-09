@@ -3,7 +3,7 @@ import * as Adapter from "enzyme-adapter-react-16";
 import { Callout, Icon, setIconOptions } from "office-ui-fabric-react";
 import * as React from "react";
 import * as renderer from "react-test-renderer";
-import { sectionGroup } from "../../../testObjects";
+import { section, sectionGroup } from "../../../testObjects";
 import NavItem, { IPropsNavItem } from "./navItem";
 
 setIconOptions({
@@ -12,7 +12,7 @@ setIconOptions({
 
 enzyme.configure({ adapter: new Adapter() });
 
-function setUp() {
+function setUpSectionGroup() {
   const props: IPropsNavItem = {
     icon: <Icon iconName="Sections" />,
     indentation: 0,
@@ -30,9 +30,41 @@ function setUp() {
   return { props, wrapper };
 }
 
+function setUpSection() {
+  const props: IPropsNavItem = {
+    icon: <Icon iconName="Section" />,
+    indentation: 0,
+    isSelected: false,
+    item: section,
+    key: "SectionKey",
+    navItemContexts: [
+      <p key="p">Hello world</p>,
+      <p key="p1">Hello world 1</p>
+    ],
+    updateSelected: jest.fn()
+  };
+  const wrapper = enzyme.mount(<NavItem {...props} />);
+  return { props, wrapper };
+}
+
 describe("Components: NavItem", () => {
+  function renderCallout(
+    wrapper: enzyme.ReactWrapper<
+      any,
+      Readonly<{}>,
+      React.Component<{}, {}, any>
+    >
+  ) {
+    // Callout should be rendered
+    const callout = wrapper.find(Callout);
+    expect(callout.parent().is("div"));
+    expect(
+      renderer.create((wrapper.instance() as NavItem).callout).toJSON()
+    ).toMatchSnapshot();
+  }
+
   test("It should render itself and subcomponents", () => {
-    const { props, wrapper } = setUp();
+    const { props, wrapper } = setUpSectionGroup();
 
     const parentDiv = wrapper.find("div").first();
     expect(parentDiv.props().style).toEqual({ marginLeft: 0 });
@@ -54,60 +86,92 @@ describe("Components: NavItem", () => {
     expect(label.parent().is("div.navItemWrapper")).toBe(true);
   });
 
-  test("Right click on button, and the item is not already selected", () => {
-    const { wrapper, props } = setUp();
-    const button = wrapper.find("button").first();
-    button.simulate("contextmenu");
-    const instance = wrapper.instance() as NavItem;
+  describe("Section group", () => {
+    test("Right click on button, and the item is not already selected", () => {
+      const { wrapper, props } = setUpSectionGroup();
+      const button = wrapper.find("button").first();
+      button.simulate("contextmenu");
+      const instance = wrapper.instance() as NavItem;
 
-    // item is not selected
-    // section groups are expandable
-    // the section group is not expanded
-    // calls updateSelected
-    const updateSelected = instance.props.updateSelected as jest.Mock;
-    expect(updateSelected.mock.calls.length).toBe(1);
-    expect(updateSelected.mock.calls[0]).toEqual([props.item.id]);
+      // item is not selected
+      // section groups are expandable
+      // the section group is not expanded
+      // calls updateSelected
+      const updateSelected = instance.props.updateSelected as jest.Mock;
+      expect(updateSelected.mock.calls.length).toBe(1);
+      expect(updateSelected.mock.calls[0]).toEqual([props.item.id]);
 
-    // calls updateIsExpanded
-    const updateIsExpanded = instance.props.updateIsExpanded as jest.Mock;
-    expect(updateIsExpanded.mock.calls.length).toBe(1);
-    expect(updateIsExpanded.mock.calls[0]).toEqual([props.item.id, true]);
+      // calls updateIsExpanded
+      const updateIsExpanded = instance.props.updateIsExpanded as jest.Mock;
+      expect(updateIsExpanded.mock.calls.length).toBe(1);
+      expect(updateIsExpanded.mock.calls[0]).toEqual([props.item.id, true]);
 
-    expect(instance.state.rightClick).toBe(true);
+      expect(instance.state.rightClick).toBe(true);
 
-    // Callout should be rendered
-    const callout = wrapper.find(Callout);
-    expect(callout.parent().is("div"));
-    expect(
-      renderer.create((wrapper.instance() as NavItem).callout).toJSON()
-    ).toMatchSnapshot();
+      renderCallout(wrapper);
+    });
+
+    test("Right click on button, and the item is already selected", () => {
+      const { wrapper } = setUpSectionGroup();
+      wrapper.setProps({ isSelected: true });
+      const button = wrapper.find("button").first();
+      button.simulate("contextmenu");
+      const instance = wrapper.instance() as NavItem;
+
+      // item is selected
+      const updateSelected = instance.props.updateSelected as jest.Mock;
+      expect(updateSelected.mock.calls.length).toBe(1);
+      expect(updateSelected.mock.calls[0]).toEqual(["notebookid"]);
+
+      // item is expandable
+      const updateIsExpanded = instance.props.updateIsExpanded as jest.Mock;
+      expect(updateIsExpanded.mock.calls.length).toBe(1);
+      expect(updateIsExpanded.mock.calls[0]).toEqual(["sectionGroup", false]);
+
+      expect(instance.state.rightClick).toBe(true);
+
+      renderCallout(wrapper);
+    });
   });
 
-  test("Right click on button, and the item is already selected", () => {
-    const { wrapper } = setUp();
-    wrapper.setProps({ isSelected: true });
-    const button = wrapper.find("button").first();
-    button.simulate("contextmenu");
-    const instance = wrapper.instance() as NavItem;
+  describe("Section", () => {
+    test("Right click on button, and the item is not already selected", () => {
+      const { wrapper, props } = setUpSection();
+      const button = wrapper.find("button").first();
+      button.simulate("contextmenu");
+      const instance = wrapper.instance() as NavItem;
 
-    // item is selected
-    const updateSelected = instance.props.updateSelected as jest.Mock;
-    expect(updateSelected.mock.calls.length).toBe(1);
-    expect(updateSelected.mock.calls[0]).toEqual(["notebookid"]);
+      // item is not selected
+      // sections are not expandable
 
-    // item is expandable
-    const updateIsExpanded = instance.props.updateIsExpanded as jest.Mock;
-    expect(updateIsExpanded.mock.calls.length).toBe(1);
-    expect(updateIsExpanded.mock.calls[0]).toEqual(["sectionGroup", false]);
+      // calls updateSelected
+      const updateSelected = instance.props.updateSelected as jest.Mock;
+      expect(updateSelected.mock.calls.length).toBe(1);
+      expect(updateSelected.mock.calls[0]).toEqual([props.item.id]);
 
-    expect(instance.state.rightClick).toBe(true);
+      expect(instance.state.rightClick).toBe(true);
 
-    // Callout should be rendered
-    const callout = wrapper.find(Callout);
-    expect(callout.parent().is("div"));
-    expect(
-      renderer.create((wrapper.instance() as NavItem).callout).toJSON()
-    ).toMatchSnapshot();
+      renderCallout(wrapper);
+    });
+
+    test("Right click on button, and the item is already selected", () => {
+      const { wrapper } = setUpSection();
+      wrapper.setProps({ isSelected: true });
+      const button = wrapper.find("button").first();
+      button.simulate("contextmenu");
+      const instance = wrapper.instance() as NavItem;
+
+      // item is selected
+      const updateSelected = instance.props.updateSelected as jest.Mock;
+      expect(updateSelected.mock.calls.length).toBe(1);
+      expect(updateSelected.mock.calls[0]).toEqual(["sectionGroup"]);
+
+      // item is not expandable
+
+      expect(instance.state.rightClick).toBe(true);
+
+      renderCallout(wrapper);
+    });
   });
 
   // displayName slice 40

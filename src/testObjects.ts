@@ -111,6 +111,7 @@ export const graphPageInstance: IPage = {
 };
 
 export const graphSectionInstance: ISection = {
+  displayName: "section",
   id: "section",
   isDefault: true,
   pages: [graphPageInstance],
