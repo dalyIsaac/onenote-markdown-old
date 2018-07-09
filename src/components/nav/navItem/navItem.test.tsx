@@ -54,7 +54,7 @@ describe("Components: NavItem", () => {
     expect(label.parent().is("div.navItemWrapper")).toBe(true);
   });
 
-  test("When `this.state.rightClick` is true, then the Callout should be rendered", () => {
+  test("Right click on button, and the item is not already selected", () => {
     const { wrapper, props } = setUp();
     const button = wrapper.find("button").first();
     button.simulate("contextmenu");
@@ -81,10 +81,34 @@ describe("Components: NavItem", () => {
     expect(
       renderer.create((wrapper.instance() as NavItem).callout).toJSON()
     ).toMatchSnapshot();
-
-    // cover more of the code paths in onClick
   });
-  // this.state.rightClick is true means Callout should be rendered
+
+  test("Right click on button, and the item is already selected", () => {
+    const { wrapper } = setUp();
+    wrapper.setProps({ isSelected: true });
+    const button = wrapper.find("button").first();
+    button.simulate("contextmenu");
+    const instance = wrapper.instance() as NavItem;
+
+    // item is selected
+    const updateSelected = instance.props.updateSelected as jest.Mock;
+    expect(updateSelected.mock.calls.length).toBe(1);
+    expect(updateSelected.mock.calls[0]).toEqual(["notebookid"]);
+
+    // item is expandable
+    const updateIsExpanded = instance.props.updateIsExpanded as jest.Mock;
+    expect(updateIsExpanded.mock.calls.length).toBe(1);
+    expect(updateIsExpanded.mock.calls[0]).toEqual(["sectionGroup", false]);
+
+    expect(instance.state.rightClick).toBe(true);
+
+    // Callout should be rendered
+    const callout = wrapper.find(Callout);
+    expect(callout.parent().is("div"));
+    expect(
+      renderer.create((wrapper.instance() as NavItem).callout).toJSON()
+    ).toMatchSnapshot();
+  });
 
   // displayName slice 40
 
