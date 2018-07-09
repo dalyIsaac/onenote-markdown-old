@@ -155,7 +155,13 @@ export const section1 = new Section(
   userId1
 );
 
-export const page = new Page(graphPageInstance, userId);
+export const page = new Page(
+  graphPageInstance,
+  userId,
+  undefined,
+  undefined,
+  true
+);
 export const page1 = new Page(graphPageInstance1, userId);
 
 export const pageId = "genericstring1";

@@ -3,7 +3,7 @@ import * as Adapter from "enzyme-adapter-react-16";
 import { Callout, Icon, setIconOptions } from "office-ui-fabric-react";
 import * as React from "react";
 import * as renderer from "react-test-renderer";
-import { section, sectionGroup } from "../../../testObjects";
+import { page, section, sectionGroup } from "../../../testObjects";
 import NavItem, { IPropsNavItem } from "./navItem";
 
 setIconOptions({
@@ -41,6 +41,24 @@ function setUpSection() {
       <p key="p">Hello world</p>,
       <p key="p1">Hello world 1</p>
     ],
+    updateSelected: jest.fn()
+  };
+  const wrapper = enzyme.mount(<NavItem {...props} />);
+  return { props, wrapper };
+}
+
+function setUpPage() {
+  const props: IPropsNavItem = {
+    icon: <Icon iconName="Page" />,
+    indentation: 0,
+    isSelected: false,
+    item: page,
+    key: "page",
+    navItemContexts: [
+      <p key="p">Hello world</p>,
+      <p key="p1">Hello world 1</p>
+    ],
+    updateIsExpanded: jest.fn(),
     updateSelected: jest.fn()
   };
   const wrapper = enzyme.mount(<NavItem {...props} />);
@@ -174,9 +192,27 @@ describe("Components: NavItem", () => {
     });
   });
 
+  describe("Page", () => {
+    test("Right click on button, and the item is not already selected", () => {
+      const { wrapper } = setUpPage();
+      const button = wrapper.find("button").first();
+      button.simulate("contextmenu");
+      const instance = wrapper.instance() as NavItem;
+
+      // pages are expandable
+      const updateIsExpanded = instance.props.updateIsExpanded as jest.Mock;
+      expect(updateIsExpanded.mock.calls.length).toBe(1);
+      expect(updateIsExpanded.mock.calls[0]).toEqual(["page", false]);
+      // item is not selected
+      const updateSelected = instance.props.updateSelected as jest.Mock;
+      expect(updateSelected.mock.calls.length).toBe(1);
+      expect(updateSelected.mock.calls[0]).toEqual(["notebookid"]);
+
+      expect(instance.state.rightClick).toBe(true);
+
+      renderCallout(wrapper);
+    });
+  });
+
   // displayName slice 40
-
-  // page, because title
-
-  // item which is selected
 });
