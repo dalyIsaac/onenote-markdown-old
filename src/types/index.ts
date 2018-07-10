@@ -33,12 +33,7 @@ export function deflateObject(
           }
         }
       } else {
-        if (typeof prop === "object") {
-          target[key] = {};
-          deflateObject(target[key], prop);
-        } else {
-          target[key] = prop;
-        }
+        target[key] = prop;
       }
     }
   }
