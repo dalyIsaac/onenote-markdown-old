@@ -70,6 +70,8 @@ export const notebook2 = new Notebook(
   "genericstring"
 );
 
+export const notebookOrder = ["notebookid", "notebookid1"];
+
 export const graphSectionGroupInstance: ISectionGroup = {
   displayName: "sectionGroup",
   id: "sectionGroup",
@@ -225,3 +227,20 @@ export const persona1: IPersona = {
   personaName: "jane.doe@outlook.com",
   userName: "Jane Doe"
 };
+
+export const onenote: IStateOneNote = {};
+onenote[notebook.id] = notebook;
+onenote[notebook1.id] = notebook1;
+onenote[sectionGroup.id] = sectionGroup;
+onenote[sectionGroup1.id] = sectionGroup1;
+onenote[section.id] = section;
+onenote[section1.id] = section1;
+onenote[page.id] = page;
+onenote[page1.id] = page1;
+
+export const selectedNav: string[] = [
+  notebook1.id,
+  sectionGroup1.id,
+  section1.id,
+  page1.id
+];
