@@ -8,16 +8,15 @@ import {
 } from "office-ui-fabric-react";
 import * as React from "react";
 import { IPersona } from "src/components/users";
-import { IAction } from "../actions";
+import { IAction } from "../../actions";
 import "./usersComponent.css";
 
-interface IStateUsersComponent {
+export interface IStateUsersComponent {
   showUserPanel: boolean;
 }
 
-interface IPropsUsersComponent {
+export interface IPropsUsersComponent {
   users: IPersona[];
-  numUsers: number;
   signIn(): IAction;
   signOut(): IAction;
 }
@@ -55,13 +54,15 @@ export default class UsersComponent extends React.Component<
     });
 
     const templates = [];
-    if (this.props.numUsers > 0) {
+    if (this.props.users.length > 0) {
       templates.push(
         <button
           key="usersButton"
           className={
             "facepileContainer" +
-            (this.props.numUsers === 1 ? " facepileContainerSingleUser" : "")
+            (this.props.users.length === 1
+              ? " facepileContainerSingleUser"
+              : "")
           }
           onClick={this.showUserPanelClicked}
         >
@@ -108,7 +109,7 @@ export default class UsersComponent extends React.Component<
           <ActionButton
             iconProps={{ iconName: "PeopleBlock" }}
             onClick={this.props.signOut}
-            disabled={this.props.numUsers === 0 ? true : false}
+            disabled={this.props.users.length === 0 ? true : false}
           >
             Sign out of all accounts
           </ActionButton>

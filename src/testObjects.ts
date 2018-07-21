@@ -9,6 +9,8 @@ import {
   SectionGroup as ISectionGroup
 } from "@microsoft/microsoft-graph-types";
 import { User } from "msal";
+import { PersonaInitialsColor } from "../node_modules/office-ui-fabric-react";
+import { IPersona } from "./components/users";
 import { IStateOneNote, IStateUserNotebooks } from "./reducers";
 import { Notebook } from "./types/Notebook";
 import { Page } from "./types/Page";
@@ -205,3 +207,21 @@ export const allNotebooks: IStateUserNotebooks[] = [
 
 export const openedNotebooks: IStateOneNote = {};
 openedNotebooks[notebook.id] = notebook;
+
+export const persona: IPersona = {
+  imageInitials: "JS",
+  imageUrl:
+    "https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg",
+  initialsColor: PersonaInitialsColor.blue,
+  personaName: "john.smith@outlook.com",
+  userName: "John Smith"
+};
+
+export const persona1: IPersona = {
+  imageInitials: "JD",
+  imageUrl:
+    "https://upload.wikimedia.org/wikipedia/commons/9/9e/Microsoft_OneNote_2013_logo.svg",
+  initialsColor: PersonaInitialsColor.green,
+  personaName: "jane.doe@outlook.com",
+  userName: "Jane Doe"
+};

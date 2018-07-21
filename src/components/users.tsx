@@ -41,7 +41,6 @@ export default class UsersContainer extends React.Component<IPropsUsers> {
         users={personas}
         signIn={this.props.signIn}
         signOut={this.props.signOut}
-        numUsers={Object.keys(personas).length}
       />
     );
   }
