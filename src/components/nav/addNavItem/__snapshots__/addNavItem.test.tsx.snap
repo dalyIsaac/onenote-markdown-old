@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Components: AddNavItem It should render self and subcomponents 1`] = `
+<button
+  className="addNavItemButton"
+  onClick={[MockFunction]}
+>
+  <div
+    className="addNavItemWrapper"
+  >
+    <i
+      aria-hidden={true}
+      className="icon addIcon root-42"
+      data-icon-name="Add"
+      role="presentation"
+    />
+    <label
+      className="addNavItemLabel"
+    >
+      Open notebooks
+    </label>
+  </div>
+</button>
+`;

@@ -2,7 +2,7 @@ import { Icon } from "office-ui-fabric-react";
 import * as React from "react";
 import "./addNavItem.css";
 
-interface IPropsAddNavItem {
+export interface IPropsAddNavItem {
   iconName: string;
   text: string;
   onClick(ev: React.MouseEvent): React.MouseEvent;

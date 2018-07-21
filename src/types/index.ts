@@ -1,7 +1,8 @@
 /**
  * Deflates an object.
  * For example: `{ "hello": { "world": "earth" } }` goes to `{ "hello.world": "earth" }`
- * Note: a key which begins with `@` will not be deflated.
+ * If there is an array, the deflated object will only contain the `id` property.
+ * Note: a key which begins with `@odata` will not be deflated.
  */
 export function deflateObject(
   target: object,
@@ -11,24 +12,28 @@ export function deflateObject(
   for (const key in source) {
     if (source.hasOwnProperty(key)) {
       const prop = source[key];
-      if (Array.isArray(prop)) {
-        if (parentName !== "") {
-          target[`${parentName}.${key}`] = getIds(prop);
+      if (!key.includes("@odata")) {
+        if (Array.isArray(prop)) {
+          if (parentName !== "") {
+            target[`${parentName}.${key}`] = getIds(prop);
+          } else {
+            target[key] = getIds(prop);
+          }
+        } else if (typeof prop === "object") {
+          if (parentName !== "") {
+            deflateObject(target, prop, `${parentName}.${key}`);
+          } else {
+            deflateObject(target, prop, `${key}`);
+          }
         } else {
-          target[key] = getIds(prop);
-        }
-      } else if (typeof prop === "object") {
-        if (parentName !== "") {
-          deflateObject(target, prop, `${parentName}.${key}`);
-        } else {
-          deflateObject(target, prop, `${key}`);
+          if (parentName !== "") {
+            target[`${parentName}.${key}`] = prop;
+          } else {
+            target[key] = prop;
+          }
         }
       } else {
-        if (parentName !== "") {
-          target[`${parentName}.${key}`] = prop;
-        } else {
-          target[key] = prop;
-        }
+        target[key] = prop;
       }
     }
   }
@@ -51,11 +56,11 @@ function getIds(element: any[]): string[] {
  * Inflates an object.
  * For example: `{ "hello.world": "earth" }` goes to `{ "hello": { "world": "earth" } }`
  */
-function inflateObject(target: any, source: any, key: any) {
+export function inflateObject(target: any, source: any, key: string = "") {
   if (typeof source === "object") {
-    for (const index in source) {
-      if (source.hasOwnProperty(key)) {
-        _inflateObjectHelper(target, source[index], key);
+    for (const currentKey in source) {
+      if (source.hasOwnProperty(currentKey)) {
+        _inflateObjectHelper(target, source[currentKey], currentKey);
       }
     }
   } else {
@@ -63,7 +68,7 @@ function inflateObject(target: any, source: any, key: any) {
   }
 }
 
-function _inflateObjectHelper(target: any, source: any, key: any) {
+function _inflateObjectHelper(target: any, source: any, key: string) {
   const dotIndex = key.includes("@odata") ? -1 : key.indexOf(".");
 
   if (dotIndex === -1) {
@@ -74,6 +79,17 @@ function _inflateObjectHelper(target: any, source: any, key: any) {
     if (target[parentKey] === undefined) {
       target[parentKey] = {};
     }
-    inflateObject(target[parentKey], source, childKey);
+    if (Array.isArray(source)) {
+      target[parentKey][childKey] = [];
+      assignArray(target[parentKey][childKey], source);
+    } else {
+      inflateObject(target[parentKey], source, childKey);
+    }
+  }
+}
+
+function assignArray(target: any, source: any) {
+  for (const item of source) {
+    target.push({ id: item });
   }
 }

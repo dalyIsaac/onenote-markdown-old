@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Components: LoadingNavItem It should render self and subcomponents 1`] = `
+<div
+  className="loadingItemWrapper"
+>
+  <div
+    className="ms-Spinner loadingNavItemSpinner root-42"
+  >
+    <div
+      className="ms-Spinner-circle ms-Spinner--xSmall circle-43"
+    />
+  </div>
+  <label
+    className="loadingNavItemSpinnerLabel"
+  >
+    Loading 
+    0
+     
+    Generic items
+  </label>
+</div>
+`;

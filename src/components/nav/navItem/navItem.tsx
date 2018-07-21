@@ -1,27 +1,27 @@
 import { Callout, DirectionalHint } from "office-ui-fabric-react";
 import * as React from "react";
-import { IUpdateIsExpanded } from "../../actions/onenote";
-import { IUpdateSelected } from "../../actions/selectedNav";
-import { Notebook } from "../../types/Notebook";
-import { Page } from "../../types/Page";
-import { Section } from "../../types/Section";
-import { SectionGroup } from "../../types/SectionGroup";
+import { IUpdateIsExpanded } from "../../../actions/onenote";
+import { IUpdateSelected } from "../../../actions/selectedNav";
+import { Notebook } from "../../../types/Notebook";
+import { Page } from "../../../types/Page";
+import { Section } from "../../../types/Section";
+import { SectionGroup } from "../../../types/SectionGroup";
 import "./navItem.css";
 
 interface IStateNavItem {
   rightClick: boolean;
 }
 
-interface IPropsNavItem {
+export interface IPropsNavItem {
   icon?: React.ReactElement<{}>;
-  item: Notebook | SectionGroup | Section | Page;
-  key: string;
   indentation?: number;
+  item: Notebook | SectionGroup | Section | Page;
   isSelectable?: boolean;
   isSelected: boolean;
+  key: string;
   navItemContexts: JSX.Element[];
-  updateSelected(id: string): IUpdateSelected;
   updateIsExpanded?(id: string, isExpanded: boolean): IUpdateIsExpanded;
+  updateSelected(id: string): IUpdateSelected;
 }
 
 export default class NavItem extends React.Component<
@@ -33,6 +33,7 @@ export default class NavItem extends React.Component<
     isSelectable: true
   };
 
+  public callout: JSX.Element;
   private targetElement: HTMLButtonElement | null;
 
   constructor(props: IPropsNavItem) {
@@ -43,6 +44,16 @@ export default class NavItem extends React.Component<
     this.calloutDismiss = this.calloutDismiss.bind(this);
     this.updateSelected = this.updateSelected.bind(this);
     this.state = { rightClick: false };
+    this.callout = (
+      <Callout
+        target={this.targetElement}
+        onDismiss={this.calloutDismiss}
+        directionalHint={DirectionalHint.rightTopEdge}
+        isBeakVisible={false}
+      >
+        <div>{this.props.navItemContexts}</div>
+      </Callout>
+    );
   }
 
   public render() {
@@ -68,16 +79,7 @@ export default class NavItem extends React.Component<
             <label>{text}</label>
           </div>
         </button>
-        {this.state.rightClick ? (
-          <Callout
-            target={this.targetElement}
-            onDismiss={this.calloutDismiss}
-            directionalHint={DirectionalHint.rightTopEdge}
-            isBeakVisible={false}
-          >
-            <div>{this.props.navItemContexts}</div>
-          </Callout>
-        ) : null}
+        {this.state.rightClick ? this.callout : null}
       </div>
     );
   }
@@ -102,9 +104,7 @@ export default class NavItem extends React.Component<
       this.updateSelected(
         item["parentSectionGroup.id"] || item["parentNotebook.id"] || item.id
       );
-      if (this.propsIsExpandable()) {
-        this.updateIsExpanded(item.id, false);
-      }
+      this.updateIsExpanded(item.id, false);
     } else {
       if (this.propsIsExpandable()) {
         if ((item as SectionGroup | Page).isExpanded) {

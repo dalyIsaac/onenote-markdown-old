@@ -2,8 +2,16 @@ import { Spinner, SpinnerSize } from "office-ui-fabric-react";
 import * as React from "react";
 import "./loadingNavItem.css";
 
-interface IPropsLoadingNavItem {
+export interface IPropsLoadingNavItem {
+  /**
+   * The number of items loading
+   */
   value: number;
+
+  /**
+   * The type of the data. e.g. Notebook, Section Group, Section, Page.
+   * It is displayed to the user. e.g. `Loading 3 Notebooks`
+   */
   type: string;
 }
 

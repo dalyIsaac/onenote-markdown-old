@@ -9,6 +9,7 @@ import {
   SectionGroup as ISectionGroup
 } from "@microsoft/microsoft-graph-types";
 import { User } from "msal";
+import { IStateOneNote, IStateUserNotebooks } from "./reducers";
 import { Notebook } from "./types/Notebook";
 import { Page } from "./types/Page";
 import { Section } from "./types/Section";
@@ -68,6 +69,7 @@ export const notebook2 = new Notebook(
 );
 
 export const graphSectionGroupInstance: ISectionGroup = {
+  displayName: "sectionGroup",
   id: "sectionGroup",
   parentNotebook: graphNotebookInstance,
   sectionGroups: [],
@@ -109,6 +111,7 @@ export const graphPageInstance: IPage = {
 };
 
 export const graphSectionInstance: ISection = {
+  displayName: "section",
   id: "section",
   isDefault: true,
   pages: [graphPageInstance],
@@ -152,7 +155,13 @@ export const section1 = new Section(
   userId1
 );
 
-export const page = new Page(graphPageInstance, userId);
+export const page = new Page(
+  graphPageInstance,
+  userId,
+  undefined,
+  undefined,
+  true
+);
 export const page1 = new Page(graphPageInstance1, userId);
 
 export const pageId = "genericstring1";
@@ -169,6 +178,7 @@ export const user = new UserData(
   ),
   "photoString1"
 );
+
 export const user1 = new UserData(
   new User(
     "jane.doe@email.com",
@@ -179,3 +189,19 @@ export const user1 = new UserData(
   ),
   "photoString2"
 );
+
+export const allNotebooks: IStateUserNotebooks[] = [
+  {
+    displayableId: "genericstring",
+    notebooks: [graphNotebookInstance, graphNotebookInstance2],
+    userId
+  },
+  {
+    displayableId: "genericstring1",
+    notebooks: [graphNotebookInstance1],
+    userId: userId1
+  }
+];
+
+export const openedNotebooks: IStateOneNote = {};
+openedNotebooks[notebook.id] = notebook;

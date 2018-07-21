@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Components: NavItem Page Right click on button, and the item is not already selected 1`] = `
+<span
+  className="ms-Layer"
+/>
+`;
+
+exports[`Components: NavItem Section Right click on button, and the item is already selected 1`] = `
+<span
+  className="ms-Layer"
+/>
+`;
+
+exports[`Components: NavItem Section Right click on button, and the item is not already selected 1`] = `
+<span
+  className="ms-Layer"
+/>
+`;
+
+exports[`Components: NavItem Section group Right click on button, and the item is already selected 1`] = `
+<span
+  className="ms-Layer"
+/>
+`;
+
+exports[`Components: NavItem Section group Right click on button, and the item is not already selected 1`] = `
+<span
+  className="ms-Layer"
+/>
+`;

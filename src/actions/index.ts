@@ -14,9 +14,9 @@ export interface IActionUser extends IAction {
   user: UserData;
 }
 
-export { onenote };
-export { authentication };
 export { allNotebooks };
+export { authentication };
+export { notebookOrder };
+export { onenote };
 export { selectedNav };
 export { totalNotebookLength };
-export { notebookOrder };
