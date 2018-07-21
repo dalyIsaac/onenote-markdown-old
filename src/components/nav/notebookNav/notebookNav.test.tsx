@@ -47,6 +47,7 @@ describe("Components: NotebookNav", () => {
       const navitem = navitems.at(i);
       expect(navitem.key()).toBe(currentNotebook.id);
       expect(navitem.key()).toBe(id);
+      expect(navitem.parent().is("nav.notebookNav")).toBe(true);
 
       expect({
         ...navitem.props(),
@@ -70,10 +71,11 @@ describe("Components: NotebookNav", () => {
     };
     const wrapper = enzyme.mount(<NotebookNav {...props} />);
 
-    const nav = wrapper.find(LoadingNavItem);
-    expect(nav.props().value).toBe(2);
-    expect(nav.props().type).toBe("notebook");
-    expect(nav.key()).toBe("notebookLoadingNumber");
+    const addnavitem = wrapper.find(LoadingNavItem);
+    expect(addnavitem.props().value).toBe(2);
+    expect(addnavitem.props().type).toBe("notebook");
+    expect(addnavitem.key()).toBe("notebookLoadingNumber");
+    expect(addnavitem.parent().is("nav.notebookNav")).toBe(true);
   });
 
   test("There's a notebook id which doesn't correspond to a notebook in onenote", () => {
