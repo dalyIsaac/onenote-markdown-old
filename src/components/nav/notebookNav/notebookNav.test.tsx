@@ -81,7 +81,7 @@ describe("Components: NotebookNav", () => {
   test("There's a notebook id which doesn't correspond to a notebook in onenote", () => {
     const props = {
       ...getProps(),
-      noteookOrder: [...notebookOrder, notebook2.id],
+      notebookOrder: [...notebookOrder, notebook2.id],
       totalNotebookLength: 3
     };
     const wrapper = enzyme.mount(<NotebookNav {...props} />);
