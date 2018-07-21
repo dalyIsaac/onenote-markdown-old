@@ -1,1 +1,2 @@
-export * from "./settings";
+import Settings from "./settings";
+export default Settings;
