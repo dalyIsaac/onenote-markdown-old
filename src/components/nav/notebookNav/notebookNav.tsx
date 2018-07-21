@@ -1,16 +1,16 @@
 import { Icon } from "office-ui-fabric-react";
 import * as React from "react";
-import { IPropsNotebookNav } from "../../containers/notebookNav";
-import AddNavItem from "./addNavItem";
-import LoadingNavItem from "./loadingNavItem";
-import NavItem from "./navItem";
+import { IPropsNotebookNav } from "../../../containers/notebookNav";
+import AddNavItem from "../addNavItem";
+import LoadingNavItem from "../loadingNavItem";
+import NavItem from "../navItem";
 import "./notebookNav.css";
 
 interface IStateNotebookNav {
   icon: JSX.Element;
 }
 
-interface IPropsNotebookNavExternal {
+export interface IPropsNotebookNavExternal {
   addNotebook(ev: React.MouseEvent<Element>): React.MouseEvent<Element>;
 }
 

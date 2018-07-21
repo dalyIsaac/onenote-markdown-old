@@ -9,6 +9,8 @@ import {
   SectionGroup as ISectionGroup
 } from "@microsoft/microsoft-graph-types";
 import { User } from "msal";
+import { PersonaInitialsColor } from "../node_modules/office-ui-fabric-react";
+import { IPersona } from "./components/users";
 import { IStateOneNote, IStateUserNotebooks } from "./reducers";
 import { Notebook } from "./types/Notebook";
 import { Page } from "./types/Page";
@@ -67,6 +69,8 @@ export const notebook2 = new Notebook(
   userId,
   "genericstring"
 );
+
+export const notebookOrder = ["notebookid", "notebookid1"];
 
 export const graphSectionGroupInstance: ISectionGroup = {
   displayName: "sectionGroup",
@@ -205,3 +209,38 @@ export const allNotebooks: IStateUserNotebooks[] = [
 
 export const openedNotebooks: IStateOneNote = {};
 openedNotebooks[notebook.id] = notebook;
+
+export const persona: IPersona = {
+  imageInitials: "JS",
+  imageUrl:
+    "https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg",
+  initialsColor: PersonaInitialsColor.blue,
+  personaName: "john.smith@outlook.com",
+  userName: "John Smith"
+};
+
+export const persona1: IPersona = {
+  imageInitials: "JD",
+  imageUrl:
+    "https://upload.wikimedia.org/wikipedia/commons/9/9e/Microsoft_OneNote_2013_logo.svg",
+  initialsColor: PersonaInitialsColor.green,
+  personaName: "jane.doe@outlook.com",
+  userName: "Jane Doe"
+};
+
+export const onenote: IStateOneNote = {};
+onenote[notebook.id] = notebook;
+onenote[notebook1.id] = notebook1;
+onenote[sectionGroup.id] = sectionGroup;
+onenote[sectionGroup1.id] = sectionGroup1;
+onenote[section.id] = section;
+onenote[section1.id] = section1;
+onenote[page.id] = page;
+onenote[page1.id] = page1;
+
+export const selectedNav: string[] = [
+  notebook1.id,
+  sectionGroup1.id,
+  section1.id,
+  page1.id
+];
