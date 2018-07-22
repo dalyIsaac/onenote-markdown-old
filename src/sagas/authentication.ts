@@ -8,10 +8,10 @@ import { betaUrl } from "../constants";
 import * as localforage from "localforage";
 import { User, UserAgentApplication } from "msal";
 import * as Msal from "msal";
-import { UserData } from "src/types/UserData";
 import { IAuthenticate, IGetPhoto } from "../actions/authentication";
 import { appId, cacheLocation } from "../constants";
 import { IState } from "../reducers";
+import { UserData } from "../types/UserData";
 import * as fetch from "./fetch";
 
 let app: UserAgentApplication;

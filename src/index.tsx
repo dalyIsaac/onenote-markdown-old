@@ -26,7 +26,7 @@ import { initializeIcons } from "office-ui-fabric-react/lib/Icons";
 
 // App components
 import App from "./App";
-import { SettingsComponent } from "./components/settings";
+import SettingsComponent from "./components/settings";
 import AboutContainer from "./containers/about";
 import HeaderContainer from "./containers/header";
 import "./index.css";

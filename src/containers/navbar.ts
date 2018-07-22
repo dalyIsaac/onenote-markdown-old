@@ -1,9 +1,9 @@
 import { connect, Dispatch } from "react-redux";
-import { IState, IStateOneNote, IStateUserNotebooks } from "src/reducers";
 import { allNotebooks, IAction, onenote } from "../actions";
 import { IOpenNotebooks } from "../actions/onenote";
+import Navbar from "../components/nav/navbar";
+import { IState, IStateOneNote, IStateUserNotebooks } from "../reducers";
 import { Notebook } from "../types/Notebook";
-import Navbar from "./../components/nav/navbar";
 
 export interface IPropsNavbar {
   allNotebooks: IStateUserNotebooks[];

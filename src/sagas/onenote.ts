@@ -1,14 +1,6 @@
 import { OnenotePage, OnenoteSection } from "@microsoft/microsoft-graph-types";
 import { call, put, select } from "redux-saga/effects";
 import {
-  indexeddbStorageGetItem,
-  indexeddbStorageGetItems,
-  indexeddbStorageSetItem
-} from "src/sagas/storage";
-import { Notebook } from "src/types/Notebook";
-import { Section } from "src/types/Section";
-import { SectionGroup } from "src/types/SectionGroup";
-import {
   IAction,
   notebookOrder,
   onenote,
@@ -31,8 +23,16 @@ import {
 import { IUpdateSelected } from "../actions/selectedNav";
 import { stableUrl } from "../constants";
 import { IState } from "../reducers";
+import { Notebook } from "../types/Notebook";
 import { Page } from "../types/Page";
+import { Section } from "../types/Section";
+import { SectionGroup } from "../types/SectionGroup";
 import * as fetch from "./fetch";
+import {
+  indexeddbStorageGetItem,
+  indexeddbStorageGetItems,
+  indexeddbStorageSetItem
+} from "./storage";
 
 export function* openNotebooks(action: IOpenNotebooks) {
   const { notebookList } = action;

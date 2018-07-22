@@ -1,6 +1,6 @@
 import * as React from "react";
-import { IStateOneNote } from "src/reducers";
 import { IPropsPagesNav } from "../../containers/pagesNav";
+import { IStateOneNote } from "../../reducers";
 import { Page } from "../../types/Page";
 import { Section } from "../../types/Section";
 import LoadingNavItem from "./loadingNavItem";

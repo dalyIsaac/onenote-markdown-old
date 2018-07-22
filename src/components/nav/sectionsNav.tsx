@@ -1,8 +1,8 @@
 import { Icon } from "office-ui-fabric-react";
 import * as React from "react";
-import { SectionGroup } from "src/types/SectionGroup";
 import { IPropsSectionNav } from "../../containers/sectionsNav";
 import { Notebook } from "../../types/Notebook";
+import { SectionGroup } from "../../types/SectionGroup";
 import LoadingNavItem from "./loadingNavItem";
 import NavItem from "./navItem";
 import "./sectionsNav.css";

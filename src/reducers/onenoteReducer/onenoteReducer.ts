@@ -1,4 +1,3 @@
-import { IStateOneNote } from "src/reducers";
 import { IAction } from "../../actions";
 import {
   IGetPageContentError,
@@ -22,6 +21,7 @@ import {
 } from "../../actionTypes";
 import { Page } from "../../types/Page";
 import { SectionGroup } from "../../types/SectionGroup";
+import { IStateOneNote } from "../index";
 
 export default function onenoteReducer(
   state: IStateOneNote = {},

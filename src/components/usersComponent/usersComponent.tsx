@@ -7,8 +7,8 @@ import {
   PersonaSize
 } from "office-ui-fabric-react";
 import * as React from "react";
-import { IPersona } from "src/components/users";
 import { IAction } from "../../actions";
+import { IPersona } from "../users";
 import "./usersComponent.css";
 
 export interface IStateUsersComponent {
