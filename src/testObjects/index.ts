@@ -13,41 +13,18 @@ export * from "./personas";
 export * from "./allNotebooks";
 export * from "./notebookOrder";
 export * from "./openedNotebooks";
-import { OnenoteSection as ISection } from "@microsoft/microsoft-graph-types";
+export * from "./graphSectionInstances";
 import { IStateOneNote } from "../reducers";
 import { Section } from "../types/Section";
-import {
-  graphNotebookInstance,
-  graphNotebookInstance1
-} from "./graphNotebookInstances";
 import { graphPageInstance, graphPageInstance1 } from "./graphPageInstances";
 import {
-  graphSectionGroupInstance,
-  graphSectionGroupInstance1
-} from "./graphSectionGroupInstances";
+  graphSectionInstance,
+  graphSectionInstance1
+} from "./graphSectionInstances";
 import { notebook, notebook1 } from "./notebooks";
 import { page, page1 } from "./pages";
 import { sectionGroup, sectionGroup1 } from "./sectionGroups";
 import { userId, userId1 } from "./users";
-
-export const graphSectionInstance: ISection = {
-  displayName: "section",
-  id: "section",
-  isDefault: true,
-  pages: [graphPageInstance],
-  pagesUrl: "https://www.example.com/pages",
-  parentNotebook: graphNotebookInstance,
-  parentSectionGroup: graphSectionGroupInstance
-};
-
-export const graphSectionInstance1: ISection = {
-  id: "graphSection",
-  isDefault: false,
-  pages: [graphPageInstance1],
-  pagesUrl: "https://www.example.com/pages1",
-  parentNotebook: graphNotebookInstance1,
-  parentSectionGroup: graphSectionGroupInstance1
-};
 
 export const section = new Section(
   graphSectionInstance,
