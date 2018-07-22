@@ -11,6 +11,8 @@ export * from "./graphPageInstances";
 export * from "./pages";
 export * from "./personas";
 export * from "./allNotebooks";
+export * from "./notebookOrder";
+export * from "./openedNotebooks";
 import { OnenoteSection as ISection } from "@microsoft/microsoft-graph-types";
 import { IStateOneNote } from "../reducers";
 import { Section } from "../types/Section";
@@ -27,8 +29,6 @@ import { notebook, notebook1 } from "./notebooks";
 import { page, page1 } from "./pages";
 import { sectionGroup, sectionGroup1 } from "./sectionGroups";
 import { userId, userId1 } from "./users";
-
-export const notebookOrder = ["notebookid", "notebookid1"];
 
 export const graphSectionInstance: ISection = {
   displayName: "section",
@@ -62,9 +62,6 @@ export const section1 = new Section(
 );
 
 export const parentSelfUser = "jane.doe@email.com";
-
-export const openedNotebooks: IStateOneNote = {};
-openedNotebooks[notebook.id] = notebook;
 
 export const onenote: IStateOneNote = {};
 onenote[notebook.id] = notebook;
