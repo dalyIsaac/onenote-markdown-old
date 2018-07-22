@@ -5,10 +5,10 @@
 export * from "./users";
 export * from "./graphNotebookInstances";
 export * from "./notebooks";
+export * from "./graphSectionGroupInstances";
 import {
   OnenotePage as IPage,
-  OnenoteSection as ISection,
-  SectionGroup as ISectionGroup
+  OnenoteSection as ISection
 } from "@microsoft/microsoft-graph-types";
 import { PersonaInitialsColor } from "office-ui-fabric-react";
 import { IPersona } from "../components/users";
@@ -21,30 +21,14 @@ import {
   graphNotebookInstance1,
   graphNotebookInstance2
 } from "./graphNotebookInstances";
+import {
+  graphSectionGroupInstance,
+  graphSectionGroupInstance1
+} from "./graphSectionGroupInstances";
 import { notebook, notebook1 } from "./notebooks";
 import { userId, userId1 } from "./users";
 
 export const notebookOrder = ["notebookid", "notebookid1"];
-
-export const graphSectionGroupInstance: ISectionGroup = {
-  displayName: "sectionGroup",
-  id: "sectionGroup",
-  parentNotebook: graphNotebookInstance,
-  sectionGroups: [],
-  sectionGroupsUrl: "https://www.example.com/sectionGroupsUrl",
-  sections: [],
-  sectionsUrl: "https://www.example.com/sections"
-};
-
-export const graphSectionGroupInstance1: ISectionGroup = {
-  id: "sectionGroup1",
-  parentNotebook: graphNotebookInstance,
-  parentSectionGroup: graphSectionGroupInstance,
-  sectionGroups: [],
-  sectionGroupsUrl: "https://www.example.com/sectionGroupsUrl1",
-  sections: [],
-  sectionsUrl: "https://www.example.com/sections"
-};
 
 export const sectionGroup = new SectionGroup(graphSectionGroupInstance, userId);
 export const sectionGroup1 = new SectionGroup(
