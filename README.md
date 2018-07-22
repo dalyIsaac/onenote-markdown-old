@@ -10,12 +10,14 @@ The aim of this project is to build a web app which can be used to read and writ
 
 Currently, the source code is hosted on [GitHub](https://github.com/dalyIsaac/onenote-markdown). The master branch is built in Visual Studio Team Services using their GitHub integration, and deployed to Azure App Service via continuous integration. Testing occurs using [Travis CI](https://travis-ci.com/dalyIsaac/onenote-markdown/), running [Jest](http://jestjs.io/).
 
-## Features
+## Tasks
 
 - [x] Signing in with multiple accounts
 - [x] Opening and downloading notebooks, section groups, sections, and pages.
 - [x] Persisting content across browser sessions
 - [ ] Editing pages in Markdown
+- [x] [Migration to TypeScript](https://github.com/dalyIsaac/onenote-markdown/commit/d70e19eb8b87b18db5463d82b9d39066580a6352)
+- [ ] Adding unit tests `In progress`. `unit-tests` branch: [![Coverage Status](https://coveralls.io/repos/github/dalyIsaac/onenote-markdown/badge.svg?branch=unit-tests)](https://coveralls.io/github/dalyIsaac/onenote-markdown?branch=unit-tests)
 
 ## Prerequisites
 
