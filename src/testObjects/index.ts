@@ -6,6 +6,7 @@ export * from "./users";
 export * from "./graphNotebookInstances";
 export * from "./notebooks";
 export * from "./graphSectionGroupInstances";
+export * from "./sectionGroups";
 import {
   OnenotePage as IPage,
   OnenoteSection as ISection
@@ -15,7 +16,6 @@ import { IPersona } from "../components/users";
 import { IStateOneNote, IStateUserNotebooks } from "../reducers";
 import { Page } from "../types/Page";
 import { Section } from "../types/Section";
-import { SectionGroup } from "../types/SectionGroup";
 import {
   graphNotebookInstance,
   graphNotebookInstance1,
@@ -26,15 +26,10 @@ import {
   graphSectionGroupInstance1
 } from "./graphSectionGroupInstances";
 import { notebook, notebook1 } from "./notebooks";
+import { sectionGroup, sectionGroup1 } from "./sectionGroups";
 import { userId, userId1 } from "./users";
 
 export const notebookOrder = ["notebookid", "notebookid1"];
-
-export const sectionGroup = new SectionGroup(graphSectionGroupInstance, userId);
-export const sectionGroup1 = new SectionGroup(
-  graphSectionGroupInstance1,
-  userId1
-);
 
 export const content = "<h1>Hello Page 1</h1>";
 export const content1 = "<h1>Hello Page 2</h1>";
