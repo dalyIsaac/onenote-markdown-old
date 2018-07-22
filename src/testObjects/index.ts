@@ -8,11 +8,11 @@ export * from "./notebooks";
 export * from "./graphSectionGroupInstances";
 export * from "./sectionGroups";
 export * from "./graphPageInstances";
+export * from "./pages";
 import { OnenoteSection as ISection } from "@microsoft/microsoft-graph-types";
 import { PersonaInitialsColor } from "office-ui-fabric-react";
 import { IPersona } from "../components/users";
 import { IStateOneNote, IStateUserNotebooks } from "../reducers";
-import { Page } from "../types/Page";
 import { Section } from "../types/Section";
 import {
   graphNotebookInstance,
@@ -25,6 +25,7 @@ import {
   graphSectionGroupInstance1
 } from "./graphSectionGroupInstances";
 import { notebook, notebook1 } from "./notebooks";
+import { page, page1 } from "./pages";
 import { sectionGroup, sectionGroup1 } from "./sectionGroups";
 import { userId, userId1 } from "./users";
 
@@ -60,17 +61,6 @@ export const section1 = new Section(
   [[graphPageInstance1]],
   userId1
 );
-
-export const page = new Page(
-  graphPageInstance,
-  userId,
-  undefined,
-  undefined,
-  true
-);
-export const page1 = new Page(graphPageInstance1, userId);
-
-export const pageId = "genericstring1";
 
 export const parentSelfUser = "jane.doe@email.com";
 
