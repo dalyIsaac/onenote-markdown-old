@@ -3,8 +3,8 @@
  */
 
 export * from "./users";
+export * from "./graphNotebookInstances";
 import {
-  Notebook as INotebook,
   OnenotePage as IPage,
   OnenoteSection as ISection,
   SectionGroup as ISectionGroup
@@ -16,40 +16,8 @@ import { Notebook } from "../types/Notebook";
 import { Page } from "../types/Page";
 import { Section } from "../types/Section";
 import { SectionGroup } from "../types/SectionGroup";
+import { graphNotebookInstance, graphNotebookInstance1, graphNotebookInstance2 } from "./graphNotebookInstances";
 import { userId, userId1 } from "./users";
-
-export const graphNotebookInstance: INotebook = {
-  displayName: "notebook",
-  id: "notebookid",
-  isDefault: true,
-  isShared: false,
-  lastModifiedDateTime: "datetime",
-  sectionGroupsUrl: "https://www.example.com/sectionGroupsUrl",
-  sectionsUrl: "https://www.example.com/sections",
-  userRole: "Owner"
-};
-
-export const graphNotebookInstance1: INotebook = {
-  displayName: "notebookid1",
-  id: "notebookid1",
-  isDefault: false,
-  isShared: true,
-  lastModifiedDateTime: "datetime1",
-  sectionGroupsUrl: "https://www.example.com/sectionGroupsUrl1",
-  sectionsUrl: "https://www.example.com/sections1",
-  userRole: "Owner"
-};
-
-export const graphNotebookInstance2: INotebook = {
-  displayName: "notebookid2",
-  id: "notebookid2",
-  isDefault: false,
-  isShared: false,
-  lastModifiedDateTime: "datetime2",
-  sectionGroupsUrl: "https://www.example.com/sectionGroupsUrl2",
-  sectionsUrl: "https://www.example.com/sections2",
-  userRole: "Reader"
-};
 
 export const notebook = new Notebook(
   graphNotebookInstance,
