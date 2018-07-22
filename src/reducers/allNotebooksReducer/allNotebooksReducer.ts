@@ -2,10 +2,10 @@
  * allNotebooksReducer is used for retrieving all of the notebooks which the logged in users have access to, and to open notebooks
  */
 
-import { IStateUserNotebooks } from "src/reducers";
 import { IAction } from "../../actions";
 import { IPutAllNotebooks } from "../../actions/allNotebooks";
 import { PUT_ALL_NOTEBOOKS } from "../../actionTypes";
+import { IStateUserNotebooks } from "../index";
 
 export default function notebooksReducer(
   state: IStateUserNotebooks[] = [],

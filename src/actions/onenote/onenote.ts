@@ -1,4 +1,3 @@
-import { IAction } from "../../actions";
 import {
   GET_NOTEBOOK,
   GET_ONENOTE,
@@ -17,6 +16,7 @@ import {
   UPDATE_IS_EXPANDED
 } from "../../actionTypes";
 import { Notebook } from "../../types/Notebook";
+import { IAction } from "../index";
 
 import { IStateOneNote } from "../../reducers";
 import { OneNoteBase } from "../../types/OneNoteBase";

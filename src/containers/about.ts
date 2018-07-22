@@ -1,7 +1,7 @@
 import { connect, Dispatch } from "react-redux";
-import { authentication, IAction } from "src/actions";
-import { IState } from "src/reducers";
+import { authentication, IAction } from "../actions";
 import About from "../components/about";
+import { IState } from "../reducers";
 
 export interface IPropsAbout {
   signIn(): IAction;

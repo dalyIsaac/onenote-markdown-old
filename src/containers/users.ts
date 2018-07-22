@@ -1,9 +1,9 @@
 import { push } from "connected-react-router";
 import { connect, Dispatch } from "react-redux";
 import { Action } from "redux";
-import { IState, IStateUsers } from "src/reducers";
 import { authentication, IAction } from "../actions";
 import Users from "../components/users";
+import { IState, IStateUsers } from "../reducers";
 
 export interface IPropsUsers {
   users: IStateUsers;

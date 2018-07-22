@@ -1,6 +1,4 @@
 import { connect, Dispatch } from "react-redux";
-import { IState, IStateUsers } from "src/reducers";
-import { UserData } from "src/types/UserData";
 import { authentication, IAction, IActionUser } from "../actions";
 import {
   IAuthenticate,
@@ -8,6 +6,8 @@ import {
   signOut
 } from "../actions/authentication";
 import Header from "../components/header";
+import { IState, IStateUsers } from "../reducers";
+import { UserData } from "../types/UserData";
 
 export interface IPropsHeader {
   userWithError?: UserData;

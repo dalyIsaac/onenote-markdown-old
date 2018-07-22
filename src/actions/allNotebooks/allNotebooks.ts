@@ -2,9 +2,9 @@
  * allNotebooks is used for retrieving all of the notebooks which the logged in users have access to, and to open notebooks
  */
 
-import { IAction } from "src/actions";
 import { GET_ALL_NOTEBOOKS, PUT_ALL_NOTEBOOKS } from "../../actionTypes";
 import { IStateUserNotebooks } from "../../reducers";
+import { IAction } from "../index";
 
 /**
  * Creates an action which starts the process of getting all of the notebooks of all the logged in users
