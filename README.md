@@ -17,7 +17,7 @@ Currently, the source code is hosted on [GitHub](https://github.com/dalyIsaac/on
 - [x] Persisting content across browser sessions
 - [ ] Editing pages in Markdown
 - [x] [Migration to TypeScript](https://github.com/dalyIsaac/onenote-markdown/commit/d70e19eb8b87b18db5463d82b9d39066580a6352)
-- [ ] Adding unit tests `In progress`. `unit-tests` branch: [![Coverage Status](https://coveralls.io/repos/github/dalyIsaac/onenote-markdown/badge.svg?branch=unit-tests)](https://coveralls.io/github/dalyIsaac/onenote-markdown?branch=unit-tests)
+- [ ] Adding unit tests: **in progress**: `unit-tests` branch: [![Coverage Status](https://coveralls.io/repos/github/dalyIsaac/onenote-markdown/badge.svg?branch=unit-tests)](https://coveralls.io/github/dalyIsaac/onenote-markdown?branch=unit-tests)
 
 ## Prerequisites
 
