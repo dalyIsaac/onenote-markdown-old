@@ -10,13 +10,13 @@ export * from "./sectionGroups";
 export * from "./graphPageInstances";
 export * from "./pages";
 export * from "./personas";
+export * from "./allNotebooks";
 import { OnenoteSection as ISection } from "@microsoft/microsoft-graph-types";
-import { IStateOneNote, IStateUserNotebooks } from "../reducers";
+import { IStateOneNote } from "../reducers";
 import { Section } from "../types/Section";
 import {
   graphNotebookInstance,
-  graphNotebookInstance1,
-  graphNotebookInstance2
+  graphNotebookInstance1
 } from "./graphNotebookInstances";
 import { graphPageInstance, graphPageInstance1 } from "./graphPageInstances";
 import {
@@ -62,19 +62,6 @@ export const section1 = new Section(
 );
 
 export const parentSelfUser = "jane.doe@email.com";
-
-export const allNotebooks: IStateUserNotebooks[] = [
-  {
-    displayableId: "genericstring",
-    notebooks: [graphNotebookInstance, graphNotebookInstance2],
-    userId
-  },
-  {
-    displayableId: "genericstring1",
-    notebooks: [graphNotebookInstance1],
-    userId: userId1
-  }
-];
 
 export const openedNotebooks: IStateOneNote = {};
 openedNotebooks[notebook.id] = notebook;
