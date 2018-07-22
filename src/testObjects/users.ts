@@ -25,3 +25,5 @@ export const user1 = new UserData(
   ),
   "photoString2"
 );
+
+export const parentSelfUser = "jane.doe@email.com";

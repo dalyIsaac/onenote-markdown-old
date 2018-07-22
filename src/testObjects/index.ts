@@ -17,5 +17,3 @@ export * from "./graphSectionInstances";
 export * from "./sections";
 export * from "./onenote";
 export * from "./selectedNav";
-
-export const parentSelfUser = "jane.doe@email.com";
