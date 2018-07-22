@@ -7,10 +7,8 @@ export * from "./graphNotebookInstances";
 export * from "./notebooks";
 export * from "./graphSectionGroupInstances";
 export * from "./sectionGroups";
-import {
-  OnenotePage as IPage,
-  OnenoteSection as ISection
-} from "@microsoft/microsoft-graph-types";
+export * from "./graphPageInstances";
+import { OnenoteSection as ISection } from "@microsoft/microsoft-graph-types";
 import { PersonaInitialsColor } from "office-ui-fabric-react";
 import { IPersona } from "../components/users";
 import { IStateOneNote, IStateUserNotebooks } from "../reducers";
@@ -21,6 +19,7 @@ import {
   graphNotebookInstance1,
   graphNotebookInstance2
 } from "./graphNotebookInstances";
+import { graphPageInstance, graphPageInstance1 } from "./graphPageInstances";
 import {
   graphSectionGroupInstance,
   graphSectionGroupInstance1
@@ -31,22 +30,6 @@ import { userId, userId1 } from "./users";
 
 export const notebookOrder = ["notebookid", "notebookid1"];
 
-export const content = "<h1>Hello Page 1</h1>";
-export const content1 = "<h1>Hello Page 2</h1>";
-
-export const graphPageInstance: IPage = {
-  content,
-  contentUrl: "https://www.example.com/Hello%20Page%201/content",
-  createdByAppId: "genericstring1",
-  id: "page",
-  lastModifiedDateTime: "2014-01-01T00:00:00Z",
-  level: 0,
-  order: 0,
-  parentNotebook: graphNotebookInstance,
-  title: "Hello Page 1",
-  userTags: ["tag1", "tag2"]
-};
-
 export const graphSectionInstance: ISection = {
   displayName: "section",
   id: "section",
@@ -55,20 +38,6 @@ export const graphSectionInstance: ISection = {
   pagesUrl: "https://www.example.com/pages",
   parentNotebook: graphNotebookInstance,
   parentSectionGroup: graphSectionGroupInstance
-};
-
-export const graphPageInstance1: IPage = {
-  content: content1,
-  contentUrl: "https://www.example.com/Hello%20Page%202/content",
-  createdByAppId: "genericstring2",
-  id: "page1",
-  lastModifiedDateTime: "2014-01-01T00:00:00Z",
-  level: 0,
-  order: 0,
-  parentNotebook: graphNotebookInstance,
-  parentSection: graphSectionInstance,
-  title: "Hello Page 2",
-  userTags: ["tag1", "tag2"]
 };
 
 export const graphSectionInstance1: ISection = {
