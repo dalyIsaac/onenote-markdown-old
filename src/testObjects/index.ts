@@ -4,6 +4,7 @@
 
 export * from "./users";
 export * from "./graphNotebookInstances";
+export * from "./notebooks";
 import {
   OnenotePage as IPage,
   OnenoteSection as ISection,
@@ -12,28 +13,16 @@ import {
 import { PersonaInitialsColor } from "office-ui-fabric-react";
 import { IPersona } from "../components/users";
 import { IStateOneNote, IStateUserNotebooks } from "../reducers";
-import { Notebook } from "../types/Notebook";
 import { Page } from "../types/Page";
 import { Section } from "../types/Section";
 import { SectionGroup } from "../types/SectionGroup";
-import { graphNotebookInstance, graphNotebookInstance1, graphNotebookInstance2 } from "./graphNotebookInstances";
-import { userId, userId1 } from "./users";
-
-export const notebook = new Notebook(
+import {
   graphNotebookInstance,
-  userId,
-  "genericstring"
-);
-export const notebook1 = new Notebook(
   graphNotebookInstance1,
-  userId1,
-  "genericstring1"
-);
-export const notebook2 = new Notebook(
-  graphNotebookInstance2,
-  userId,
-  "genericstring"
-);
+  graphNotebookInstance2
+} from "./graphNotebookInstances";
+import { notebook, notebook1 } from "./notebooks";
+import { userId, userId1 } from "./users";
 
 export const notebookOrder = ["notebookid", "notebookid1"];
 
