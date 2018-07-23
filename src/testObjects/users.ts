@@ -1,4 +1,5 @@
 import { User } from "msal";
+import { IStateUsers } from "../reducers";
 import { UserData } from "../types/UserData";
 
 export const userId = "jane.doe@email.com";
@@ -27,3 +28,7 @@ export const user1 = new UserData(
 );
 
 export const parentSelfUser = "jane.doe@email.com";
+
+export const users: IStateUsers = {};
+users[user.userIdentifier] = user;
+users[user1.userIdentifier] = user1;

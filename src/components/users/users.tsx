@@ -1,7 +1,7 @@
 import { PersonaInitialsColor } from "office-ui-fabric-react";
 import * as React from "react";
-import { IPropsUsers } from "../containers/users";
-import UsersComponent from "./usersComponent";
+import { IPropsUsers } from "../../containers/users";
+import UsersComponent from "../usersComponent";
 
 export interface IPersona {
   imageInitials: string;
