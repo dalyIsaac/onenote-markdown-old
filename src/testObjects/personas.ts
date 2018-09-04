@@ -1,7 +1,7 @@
 import { PersonaInitialsColor } from "office-ui-fabric-react";
-import { IPersona } from "../components/users";
+import { ICustomPersona } from "../components/users";
 
-export const persona: IPersona = {
+export const persona: ICustomPersona = {
   imageInitials: "JS",
   imageUrl:
     "https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg",
@@ -10,7 +10,7 @@ export const persona: IPersona = {
   userName: "John Smith"
 };
 
-export const persona1: IPersona = {
+export const persona1: ICustomPersona = {
   imageInitials: "JD",
   imageUrl:
     "https://upload.wikimedia.org/wikipedia/commons/9/9e/Microsoft_OneNote_2013_logo.svg",

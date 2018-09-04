@@ -8,7 +8,7 @@
       "type": "chrome",
       "request": "attach",
       "name": "Attach Chrome against localhost",
-      "url": "http://localhost:3000",
+      "url": "http://localhost:3000/about",
       "port": 9222,
       "webRoot": "${workspaceFolder}"
     }

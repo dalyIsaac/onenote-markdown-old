@@ -8,7 +8,7 @@ import {
 } from "office-ui-fabric-react";
 import * as React from "react";
 import { IAction } from "../../actions";
-import { IPersona } from "../users";
+import { ICustomPersona } from "../users";
 import "./usersComponent.css";
 
 export interface IStateUsersComponent {
@@ -16,7 +16,7 @@ export interface IStateUsersComponent {
 }
 
 export interface IPropsUsersComponent {
-  users: IPersona[];
+  users: ICustomPersona[];
   signIn(): IAction;
   signOut(): IAction;
 }
