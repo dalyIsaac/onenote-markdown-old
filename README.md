@@ -1,5 +1,7 @@
 # OneNoteMarkdown
 
+**NOTE: A newer attempt is being built at https://github.com/dalyIsaac/onenote-markdown**.
+
 |               |                                                                                                                                                                                                                                 |
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Build status  | ![https://projkiwi.visualstudio.com/_apis/public/build/definitions/f360f67a-ad24-4bef-8761-31411c531bd4/2/badge](https://projkiwi.visualstudio.com/_apis/public/build/definitions/f360f67a-ad24-4bef-8761-31411c531bd4/2/badge) |
